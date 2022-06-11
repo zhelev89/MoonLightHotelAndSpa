@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import team2.MoonLight.Hotel.and.Spa.models.rooms.RoomBedType;
 import team2.MoonLight.Hotel.and.Spa.models.rooms.Room;
 import team2.MoonLight.Hotel.and.Spa.models.users.User;
 
@@ -40,10 +41,17 @@ public class RoomReservation {
     private Integer guestNumber;
 
     @NotNull
-    @ManyToOne
+    @Column(name = "total_price")
+    private Double totalPrice;
+
+    @Enumerated(EnumType.STRING)
+    private RoomBedType roomBedType;
+
+    @NotNull
+    @OneToOne
     private Room room;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private User user;
 }

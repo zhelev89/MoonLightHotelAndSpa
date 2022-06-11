@@ -1,4 +1,4 @@
-package team2.MoonLight.Hotel.and.Spa.models.rooms;
+package team2.MoonLight.Hotel.and.Spa.models.users;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,18 +13,14 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "room_types")
-public class RoomType {
+@Table(name = "user_role")
+public class UserRole {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    @Column(name = "room_type", unique = true)
-    private String roomType;
-
-    @NotNull
-    @Column(name = "price")
-    private Double price;
+    @Column(name = "user_role", unique = true)
+    private String userRole;
 }

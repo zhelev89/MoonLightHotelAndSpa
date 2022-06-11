@@ -13,14 +13,20 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "room_views")
-public class RoomView {
+@Table(name = "rooms")
+public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    private RoomType roomType;
+
+    @Enumerated(EnumType.STRING)
+    private RoomView roomView;
+
     @NotNull
-    @Column(name = "room_view", unique = true)
-    private String roomView;
+    @Column(name = "price")
+    private Double price;
 }
