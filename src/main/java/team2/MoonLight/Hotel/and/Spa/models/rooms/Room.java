@@ -20,13 +20,15 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private RoomType roomType;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private RoomView roomView;
 
     @NotNull
     @Column(name = "price")
-    private Double price;
+    private Double roomPrice;
 }
