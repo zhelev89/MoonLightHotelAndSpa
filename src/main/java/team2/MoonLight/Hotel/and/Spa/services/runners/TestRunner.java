@@ -1,4 +1,4 @@
-package team2.MoonLight.Hotel.and.Spa.runners;
+package team2.MoonLight.Hotel.and.Spa.services.runners;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
