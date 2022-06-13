@@ -2,15 +2,22 @@ package team2.MoonLight.Hotel.and.Spa.runners;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.format.datetime.standard.InstantFormatter;
 import org.springframework.stereotype.Component;
+import team2.MoonLight.Hotel.and.Spa.models.reservations.RoomReservation;
 import team2.MoonLight.Hotel.and.Spa.models.rooms.Room;
 import team2.MoonLight.Hotel.and.Spa.models.rooms.RoomType;
 import team2.MoonLight.Hotel.and.Spa.models.rooms.RoomView;
 import team2.MoonLight.Hotel.and.Spa.models.users.User;
 import team2.MoonLight.Hotel.and.Spa.models.users.UserRole;
+import team2.MoonLight.Hotel.and.Spa.services.RoomReservationService;
 import team2.MoonLight.Hotel.and.Spa.services.RoomService;
 import team2.MoonLight.Hotel.and.Spa.services.UserRoleService;
 import team2.MoonLight.Hotel.and.Spa.services.UserService;
+
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 
 @Component
 public class TestRunner implements CommandLineRunner {
@@ -24,6 +31,9 @@ public class TestRunner implements CommandLineRunner {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RoomReservationService roomReservationService;
+
     @Override
     public void run(String... args) throws Exception {
         createdStandardRooms();
@@ -31,6 +41,7 @@ public class TestRunner implements CommandLineRunner {
         createdApartments();
         createdUserRoles();
         createdUsers();
+        //createdRoomReservations();
     }
 
     public void createdStandardRooms() {
@@ -123,19 +134,19 @@ public class TestRunner implements CommandLineRunner {
 
     public void createdApartments() {
         Room room15 = new Room();
-        room15.setRoomType(RoomType.Studio);
+        room15.setRoomType(RoomType.Apartment);
         room15.setRoomView(RoomView.Pool);
         room15.setRoomPrice(520.00);
         roomService.save(room15);
 
         Room room16 = new Room();
-        room16.setRoomType(RoomType.Studio);
+        room16.setRoomType(RoomType.Apartment);
         room16.setRoomView(RoomView.Sea);
         room16.setRoomPrice(520.00);
         roomService.save(room16);
 
         Room room17 = new Room();
-        room17.setRoomType(RoomType.Studio);
+        room17.setRoomType(RoomType.Apartment);
         room17.setRoomView(RoomView.Sea);
         room17.setRoomPrice(520.00);
         roomService.save(room17);
@@ -167,5 +178,10 @@ public class TestRunner implements CommandLineRunner {
         user2.setPassword("12345");
         user2.setPhone("0899123456");
         userService.save(user2);
+    }
+
+    public void createdRoomReservations() {
+        RoomReservation roomReservation = new RoomReservation();
+        roomReservationService.save(roomReservation);
     }
 }

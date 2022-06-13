@@ -8,5 +8,9 @@ public interface UserService {
 
     User save(User user);
 
+    User findById(Long id);
+
     List<User> findAll();
+
+    User update(Long id, String newPassword);
 }

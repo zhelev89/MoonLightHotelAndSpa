@@ -1,6 +1,5 @@
 package team2.MoonLight.Hotel.and.Spa.services.Implements;
 
-import com.sun.jdi.request.DuplicateRequestException;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -9,13 +8,12 @@ import team2.MoonLight.Hotel.and.Spa.models.users.UserRole;
 import team2.MoonLight.Hotel.and.Spa.repositories.UserRoleRepository;
 import team2.MoonLight.Hotel.and.Spa.services.UserRoleService;
 
-import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Objects;
 
 @Service
 @AllArgsConstructor
-public class UserRoleImpl implements UserRoleService {
+public class UserRoleServiceImpl implements UserRoleService {
 
     private final UserRoleRepository userRoleRepository;
 

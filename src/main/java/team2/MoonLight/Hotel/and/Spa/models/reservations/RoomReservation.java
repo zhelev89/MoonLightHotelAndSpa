@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import team2.MoonLight.Hotel.and.Spa.models.rooms.RoomBedType;
 import team2.MoonLight.Hotel.and.Spa.models.rooms.Room;
 import team2.MoonLight.Hotel.and.Spa.models.users.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.Instant;
 import java.util.Date;
 
 @Data
@@ -25,16 +27,17 @@ public class RoomReservation {
     private Long id;
 
     @NotNull
+    @CreationTimestamp
     @Column(name = "created_at")
-    private Date createdAt;
+    private Instant createdAt;
 
     @NotNull
     @Column(name = "check_in")
-    private Date checkIn;
+    private Instant checkIn;
 
     @NotNull
     @Column(name = "check_out")
-    private Date checkOut;
+    private Instant checkOut;
 
     @NotNull
     @Column(name = "guest_number")

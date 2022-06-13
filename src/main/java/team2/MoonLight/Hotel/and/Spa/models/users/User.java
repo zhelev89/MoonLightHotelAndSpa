@@ -4,10 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 import team2.MoonLight.Hotel.and.Spa.models.reservations.RoomReservation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -43,9 +47,9 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Temporal(TemporalType.DATE)
+    @CreationTimestamp
     @Column(name = "created_at")
-    private Date createdAt;
+    private Instant createdAt;
 
     @NotNull
     @ManyToOne

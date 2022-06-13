@@ -6,6 +6,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import team2.MoonLight.Hotel.and.Spa.exceptions.DuplicateRecordException;
+import team2.MoonLight.Hotel.and.Spa.exceptions.NotFoundRecordException;
 import team2.MoonLight.Hotel.and.Spa.models.users.User;
 import team2.MoonLight.Hotel.and.Spa.models.users.UserRole;
 import team2.MoonLight.Hotel.and.Spa.repositories.UserRepository;
@@ -17,7 +18,7 @@ import java.util.Objects;
 
 @Service
 @AllArgsConstructor
-public class UserImpl implements UserService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
@@ -39,7 +40,22 @@ public class UserImpl implements UserService {
         }
     }
 
+    public User findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundRecordException(
+                        String.format("User with id:%s, not found.", id)));
+    }
+
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    public User update(Long id, String newPassword) {
+        Objects.requireNonNull(id);
+        Objects.requireNonNull(newPassword);
+
+        User foundedUser = findById(id);
+        foundedUser.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        return foundedUser;
     }
 }
