@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRegisterRequest {
+public class UserSaveRequest {
 
     @NotNull
     @Min(2) @Max(255)

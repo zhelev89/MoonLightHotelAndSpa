@@ -2,7 +2,7 @@ package team2.MoonLight.Hotel.and.Spa.convertors;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import team2.MoonLight.Hotel.and.Spa.dataTransferObjects.UserRegisterRequest;
+import team2.MoonLight.Hotel.and.Spa.dataTransferObjects.UserSaveRequest;
 import team2.MoonLight.Hotel.and.Spa.dataTransferObjects.UserResponse;
 import team2.MoonLight.Hotel.and.Spa.models.users.User;
 
@@ -10,13 +10,13 @@ import team2.MoonLight.Hotel.and.Spa.models.users.User;
 @AllArgsConstructor
 public class UserConverter {
 
-    public User convert(UserRegisterRequest userRegisterRequest) {
+    public User convert(UserSaveRequest userSaveRequest) {
         return User.builder()
-                .firstName(userRegisterRequest.getFirstName())
-                .lastName(userRegisterRequest.getLastName())
-                .email(userRegisterRequest.getEmail())
-                .phone(userRegisterRequest.getPhone())
-                .password(userRegisterRequest.getPassword())
+                .firstName(userSaveRequest.getFirstName())
+                .lastName(userSaveRequest.getLastName())
+                .email(userSaveRequest.getEmail())
+                .phone(userSaveRequest.getPhone())
+                .password(userSaveRequest.getPassword())
                 .build();
     }
 
