@@ -2,8 +2,9 @@ package team2.MoonLightHotelAndSpa.convertors;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import team2.MoonLightHotelAndSpa.dataTransferObjects.UserSaveRequest;
+import team2.MoonLight.Hotel.and.Spa.dataTransferObjects.UserUpdateRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.UserResponse;
+import team2.MoonLightHotelAndSpa.dataTransferObjects.UserSaveRequest;
 import team2.MoonLightHotelAndSpa.models.users.User;
 
 @Component
@@ -26,6 +27,13 @@ public class UserConverter {
                 .lastName(user.getLastName())
                 .email(user.getEmail())
                 .phone(user.getPhone())
+                .build();
+    }
+
+    public User convert(UserUpdateRequest userUpdateRequest) {
+        return User.builder()
+                .id(userUpdateRequest.getId())
+                .password(userUpdateRequest.getPassword())
                 .build();
     }
 }

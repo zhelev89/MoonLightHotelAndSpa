@@ -4,13 +4,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import team2.MoonLight.Hotel.and.Spa.dataTransferObjects.UserUpdateRequest;
 import team2.MoonLightHotelAndSpa.convertors.UserConverter;
-import team2.MoonLightHotelAndSpa.dataTransferObjects.UserSaveRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.UserResponse;
+import team2.MoonLightHotelAndSpa.dataTransferObjects.UserSaveRequest;
 import team2.MoonLightHotelAndSpa.models.users.User;
 import team2.MoonLightHotelAndSpa.services.UserService;
 
@@ -48,5 +45,13 @@ public class UserController {
                 .body(userService.findAll().stream()
                         .map(user -> userConverter.convert(user))
                         .collect(Collectors.toList()));
+    }
+
+    @PutMapping(value = "/update")
+    public ResponseEntity<UserResponse> update(@RequestBody @Valid UserUpdateRequest userUpdateRequest) {
+        User user = userConverter.convert(userUpdateRequest);
+        User updatedUser = userService.update(user.getId(), user.getPassword());
+        UserResponse userResponse = userConverter.convert(updatedUser);
+        return ResponseEntity.ok().body(userResponse);
     }
 }

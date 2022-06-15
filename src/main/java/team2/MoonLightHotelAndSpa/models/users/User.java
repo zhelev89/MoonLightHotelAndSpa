@@ -14,6 +14,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -50,23 +51,13 @@ public class User {
     @Column(name = "created_at")
     private Instant createdAt;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     @JsonManagedReference
     @ManyToMany
-=======
-    @ManyToMany(fetch = FetchType.EAGER)
->>>>>>> bea500f676d4b882bb701d147e9b0ae1841889cb
-=======
-
-    @ManyToMany
->>>>>>> main
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<RoomReservation> roomReservations;
