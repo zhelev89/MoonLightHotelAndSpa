@@ -30,7 +30,7 @@ public class TestRunner implements CommandLineRunner {
     private RoomReservationService roomReservationService;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         //createdStandardRooms();
         //createdStudios();
         //createdApartments();
