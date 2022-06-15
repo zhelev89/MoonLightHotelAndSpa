@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import team2.MoonLight.Hotel.and.Spa.convertors.UserConverter;
 import team2.MoonLight.Hotel.and.Spa.dataTransferObjects.UserSaveRequest;
 import team2.MoonLight.Hotel.and.Spa.dataTransferObjects.UserResponse;
+import team2.MoonLight.Hotel.and.Spa.dataTransferObjects.UserUpdateRequest;
 import team2.MoonLight.Hotel.and.Spa.models.users.User;
 import team2.MoonLight.Hotel.and.Spa.services.UserService;
 
@@ -38,12 +39,19 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.FOUND).body(userResponse);
     }
 
-    //Тук мапинга не работи... получава се инфинити лууп, който трябва да се оправи
     @GetMapping
     public ResponseEntity<List<UserResponse>> findAll() {
         return ResponseEntity.status(HttpStatus.FOUND)
                 .body(userService.findAll().stream()
                         .map(user -> userConverter.convert(user))
                         .collect(Collectors.toList()));
+    }
+
+    @PutMapping(value = "/update")
+    public ResponseEntity<UserResponse> update(@RequestBody @Valid UserUpdateRequest userUpdateRequest) {
+        User user = userConverter.convert(userUpdateRequest);
+        User updatedUser = userService.update(user.getId(), user.getPassword());
+        UserResponse userResponse = userConverter.convert(updatedUser);
+        return ResponseEntity.ok().body(userResponse);
     }
 }
