@@ -17,20 +17,20 @@ import javax.validation.constraints.NotNull;
 public class UserSaveRequest {
 
     @NotNull
-    @Min(2) @Max(255)
+    //@Min(2) @Max(255)
     private String firstName;
 
     @NotNull
-    @Min(2) @Max(255)
+    //@Min(2) @Max(255)
     private String lastName;
 
     @NotNull
     @Email
-    @Min(5) @Max(255)
+    //@Min(5) @Max(255)
     private String email;
 
     @NotNull
-    @Max(15)
+    //@Max(15)
     private String phone;
 
     @NotNull
