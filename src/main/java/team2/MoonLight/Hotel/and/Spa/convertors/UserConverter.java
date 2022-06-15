@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import team2.MoonLight.Hotel.and.Spa.dataTransferObjects.UserSaveRequest;
 import team2.MoonLight.Hotel.and.Spa.dataTransferObjects.UserResponse;
-<<<<<<< HEAD
 import team2.MoonLight.Hotel.and.Spa.dataTransferObjects.UserUpdateRequest;
-=======
->>>>>>> main
 import team2.MoonLight.Hotel.and.Spa.models.users.User;
 
 @Component
@@ -32,7 +29,6 @@ public class UserConverter {
                 .phone(user.getPhone())
                 .build();
     }
-<<<<<<< HEAD
 
     public User convert(UserUpdateRequest userUpdateRequest) {
         return User.builder()
@@ -40,6 +36,4 @@ public class UserConverter {
                 .password(userUpdateRequest.getPassword())
                 .build();
     }
-=======
->>>>>>> main
 }

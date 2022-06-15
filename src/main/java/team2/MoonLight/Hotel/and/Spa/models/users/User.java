@@ -51,21 +51,13 @@ public class User {
     @Column(name = "created_at")
     private Instant createdAt;
 
-<<<<<<< HEAD
     @JsonManagedReference
-=======
-
->>>>>>> main
     @ManyToMany
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-<<<<<<< HEAD
-=======
-
->>>>>>> main
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<RoomReservation> roomReservations;
