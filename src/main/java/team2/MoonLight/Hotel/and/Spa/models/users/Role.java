@@ -7,20 +7,24 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user_role")
-public class UserRole {
+@Table(name = "role")
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    @Column(name = "user_role", unique = true)
-    private String userRole;
+    @Column(name = "role", unique = true)
+    private String role;
+
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
 }

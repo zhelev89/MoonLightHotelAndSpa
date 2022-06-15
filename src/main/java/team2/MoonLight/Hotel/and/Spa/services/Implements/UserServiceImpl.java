@@ -8,13 +8,15 @@ import org.springframework.stereotype.Service;
 import team2.MoonLight.Hotel.and.Spa.exceptions.DuplicateRecordException;
 import team2.MoonLight.Hotel.and.Spa.exceptions.NotFoundRecordException;
 import team2.MoonLight.Hotel.and.Spa.models.users.User;
-import team2.MoonLight.Hotel.and.Spa.models.users.UserRole;
+import team2.MoonLight.Hotel.and.Spa.models.users.Role;
 import team2.MoonLight.Hotel.and.Spa.repositories.UserRepository;
-import team2.MoonLight.Hotel.and.Spa.services.UserRoleService;
+import team2.MoonLight.Hotel.and.Spa.services.RoleService;
 import team2.MoonLight.Hotel.and.Spa.services.UserService;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -22,8 +24,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    @Autowired
-    private UserRoleService userRoleService;
+    private RoleService roleService;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -31,8 +32,10 @@ public class UserServiceImpl implements UserService {
     public User save(User user) {
         try {
             Objects.requireNonNull(user);
-            UserRole customer = userRoleService.findByRole("Customer");
-            user.setUserRole(customer);
+            Role customer = roleService.findByRole("Customer");
+            Set<Role> customerRoles = new HashSet<>();
+            customerRoles.add(customer);
+            user.setRoles(customerRoles);
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             return userRepository.save(user);
         } catch (DataIntegrityViolationException ex) {
