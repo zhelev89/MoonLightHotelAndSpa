@@ -1,19 +1,19 @@
-package team2.MoonLight.Hotel.and.Spa.models.users;
+package team2.MoonLightHotelAndSpa.models.users;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import team2.MoonLight.Hotel.and.Spa.models.reservations.RoomReservation;
+import team2.MoonLightHotelAndSpa.models.reservations.RoomReservation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.List;
 import java.util.Set;
+
 
 @Data
 @Builder

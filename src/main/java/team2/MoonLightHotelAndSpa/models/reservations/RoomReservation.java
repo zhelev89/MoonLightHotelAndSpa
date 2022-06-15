@@ -5,8 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import team2.MoonLightHotelAndSpa.models.rooms.RoomBedType;
 import team2.MoonLightHotelAndSpa.models.rooms.Room;
+import team2.MoonLightHotelAndSpa.models.rooms.RoomBedType;
 import team2.MoonLightHotelAndSpa.models.users.User;
 
 import javax.persistence.*;

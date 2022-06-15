@@ -1,11 +1,11 @@
-package team2.MoonLight.Hotel.and.Spa.convertors;
+package team2.MoonLightHotelAndSpa.convertors;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import team2.MoonLight.Hotel.and.Spa.dataTransferObjects.UserSaveRequest;
-import team2.MoonLight.Hotel.and.Spa.dataTransferObjects.UserResponse;
 import team2.MoonLight.Hotel.and.Spa.dataTransferObjects.UserUpdateRequest;
-import team2.MoonLight.Hotel.and.Spa.models.users.User;
+import team2.MoonLightHotelAndSpa.dataTransferObjects.UserResponse;
+import team2.MoonLightHotelAndSpa.dataTransferObjects.UserSaveRequest;
+import team2.MoonLightHotelAndSpa.models.users.User;
 
 @Component
 @AllArgsConstructor
