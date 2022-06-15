@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User findById(Long id) {
+        Objects.requireNonNull(id);
         return userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundRecordException(
                         String.format("User with id:%s, not found.", id)));

@@ -31,6 +31,13 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
     }
 
+    @GetMapping(value = "/id/{id}")
+    public ResponseEntity<UserResponse> findById(@PathVariable @Valid Long id) {
+        User foundUser = userService.findById(id);
+        UserResponse userResponse = userConverter.convert(foundUser);
+        return ResponseEntity.status(HttpStatus.FOUND).body(userResponse);
+    }
+
     //Тук мапинга не работи... получава се инфинити лууп, който трябва да се оправи
     @GetMapping
     public ResponseEntity<List<UserResponse>> findAll() {
