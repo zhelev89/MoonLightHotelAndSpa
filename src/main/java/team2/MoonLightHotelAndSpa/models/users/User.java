@@ -1,5 +1,6 @@
 package team2.MoonLightHotelAndSpa.models.users;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,7 +52,6 @@ public class User {
     @Column(name = "created_at")
     private Instant createdAt;
 
-    @JsonManagedReference
     @ManyToMany
     @JoinTable(
             name = "users_roles",

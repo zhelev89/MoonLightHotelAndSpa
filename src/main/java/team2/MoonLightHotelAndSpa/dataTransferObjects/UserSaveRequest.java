@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import team2.MoonLightHotelAndSpa.models.users.Role;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Data
 @Builder
@@ -29,4 +31,6 @@ public class UserSaveRequest {
 
     @NotNull
     private String password;
+
+    private Set<Role> roles;
 }

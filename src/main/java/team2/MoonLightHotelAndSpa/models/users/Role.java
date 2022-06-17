@@ -1,5 +1,7 @@
 package team2.MoonLightHotelAndSpa.models.users;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +26,6 @@ public class Role {
     @NotNull
     @Column(name = "role", unique = true)
     private String role;
-
 
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;

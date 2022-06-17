@@ -32,10 +32,11 @@ public class UserServiceImpl implements UserService {
     public User save(User user) {
         try {
             Objects.requireNonNull(user);
-            Role customer = roleService.findByRole("Customer");
-            Set<Role> customerRoles = new HashSet<>();
-            customerRoles.add(customer);
-            user.setRoles(customerRoles);
+//            Role customer = roleService.findByRole("Customer");
+//            customer.setUsers(new HashSet<>());
+//            Set<Role> customerRoles = new HashSet<>();
+//            customerRoles.add(customer);
+//            user.setRoles(customerRoles);
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             return userRepository.save(user);
         } catch (DataIntegrityViolationException ex) {
