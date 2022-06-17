@@ -37,7 +37,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponse> save(@RequestBody @Valid UserSaveRequest userSaveRequest) {
-        Role customer = roleService.findByRole("Customer");
+        Role customer = roleService.findByRole("Client");
         customer.setUsers(new HashSet<>());
 
         userSaveRequest.setRoles(new HashSet<>());

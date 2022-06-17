@@ -9,7 +9,6 @@ import team2.MoonLightHotelAndSpa.models.users.Role;
 import team2.MoonLightHotelAndSpa.repositories.RoleRepository;
 import team2.MoonLightHotelAndSpa.services.RoleService;
 
-import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -33,10 +32,5 @@ public class RoleServiceImpl implements RoleService {
         return roleRepository.findByRole(role).orElseThrow(
                 () -> new NotFoundRecordException(
                         String.format("Role with name:%s, not found", role)));
-    }
-
-    @Override
-    public List<Role> findAll() {
-        return null;
     }
 }

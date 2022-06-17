@@ -149,7 +149,7 @@ public class TestRunner implements CommandLineRunner {
 
     public void createdUserRoles() {
         Role role1 = new Role();
-        role1.setRole("Customer");
+        role1.setRole("Client");
         roleService.save(role1);
 
         Role role2 = new Role();
