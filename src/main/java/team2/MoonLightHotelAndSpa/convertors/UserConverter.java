@@ -18,6 +18,7 @@ public class UserConverter {
                 .email(userSaveRequest.getEmail())
                 .phone(userSaveRequest.getPhone())
                 .password(userSaveRequest.getPassword())
+                .roles(userSaveRequest.getRoles())
                 .build();
     }
 
