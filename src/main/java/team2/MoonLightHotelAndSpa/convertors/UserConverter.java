@@ -7,9 +7,13 @@ import team2.MoonLightHotelAndSpa.dataTransferObjects.UserResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.UserSaveRequest;
 import team2.MoonLightHotelAndSpa.models.users.User;
 
+import java.util.stream.Collectors;
+
 @Component
 @AllArgsConstructor
 public class UserConverter {
+
+    private final RoleConverter roleConverter;
 
     public User convert(UserSaveRequest userSaveRequest) {
         return User.builder()
@@ -28,6 +32,7 @@ public class UserConverter {
                 .lastName(user.getLastName())
                 .email(user.getEmail())
                 .phone(user.getPhone())
+                .roles(user.getRoles().stream().map(roleConverter::convert).collect(Collectors.toSet()))
                 .build();
     }
 

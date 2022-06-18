@@ -1,5 +1,6 @@
 package team2.MoonLightHotelAndSpa.models.users;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -55,6 +56,10 @@ public class User {
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id"
+    )
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)

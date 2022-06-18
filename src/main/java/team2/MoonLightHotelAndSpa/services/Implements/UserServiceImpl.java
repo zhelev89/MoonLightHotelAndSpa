@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.exceptions.DuplicateRecordException;
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             return userRepository.save(user);
         } catch (DataIntegrityViolationException ex) {
-            throw new DuplicateRecordException("User with this email or phone is already exist.");
+            throw new DuplicateRecordException("User with this email or phone is already exists.");
         }
     }
 
