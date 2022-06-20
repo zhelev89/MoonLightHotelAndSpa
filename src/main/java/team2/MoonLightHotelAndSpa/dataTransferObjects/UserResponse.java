@@ -1,6 +1,5 @@
 package team2.MoonLightHotelAndSpa.dataTransferObjects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 
