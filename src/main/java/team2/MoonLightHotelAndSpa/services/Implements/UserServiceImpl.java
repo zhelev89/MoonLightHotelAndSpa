@@ -55,4 +55,8 @@ public class UserServiceImpl implements UserService {
         foundUser.setPassword(bCryptPasswordEncoder.encode(newPassword));
         return foundUser;
     }
+
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
+    }
 }
