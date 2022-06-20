@@ -14,4 +14,6 @@ public interface UserService {
     List<User> findAll();
 
     User update(Long id, String newPassword);
+
+    void deleteById(Long id);
 }
