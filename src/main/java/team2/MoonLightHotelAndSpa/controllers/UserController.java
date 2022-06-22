@@ -45,11 +45,9 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<Set<UserResponse>> findAll() {
+    public ResponseEntity<Set<User>> findAll() {
         return ResponseEntity.status(HttpStatus.FOUND)
-                .body(userService.findAll().stream()
-                        .map(user -> userConverter.convert(user))
-                        .collect(Collectors.toSet()));
+                .body(userService.findAll());
     }
 
     @PutMapping

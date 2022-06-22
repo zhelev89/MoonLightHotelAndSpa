@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -18,6 +19,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "role")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Role {
 
     @Id
@@ -28,7 +31,8 @@ public class Role {
     @Column(name = "role", unique = true)
     private String role;
 
-    @JsonBackReference
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
+    @ManyToMany(mappedBy = "roles",
+            cascade = CascadeType.ALL,
+            targetEntity = User.class)
+    private Set<User> users = new HashSet<>();
 }
