@@ -34,8 +34,7 @@ public class TestRunner implements CommandLineRunner {
         //createdStandardRooms();
         //createdStudios();
         //createdApartments();
-        //createdUserRoles();
-        //createdUsers();
+        createdUserRoles();
         //createdRoomReservations();
     }
 
@@ -155,24 +154,6 @@ public class TestRunner implements CommandLineRunner {
         Role role2 = new Role();
         role2.setRole("Admin");
         roleService.save(role2);
-    }
-
-    public void createdUsers() {
-        User user = new User();
-        user.setName("Zhivko");
-        user.setSurname("Zhelev");
-        user.setEmail("zhelev89@yahoo.com");
-        user.setPassword("12345");
-        user.setPhone("0899123123");
-        userService.save(user);
-
-        User user2 = new User();
-        user2.setName("Georgi");
-        user2.setSurname("Ivanov");
-        user2.setEmail("goshkata@yahoo.com");
-        user2.setPassword("12345");
-        user2.setPhone("0899123456");
-        userService.save(user2);
     }
 
     public void createdRoomReservations() {

@@ -12,8 +12,10 @@ import team2.MoonLightHotelAndSpa.models.users.User;
 import team2.MoonLightHotelAndSpa.repositories.UserRepository;
 import team2.MoonLightHotelAndSpa.services.UserService;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -43,8 +45,8 @@ public class UserServiceImpl implements UserService {
                         String.format("User with id:%s, not found.", id)));
     }
 
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public Set<User> findAll() {
+        return new HashSet<>(userRepository.findAll());
     }
 
     public User update(Long id, String newPassword) {

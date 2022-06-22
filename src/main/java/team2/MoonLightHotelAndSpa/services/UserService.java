@@ -1,9 +1,8 @@
 package team2.MoonLightHotelAndSpa.services;
 
-
 import team2.MoonLightHotelAndSpa.models.users.User;
 
-import java.util.List;
+import java.util.Set;
 
 public interface UserService {
 
@@ -11,7 +10,7 @@ public interface UserService {
 
     User findById(Long id);
 
-    List<User> findAll();
+    Set<User> findAll();
 
     User update(Long id, String newPassword);
 

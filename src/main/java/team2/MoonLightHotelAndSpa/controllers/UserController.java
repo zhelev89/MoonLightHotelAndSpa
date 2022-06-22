@@ -13,7 +13,9 @@ import team2.MoonLightHotelAndSpa.models.users.User;
 import team2.MoonLightHotelAndSpa.services.UserService;
 
 import javax.validation.Valid;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -43,11 +45,11 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserResponse>> findAll() {
+    public ResponseEntity<Set<UserResponse>> findAll() {
         return ResponseEntity.status(HttpStatus.FOUND)
                 .body(userService.findAll().stream()
                         .map(user -> userConverter.convert(user))
-                        .collect(Collectors.toList()));
+                        .collect(Collectors.toSet()));
     }
 
     @PutMapping
