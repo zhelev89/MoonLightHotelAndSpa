@@ -5,12 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import team2.MoonLightHotelAndSpa.models.reservations.RoomReservation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -27,12 +26,12 @@ public class User {
     private Long id;
 
     @NotNull
-    @Column(name = "first_name")
-    private String firstName;
+    @Column(name = "name")
+    private String name;
 
     @NotNull
-    @Column(name = "last_name")
-    private String lastName;
+    @Column(name = "surname")
+    private String surname;
 
     @NotNull
     @Column(name = "email", unique = true)
@@ -47,16 +46,13 @@ public class User {
     private String password;
 
     @CreationTimestamp
-    @Column(name = "created_at")
-    private Instant createdAt;
+    @Column(name = "created")
+    private Instant created;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<RoomReservation> roomReservations;
 }

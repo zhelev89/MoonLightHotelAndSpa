@@ -34,7 +34,7 @@ public class TestRunner implements CommandLineRunner {
         //createdStandardRooms();
         //createdStudios();
         //createdApartments();
-        createdUserRoles();
+        //createdUserRoles();
         //createdUsers();
         //createdRoomReservations();
     }
@@ -159,16 +159,16 @@ public class TestRunner implements CommandLineRunner {
 
     public void createdUsers() {
         User user = new User();
-        user.setFirstName("Zhivko");
-        user.setLastName("Zhelev");
+        user.setName("Zhivko");
+        user.setSurname("Zhelev");
         user.setEmail("zhelev89@yahoo.com");
         user.setPassword("12345");
         user.setPhone("0899123123");
         userService.save(user);
 
         User user2 = new User();
-        user2.setFirstName("Georgi");
-        user2.setLastName("Ivanov");
+        user2.setName("Georgi");
+        user2.setSurname("Ivanov");
         user2.setEmail("goshkata@yahoo.com");
         user2.setPassword("12345");
         user2.setPhone("0899123456");

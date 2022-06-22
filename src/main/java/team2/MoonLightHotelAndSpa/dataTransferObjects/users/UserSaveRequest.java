@@ -1,10 +1,9 @@
-package team2.MoonLightHotelAndSpa.dataTransferObjects;
+package team2.MoonLightHotelAndSpa.dataTransferObjects.users;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import team2.MoonLightHotelAndSpa.models.users.Role;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -17,10 +16,10 @@ import java.util.Set;
 public class UserSaveRequest {
 
     @NotNull
-    private String firstName;
+    private String name;
 
     @NotNull
-    private String lastName;
+    private String surname;
 
     @NotNull
     @Email
@@ -32,5 +31,6 @@ public class UserSaveRequest {
     @NotNull
     private String password;
 
-    private Set<Role> roles;
+    @NotNull
+    private Set<String> roles;
 }

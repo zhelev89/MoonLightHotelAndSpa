@@ -1,4 +1,4 @@
-package team2.MoonLight.Hotel.and.Spa.dataTransferObjects;
+package team2.MoonLightHotelAndSpa.dataTransferObjects.users;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
