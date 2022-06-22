@@ -7,4 +7,6 @@ public interface RoleService {
     Role save(Role role);
 
     Role findByRole(String userRole);
+
+    Role findAll();
 }

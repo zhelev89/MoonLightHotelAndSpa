@@ -1,19 +1,11 @@
 package team2.MoonLightHotelAndSpa.models.users;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.Set;
 
 
@@ -23,8 +15,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class User {
 
     @Id
@@ -55,11 +45,12 @@ public class User {
     @Column(name = "created")
     private Instant created;
 
-    @ManyToMany(cascade = CascadeType.ALL,
-            targetEntity = Role.class)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToMany
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> roles;
 }

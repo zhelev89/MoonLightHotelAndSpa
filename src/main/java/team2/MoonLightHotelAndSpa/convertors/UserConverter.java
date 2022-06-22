@@ -11,6 +11,7 @@ import team2.MoonLightHotelAndSpa.models.users.User;
 import team2.MoonLightHotelAndSpa.services.RoleService;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 @Component
@@ -26,7 +27,9 @@ public class UserConverter {
             role = name;
         }
 
-        Role foundRole = roleService.findByRole(role);
+        Role foundRole = roleService.findByRole(role.toLowerCase(Locale.ROOT));
+        foundRole.setRole(role.toLowerCase());
+
         Set<Role> roles = new HashSet<>();
         roles.add(foundRole);
 

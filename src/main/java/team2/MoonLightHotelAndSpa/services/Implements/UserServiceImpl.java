@@ -13,20 +13,16 @@ import team2.MoonLightHotelAndSpa.repositories.UserRepository;
 import team2.MoonLightHotelAndSpa.services.UserService;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 @Service
 @AllArgsConstructor
-@NoArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public User save(User user) {
         try {

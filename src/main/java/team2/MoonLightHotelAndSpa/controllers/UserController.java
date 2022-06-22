@@ -1,7 +1,6 @@
 package team2.MoonLightHotelAndSpa.controllers;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,20 +12,15 @@ import team2.MoonLightHotelAndSpa.models.users.User;
 import team2.MoonLightHotelAndSpa.services.UserService;
 
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
 @RestController
+@AllArgsConstructor
 @RequestMapping(value = "/users")
 public class UserController {
 
-    @Autowired
     private UserConverter userConverter;
-
-    @Autowired
     private UserService userService;
 
     @PostMapping
@@ -45,9 +39,11 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<Set<User>> findAll() {
+    public ResponseEntity<Set<UserResponse>> findAll() {
         return ResponseEntity.status(HttpStatus.FOUND)
-                .body(userService.findAll());
+                .body(userService.findAll().stream()
+                        .map(user -> userConverter.convert(user))
+                        .collect(Collectors.toSet()));
     }
 
     @PutMapping

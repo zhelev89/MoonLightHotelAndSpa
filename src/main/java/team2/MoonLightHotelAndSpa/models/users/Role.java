@@ -1,16 +1,9 @@
 package team2.MoonLightHotelAndSpa.models.users;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -18,9 +11,9 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "role")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+@EqualsAndHashCode
+@ToString
+@Table(name = "roles")
 public class Role {
 
     @Id
@@ -31,8 +24,6 @@ public class Role {
     @Column(name = "role", unique = true)
     private String role;
 
-    @ManyToMany(mappedBy = "roles",
-            cascade = CascadeType.ALL,
-            targetEntity = User.class)
-    private Set<User> users = new HashSet<>();
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
 }

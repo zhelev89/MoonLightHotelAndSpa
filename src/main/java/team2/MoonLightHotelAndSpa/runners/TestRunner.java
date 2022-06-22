@@ -14,6 +14,8 @@ import team2.MoonLightHotelAndSpa.services.RoomReservationService;
 import team2.MoonLightHotelAndSpa.services.RoomService;
 import team2.MoonLightHotelAndSpa.services.UserService;
 
+import java.util.HashSet;
+
 @Component
 public class TestRunner implements CommandLineRunner {
 
@@ -34,7 +36,7 @@ public class TestRunner implements CommandLineRunner {
         //createdStandardRooms();
         //createdStudios();
         //createdApartments();
-        createdUserRoles();
+        //createdUserRoles();
         //createdRoomReservations();
     }
 
@@ -148,11 +150,13 @@ public class TestRunner implements CommandLineRunner {
 
     public void createdUserRoles() {
         Role role1 = new Role();
-        role1.setRole("Client");
+        role1.setRole("client");
+        role1.setUsers(new HashSet<>());
         roleService.save(role1);
 
         Role role2 = new Role();
-        role2.setRole("Admin");
+        role2.setRole("admin");
+        role2.setUsers(new HashSet<>());
         roleService.save(role2);
     }
 
