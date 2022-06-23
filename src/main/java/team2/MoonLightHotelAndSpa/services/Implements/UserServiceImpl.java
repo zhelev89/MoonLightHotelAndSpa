@@ -8,16 +8,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.exceptions.DuplicateRecordException;
 import team2.MoonLightHotelAndSpa.exceptions.NotFoundRecordException;
+import team2.MoonLightHotelAndSpa.models.users.Role;
 import team2.MoonLightHotelAndSpa.models.users.User;
 import team2.MoonLightHotelAndSpa.repositories.UserRepository;
 import team2.MoonLightHotelAndSpa.services.UserService;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -45,13 +49,18 @@ public class UserServiceImpl implements UserService {
         return new HashSet<>(userRepository.findAll());
     }
 
-    public User update(Long id, String newPassword) {
+    public User update(Long id, User updatedUser) {
         Objects.requireNonNull(id);
-        Objects.requireNonNull(newPassword);
 
-        User foundUser = findById(id);
-        foundUser.setPassword(bCryptPasswordEncoder.encode(newPassword));
-        return foundUser;
+        User user = findById(id);
+        user.setEmail(updatedUser.getEmail());
+        user.setPassword(updatedUser.getPassword());
+        user.setName(updatedUser.getName());
+        user.setSurname(updatedUser.getSurname());
+        user.setPhone(updatedUser.getPhone());
+        user.setRoles(updatedUser.getRoles());
+
+        return user;
     }
 
     public void deleteById(Long id) {

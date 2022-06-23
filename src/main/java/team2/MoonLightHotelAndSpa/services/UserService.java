@@ -12,7 +12,7 @@ public interface UserService {
 
     Set<User> findAll();
 
-    User update(Long id, String newPassword);
+    User update(Long id, User updatedUser);
 
     void deleteById(Long id);
 }

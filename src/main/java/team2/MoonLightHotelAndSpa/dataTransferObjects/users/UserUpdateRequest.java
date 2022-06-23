@@ -4,17 +4,21 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.validation.constraints.NotNull;
+import java.time.Instant;
+import java.util.Set;
 
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class UserUpdateRequest {
 
-    @NotNull
-    private Long id;
-    @NotNull
+    private String email;
     private String password;
+    private String name;
+    private String surname;
+    private String phone;
+    private Set<String> roles;
 }

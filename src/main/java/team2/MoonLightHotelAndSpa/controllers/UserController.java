@@ -46,10 +46,10 @@ public class UserController {
                         .collect(Collectors.toSet()));
     }
 
-    @PutMapping
-    public ResponseEntity<UserResponse> update(@RequestBody @Valid UserUpdateRequest userUpdateRequest) {
-        User user = userConverter.convert(userUpdateRequest);
-        User updatedUser = userService.update(user.getId(), user.getPassword());
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<UserResponse> update(@RequestBody @Valid UserUpdateRequest userUpdateRequest,@PathVariable Long id) {
+        User convertedUser = userConverter.convert(userUpdateRequest);
+        User updatedUser = userService.update(id, convertedUser);
         UserResponse userResponse = userConverter.convert(updatedUser);
         return ResponseEntity.ok().body(userResponse);
     }

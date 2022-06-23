@@ -13,6 +13,7 @@ import team2.MoonLightHotelAndSpa.services.RoleService;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -20,6 +21,9 @@ public class UserConverter {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private RoleConverter roleConverter;
 
     public User convert(UserSaveRequest userSaveRequest) {
         String role = "";
@@ -64,9 +68,25 @@ public class UserConverter {
     }
 
     public User convert(UserUpdateRequest userUpdateRequest) {
+
+        String role = "";
+        for (String name : userUpdateRequest.getRoles()) {
+            role = name;
+        }
+
+        Role foundRole = roleService.findByRole(role.toLowerCase(Locale.ROOT));
+        foundRole.setRole(role.toLowerCase());
+
+        Set<Role> roles = new HashSet<>();
+        roles.add(foundRole);
+
         return User.builder()
-                .id(userUpdateRequest.getId())
+                .email(userUpdateRequest.getEmail())
                 .password(userUpdateRequest.getPassword())
+                .name(userUpdateRequest.getName())
+                .surname(userUpdateRequest.getSurname())
+                .phone(userUpdateRequest.getPhone())
+                .roles(roles)
                 .build();
     }
 }
