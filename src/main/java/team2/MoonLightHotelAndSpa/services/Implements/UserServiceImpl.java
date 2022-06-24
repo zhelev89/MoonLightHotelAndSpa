@@ -2,6 +2,8 @@ package team2.MoonLightHotelAndSpa.services.Implements;
 
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.exceptions.DuplicateRecordException;
@@ -41,6 +43,13 @@ public class UserServiceImpl implements UserService {
                         String.format("User with id:%s, not found.", id)));
     }
 
+    public User findByEmail(String email) {
+        Objects.requireNonNull(email);
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundRecordException(
+                        String.format("User with email:%s, not found.", email)));
+    }
+
     public Set<User> findAll() {
         return new HashSet<>(userRepository.findAll());
     }
@@ -61,5 +70,10 @@ public class UserServiceImpl implements UserService {
 
     public void deleteById(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
+        return findByEmail(username);
     }
 }

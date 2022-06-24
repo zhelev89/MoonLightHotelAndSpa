@@ -28,7 +28,7 @@ public class UserController {
         User user = userConverter.convert(userSaveRequest);
         User savedUser = userService.save(user);
         UserResponse userResponse = userConverter.convert(savedUser);
-        return ResponseEntity.ok().body(userResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
     }
 
     @GetMapping(value = "/id/{id}")
