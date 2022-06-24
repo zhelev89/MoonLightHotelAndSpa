@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/users")
 public class UserController {
 
-    private UserConverter userConverter;
-    private UserService userService;
+    private final UserConverter userConverter;
+    private final UserService userService;
 
     @PostMapping
     public ResponseEntity<UserResponse> save(@RequestBody @Valid UserSaveRequest userSaveRequest) {
