@@ -42,12 +42,12 @@ public class UserController {
     public ResponseEntity<Set<UserResponse>> findAll() {
         return ResponseEntity.ok()
                 .body(userService.findAll().stream()
-                        .map(user -> userConverter.convert(user))
+                        .map(userConverter::convert)
                         .collect(Collectors.toSet()));
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UserResponse> update(@RequestBody @Valid UserUpdateRequest userUpdateRequest,@PathVariable Long id) {
+    public ResponseEntity<UserResponse> update(@RequestBody @Valid UserUpdateRequest userUpdateRequest, @PathVariable Long id) {
         User convertedUser = userConverter.convert(userUpdateRequest);
         User updatedUser = userService.update(id, convertedUser);
         UserResponse userResponse = userConverter.convert(updatedUser);

@@ -59,7 +59,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<Role> getAuthorities() {
-        return roles;
+        return getRoles();
     }
 
     @Override

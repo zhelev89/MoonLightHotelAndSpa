@@ -34,9 +34,10 @@ public class AppAuthenticationProvider implements AuthenticationProvider {
         final User user = (User) userService.loadUserByUsername(username);
 
         if (!bCryptPasswordEncoder.matches(password, user.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Username or password does match.");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Username or password does not match.");
         }
-        return null;
+
+        return new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
     }
 
     @Override
