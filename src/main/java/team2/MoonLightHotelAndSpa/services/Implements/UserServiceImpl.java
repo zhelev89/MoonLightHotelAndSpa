@@ -1,8 +1,6 @@
 package team2.MoonLightHotelAndSpa.services.Implements;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,19 +10,19 @@ import team2.MoonLightHotelAndSpa.models.users.User;
 import team2.MoonLightHotelAndSpa.repositories.UserRepository;
 import team2.MoonLightHotelAndSpa.services.UserService;
 
-import java.util.List;
+import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
-@NoArgsConstructor
+@Transactional
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public User save(User user) {
         try {
@@ -43,17 +41,22 @@ public class UserServiceImpl implements UserService {
                         String.format("User with id:%s, not found.", id)));
     }
 
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public Set<User> findAll() {
+        return new HashSet<>(userRepository.findAll());
     }
 
-    public User update(Long id, String newPassword) {
+    public User update(Long id, User updatedUser) {
         Objects.requireNonNull(id);
-        Objects.requireNonNull(newPassword);
 
-        User foundUser = findById(id);
-        foundUser.setPassword(bCryptPasswordEncoder.encode(newPassword));
-        return foundUser;
+        User user = findById(id);
+        user.setEmail(updatedUser.getEmail());
+        user.setPassword(updatedUser.getPassword());
+        user.setName(updatedUser.getName());
+        user.setSurname(updatedUser.getSurname());
+        user.setPhone(updatedUser.getPhone());
+        user.setRoles(updatedUser.getRoles());
+
+        return user;
     }
 
     public void deleteById(Long id) {

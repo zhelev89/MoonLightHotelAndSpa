@@ -1,9 +1,6 @@
 package team2.MoonLightHotelAndSpa.models.users;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,7 +11,9 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "role")
+@EqualsAndHashCode
+@ToString
+@Table(name = "roles")
 public class Role {
 
     @Id

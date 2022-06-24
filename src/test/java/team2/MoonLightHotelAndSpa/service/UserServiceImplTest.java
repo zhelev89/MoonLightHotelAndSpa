@@ -76,24 +76,24 @@ public class UserServiceImplTest {
     public void verifyUpdate() {
         User user = User.builder()
                 .id(1L)
-                .firstName("Georgi")
-                .lastName("Georgiev")
+                .name("Georgi")
+                .surname("Georgiev")
                 .phone("0888888888")
                 .email("email@gmail.com")
                 .password("12345678")
                 .build();
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(User.builder()
                 .id(1L)
-                .firstName("Georgi")
-                .lastName("Georgiev")
+                .name("Georgi")
+                .surname("Georgiev")
                 .phone("0888888888")
                 .email("email@gmail.com")
                 .password("12345678")
                 .build()));
-        User returnedUser = userService.update(user.getId(), user.getPassword());
+        User returnedUser = userService.update(user.getId(), user);
         assertEquals(user.getId(), returnedUser.getId());
-        assertEquals(user.getFirstName(), returnedUser.getFirstName());
-        assertEquals(user.getLastName(), returnedUser.getLastName());
+        assertEquals(user.getName(), returnedUser.getName());
+        assertEquals(user.getSurname(), returnedUser.getSurname());
         assertEquals(user.getPhone(), returnedUser.getPhone());
         assertEquals(user.getEmail(), returnedUser.getEmail());
     }

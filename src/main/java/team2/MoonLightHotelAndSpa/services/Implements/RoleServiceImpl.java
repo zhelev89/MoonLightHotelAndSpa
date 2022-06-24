@@ -33,4 +33,8 @@ public class RoleServiceImpl implements RoleService {
                 () -> new NotFoundRecordException(
                         String.format("Role with name:%s, not found", role)));
     }
+
+    public Role findAll() {
+        return null;
+    }
 }
