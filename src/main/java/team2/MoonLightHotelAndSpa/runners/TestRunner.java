@@ -36,7 +36,7 @@ public class TestRunner implements CommandLineRunner {
         //createdStandardRooms();
         //createdStudios();
         //createdApartments();
-        createdUserRoles();
+        //createdUserRoles();
         //createdRoomReservations();
     }
 
