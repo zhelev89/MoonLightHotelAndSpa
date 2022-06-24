@@ -13,7 +13,6 @@ import team2.MoonLightHotelAndSpa.services.RoleService;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -21,9 +20,6 @@ public class UserConverter {
 
     @Autowired
     private RoleService roleService;
-
-    @Autowired
-    private RoleConverter roleConverter;
 
     public User convert(UserSaveRequest userSaveRequest) {
         String role = "";

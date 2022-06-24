@@ -40,7 +40,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<Set<UserResponse>> findAll() {
-        return ResponseEntity.status(HttpStatus.FOUND)
+        return ResponseEntity.ok()
                 .body(userService.findAll().stream()
                         .map(user -> userConverter.convert(user))
                         .collect(Collectors.toSet()));

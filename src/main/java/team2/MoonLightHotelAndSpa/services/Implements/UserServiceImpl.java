@@ -1,21 +1,17 @@
 package team2.MoonLightHotelAndSpa.services.Implements;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.exceptions.DuplicateRecordException;
 import team2.MoonLightHotelAndSpa.exceptions.NotFoundRecordException;
-import team2.MoonLightHotelAndSpa.models.users.Role;
 import team2.MoonLightHotelAndSpa.models.users.User;
 import team2.MoonLightHotelAndSpa.repositories.UserRepository;
 import team2.MoonLightHotelAndSpa.services.UserService;
 
 import javax.transaction.Transactional;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
