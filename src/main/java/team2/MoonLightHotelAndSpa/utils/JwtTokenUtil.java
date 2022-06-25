@@ -28,7 +28,7 @@ public class JwtTokenUtil {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() * 100))
                 .signWith(SignatureAlgorithm.HS512, "bootCamp-team2")
-                .setSubject(user.getUsername())
+                //.setSubject(user.getUsername())
                 .compact();
     }
 }

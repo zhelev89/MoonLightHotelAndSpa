@@ -2,13 +2,14 @@ package team2.MoonLightHotelAndSpa.models.users;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.Collection;
+
 import java.util.Set;
 
 
@@ -59,7 +60,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<Role> getAuthorities() {
-        return getRoles();
+        return roles;
     }
 
     @Override
