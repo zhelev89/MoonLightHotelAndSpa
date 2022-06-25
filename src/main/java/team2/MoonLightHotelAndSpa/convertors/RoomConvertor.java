@@ -1,6 +1,7 @@
 package team2.MoonLightHotelAndSpa.convertors;
 
 import org.springframework.stereotype.Component;
+import team2.MoonLightHotelAndSpa.dataTransferObjects.RoomResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.RoomSaveRequest;
 import team2.MoonLightHotelAndSpa.models.rooms.Room;
 
@@ -9,9 +10,28 @@ public class RoomConvertor {
 
     public Room convert(RoomSaveRequest roomSaveRequest) {
         return Room.builder()
-                .roomType(roomSaveRequest.getRoomType())
-                .roomView(roomSaveRequest.getRoomView())
-                .roomPrice(roomSaveRequest.getRoomPrice())
+                .title(roomSaveRequest.getTitle())
+                .image(roomSaveRequest.getImage())
+                .images(roomSaveRequest.getImages())
+                .description(roomSaveRequest.getDescription())
+                .facilities(roomSaveRequest.getFacilities())
+                .area(roomSaveRequest.getArea())
+                .people(roomSaveRequest.getPeople())
+                .price(roomSaveRequest.getPrice())
+                .build();
+    }
+
+    public RoomResponse convert(Room room) {
+        return RoomResponse.builder()
+                .id(room.getId())
+                .title(room.getTitle())
+                .image(room.getImage())
+                .images(room.getImages())
+                .description(room.getDescription())
+                .facilities(room.getFacilities())
+                .area(room.getArea())
+                .people(room.getPeople())
+                .price(room.getPrice())
                 .build();
     }
 }

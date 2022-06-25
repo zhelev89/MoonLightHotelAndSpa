@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.convertors.RoomConvertor;
+import team2.MoonLightHotelAndSpa.dataTransferObjects.RoomResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.RoomSaveRequest;
 import team2.MoonLightHotelAndSpa.models.rooms.Room;
 import team2.MoonLightHotelAndSpa.services.RoomService;
@@ -23,15 +24,15 @@ public class RoomController {
     private RoomConvertor roomConvertor;
 
     @PostMapping
-    private ResponseEntity<Room> save(@RequestBody RoomSaveRequest roomSaveRequest) {
+    private ResponseEntity<RoomResponse> save(@RequestBody RoomSaveRequest roomSaveRequest) {
         Room room = roomConvertor.convert(roomSaveRequest);
         Room savedRoom = roomService.save(room);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(savedRoom);
+        RoomResponse response = roomConvertor.convert(savedRoom);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping
-    private List<Room> findAll() {
-        return roomService.findAll();
+    private ResponseEntity<List<Room>> findAll() {
+        return ResponseEntity.ok().body(roomService.findAll());
     }
 }

@@ -1,47 +1,34 @@
 package team2.MoonLightHotelAndSpa.dataTransferObjects;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import team2.MoonLightHotelAndSpa.models.rooms.RoomBedType;
 import team2.MoonLightHotelAndSpa.models.rooms.RoomType;
 import team2.MoonLightHotelAndSpa.models.rooms.RoomView;
 
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.List;
 
-@Data
+
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class RoomSaveRequest {
+@Data
+public class RoomResponse {
 
-    @NotNull
+    private Long id;
+
     private RoomType title;
 
-    @NotNull
     private String image;
 
-    @NotNull
     private ArrayList<String> images;
 
-    @NotNull
     private String description;
 
-    @NotNull
     private RoomBedType facilities;
 
-    @NotNull
     private RoomView area;
 
-    @NotNull
     private Integer people;
 
-    @NotNull
     private Float price;
 
-    @NotNull
-    private Integer count;
 }
