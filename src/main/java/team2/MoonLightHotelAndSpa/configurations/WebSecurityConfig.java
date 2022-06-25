@@ -3,6 +3,7 @@ package team2.MoonLightHotelAndSpa.configurations;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -11,9 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import team2.MoonLightHotelAndSpa.providers.AppAuthenticationProvider;
 
+@AllArgsConstructor
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@AllArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AppAuthenticationProvider appAuthenticationProvider;
@@ -21,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/users/token", "/users")
+                .antMatchers(HttpMethod.POST, "/users/token", "/users")
                 .permitAll()
                 .and()
                 .sessionManagement()

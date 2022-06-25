@@ -8,22 +8,22 @@ import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.users.LoginRequest;
 import team2.MoonLightHotelAndSpa.models.users.User;
 import team2.MoonLightHotelAndSpa.services.LoginService;
-import team2.MoonLightHotelAndSpa.utils.JsonWebTokenUtil;
+import team2.MoonLightHotelAndSpa.utils.JwtTokenUtil;
 
 @Service
 @AllArgsConstructor
 public class LoginServiceImpl implements LoginService {
 
     private final AuthenticationManager authenticationManager;
-    private final JsonWebTokenUtil jsonWebTokenUtil;
+    private final JwtTokenUtil jwtTokenUtil;
 
     public String authenticate(LoginRequest loginRequest) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
 
         Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         User user = (User) authentication.getPrincipal();
 
-        return jsonWebTokenUtil.generateToken(user);
+        return jwtTokenUtil.generateToken(user);
     }
 }
