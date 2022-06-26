@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.convertors.RoomConvertor;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.RoomResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.RoomSaveRequest;
+import team2.MoonLightHotelAndSpa.dataTransferObjects.RoomUpdateRequest;
 import team2.MoonLightHotelAndSpa.models.rooms.Room;
 import team2.MoonLightHotelAndSpa.services.RoomService;
 
@@ -34,5 +35,13 @@ public class RoomController {
     @GetMapping
     private ResponseEntity<List<Room>> findAll() {
         return ResponseEntity.ok().body(roomService.findAll());
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<RoomResponse> update(@RequestBody RoomUpdateRequest roomUpdateRequest,@PathVariable Long id) {
+        Room convertedRoom = roomConvertor.convert(roomUpdateRequest);
+        Room updatedRoom = roomService.update(id, convertedRoom);
+        RoomResponse roomResponse = roomConvertor.convert(updatedRoom);
+        return ResponseEntity.ok().body(roomResponse);
     }
 }
