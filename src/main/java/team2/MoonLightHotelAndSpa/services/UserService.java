@@ -1,14 +1,17 @@
 package team2.MoonLightHotelAndSpa.services;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
 import team2.MoonLightHotelAndSpa.models.users.User;
 
 import java.util.Set;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     User save(User user);
 
     User findById(Long id);
+
+    User findByEmail(String email);
 
     Set<User> findAll();
 

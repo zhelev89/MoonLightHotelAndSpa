@@ -1,7 +1,6 @@
 package team2.MoonLightHotelAndSpa.convertors;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.users.UserUpdateRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.users.UserResponse;
@@ -18,8 +17,8 @@ import java.util.Set;
 @AllArgsConstructor
 public class UserConverter {
 
-    @Autowired
-    private RoleService roleService;
+    private final RoleConverter roleConverter;
+    private final RoleService roleService;
 
     public User convert(UserSaveRequest userSaveRequest) {
         String role = "";
@@ -27,8 +26,8 @@ public class UserConverter {
             role = name;
         }
 
-        Role foundRole = roleService.findByRole(role.toLowerCase(Locale.ROOT));
-        foundRole.setRole(role.toLowerCase());
+        role = roleConverter.convertRoleRequest(role);
+        Role foundRole = roleService.findByRole(role);
 
         Set<Role> roles = new HashSet<>();
         roles.add(foundRole);
@@ -49,6 +48,7 @@ public class UserConverter {
             role = roles.getRole();
         }
 
+        role = roleConverter.convertToRoleResponse(role);
         Set<String> roles = new HashSet<>();
         roles.add(role);
 
