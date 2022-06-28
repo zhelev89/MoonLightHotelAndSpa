@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             return userRepository.save(user);
         } catch (DataIntegrityViolationException ex) {
-            throw new DuplicateRecordException("User with this email or phone is already exist.");
+            throw new DuplicateRecordException("User with this email or phone is already exist.", ex.getCause());
         }
     }
 
