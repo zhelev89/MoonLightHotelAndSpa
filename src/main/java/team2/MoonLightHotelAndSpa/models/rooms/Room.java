@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 
 @Data
 @Builder
@@ -22,13 +23,32 @@ public class Room {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private RoomType roomType;
+    private RoomTitle title;
+
+    @NotNull
+    private String image;
+
+    //Ако е само List не стартира проекта
+    @NotNull
+    private ArrayList<String> images;
+
+    @NotNull
+    private String description;
+
+    @Enumerated(EnumType.STRING)
+    private RoomFacilities facilities;
+
+    @NotNull
+    private Integer area;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private RoomView roomView;
+    private RoomView view;
+
+    @NotNull
+    private Integer people;
 
     @NotNull
     @Column(name = "price")
-    private Double roomPrice;
+    private Float price;
 }
