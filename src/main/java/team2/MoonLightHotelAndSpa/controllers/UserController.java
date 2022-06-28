@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.users.UserUpdateRequest;
 import team2.MoonLightHotelAndSpa.convertors.UserConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.users.UserResponse;
@@ -20,15 +21,15 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/users")
 public class UserController {
 
-    private UserConverter userConverter;
-    private UserService userService;
+    private final UserConverter userConverter;
+    private final UserService userService;
 
     @PostMapping
     public ResponseEntity<UserResponse> save(@RequestBody @Valid UserSaveRequest userSaveRequest) {
         User user = userConverter.convert(userSaveRequest);
         User savedUser = userService.save(user);
         UserResponse userResponse = userConverter.convert(savedUser);
-        return ResponseEntity.ok().body(userResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
     }
 
     @GetMapping(value = "/id/{id}")
@@ -42,12 +43,12 @@ public class UserController {
     public ResponseEntity<Set<UserResponse>> findAll() {
         return ResponseEntity.ok()
                 .body(userService.findAll().stream()
-                        .map(user -> userConverter.convert(user))
+                        .map(userConverter::convert)
                         .collect(Collectors.toSet()));
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UserResponse> update(@RequestBody @Valid UserUpdateRequest userUpdateRequest,@PathVariable Long id) {
+    public ResponseEntity<UserResponse> update(@RequestBody @Valid UserUpdateRequest userUpdateRequest, @PathVariable Long id) {
         User convertedUser = userConverter.convert(userUpdateRequest);
         User updatedUser = userService.update(id, convertedUser);
         UserResponse userResponse = userConverter.convert(updatedUser);
