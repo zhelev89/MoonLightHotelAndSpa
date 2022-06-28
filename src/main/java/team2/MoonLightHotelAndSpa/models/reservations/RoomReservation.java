@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import team2.MoonLightHotelAndSpa.models.rooms.Room;
-import team2.MoonLightHotelAndSpa.models.rooms.RoomBedType;
+import team2.MoonLightHotelAndSpa.models.rooms.RoomFacilities;
 import team2.MoonLightHotelAndSpa.models.users.User;
 
 import javax.persistence.*;
@@ -47,7 +47,7 @@ public class RoomReservation {
     private Double totalPrice;
 
     @Enumerated(EnumType.STRING)
-    private RoomBedType roomBedType;
+    private RoomFacilities roomFacilities;
 
     @NotNull
     @OneToOne
