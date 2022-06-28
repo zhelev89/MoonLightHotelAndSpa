@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class RoomSaveRequest {
 
     @NotNull
-    private RoomTitle roomTitle;
+    private RoomTitle title;
 
     @NotNull
     private String image;
@@ -30,13 +30,13 @@ public class RoomSaveRequest {
     private String description;
 
     @NotNull
-    private RoomFacilities roomFacilities;
+    private RoomFacilities facilities;
 
     @NotNull
     private Integer area;
 
     @NotNull
-    private RoomView roomView;
+    private RoomView view;
 
     @NotNull
     private Integer people;
