@@ -1,6 +1,6 @@
 package team2.MoonLightHotelAndSpa.models.rooms;
 
-public enum RoomBedType {
+public enum RoomFacilities {
     Separated,
     Together
 }

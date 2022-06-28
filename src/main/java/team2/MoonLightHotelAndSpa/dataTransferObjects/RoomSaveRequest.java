@@ -4,13 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import team2.MoonLightHotelAndSpa.models.rooms.RoomBedType;
-import team2.MoonLightHotelAndSpa.models.rooms.RoomType;
+import team2.MoonLightHotelAndSpa.models.rooms.RoomFacilities;
+import team2.MoonLightHotelAndSpa.models.rooms.RoomTitle;
 import team2.MoonLightHotelAndSpa.models.rooms.RoomView;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Builder
@@ -19,7 +18,7 @@ import java.util.List;
 public class RoomSaveRequest {
 
     @NotNull
-    private RoomType title;
+    private RoomTitle roomTitle;
 
     @NotNull
     private String image;
@@ -31,10 +30,13 @@ public class RoomSaveRequest {
     private String description;
 
     @NotNull
-    private RoomBedType facilities;
+    private RoomFacilities roomFacilities;
 
     @NotNull
-    private RoomView area;
+    private Integer area;
+
+    @NotNull
+    private RoomView roomView;
 
     @NotNull
     private Integer people;
