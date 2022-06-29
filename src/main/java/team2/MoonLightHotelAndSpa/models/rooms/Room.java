@@ -23,7 +23,7 @@ public class Room {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private RoomTitle roomTitle;
+    private RoomTitle title;
 
     @NotNull
     private String image;

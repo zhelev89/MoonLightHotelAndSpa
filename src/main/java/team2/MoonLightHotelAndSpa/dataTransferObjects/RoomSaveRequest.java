@@ -36,7 +36,7 @@ public class RoomSaveRequest {
     private Integer area;
 
     @NotNull
-    private RoomView roomView;
+    private RoomView view;
 
     @NotNull
     private Integer people;
