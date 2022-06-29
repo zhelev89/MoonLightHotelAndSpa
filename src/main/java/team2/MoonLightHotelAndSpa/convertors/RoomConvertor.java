@@ -10,13 +10,13 @@ public class RoomConvertor {
 
     public Room convert(RoomSaveRequest roomSaveRequest) {
         return Room.builder()
-                .roomTitle(roomSaveRequest.getRoomTitle())
+                .roomTitle(roomSaveRequest.getTitle())
                 .image(roomSaveRequest.getImage())
                 .images(roomSaveRequest.getImages())
                 .description(roomSaveRequest.getDescription())
-                .roomFacilities(roomSaveRequest.getRoomFacilities())
+                .facilities(roomSaveRequest.getFacilities())
                 .area(roomSaveRequest.getArea())
-                .roomView(roomSaveRequest.getRoomView())
+                .view(roomSaveRequest.getRoomView())
                 .people(roomSaveRequest.getPeople())
                 .price(roomSaveRequest.getPrice())
                 .build();
@@ -25,12 +25,12 @@ public class RoomConvertor {
     public RoomResponse convert(Room room) {
         return RoomResponse.builder()
                 .id(room.getId())
-                .roomTitle(room.getRoomTitle())
+                .title(room.getRoomTitle())
                 .image(room.getImage())
                 .images(room.getImages())
                 .description(room.getDescription())
-                .roomFacilities(room.getRoomFacilities())
-                .roomView(room.getRoomView())
+                .facilities(room.getFacilities())
+                .view(room.getView())
                 .area(room.getArea())
                 .people(room.getPeople())
                 .price(room.getPrice())

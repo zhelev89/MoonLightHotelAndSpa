@@ -7,8 +7,13 @@ import java.util.Locale;
 @Component
 public class RoleConverter {
 
+    private static final String role_prefix = "ROLE_";
+
     public String convertRoleRequest(String role) {
-        return "ROLE_" + role.toUpperCase(Locale.ROOT);
+        if (!role.startsWith(role_prefix)) {
+            return "ROLE_" + role.toUpperCase(Locale.ROOT);
+        }
+        return role.toUpperCase();
     }
 
     public String convertToRoleResponse(String role) {

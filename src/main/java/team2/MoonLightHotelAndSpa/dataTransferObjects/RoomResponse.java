@@ -15,7 +15,7 @@ public class RoomResponse {
 
     private Long id;
 
-    private RoomTitle roomTitle;
+    private RoomTitle title;
 
     private String image;
 
@@ -23,11 +23,11 @@ public class RoomResponse {
 
     private String description;
 
-    private RoomFacilities roomFacilities;
+    private RoomFacilities facilities;
 
     private Integer area;
 
-    private RoomView roomView;
+    private RoomView view;
 
     private Integer people;
 

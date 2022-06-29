@@ -36,14 +36,14 @@ public class Room {
     private String description;
 
     @Enumerated(EnumType.STRING)
-    private RoomFacilities roomFacilities;
+    private RoomFacilities facilities;
 
     @NotNull
     private Integer area;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private RoomView roomView;
+    private RoomView view;
 
     @NotNull
     private Integer people;
