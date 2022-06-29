@@ -23,7 +23,7 @@ public class Room {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private RoomType title;
+    private RoomTitle title;
 
     @NotNull
     private String image;
@@ -36,11 +36,14 @@ public class Room {
     private String description;
 
     @Enumerated(EnumType.STRING)
-    private RoomBedType facilities;
+    private RoomFacilities facilities;
+
+    @NotNull
+    private Integer area;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private RoomView area;
+    private RoomView view;
 
     @NotNull
     private Integer people;

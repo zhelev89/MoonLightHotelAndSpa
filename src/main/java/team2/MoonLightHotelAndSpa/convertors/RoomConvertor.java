@@ -17,6 +17,7 @@ public class RoomConvertor {
                 .description(roomSaveRequest.getDescription())
                 .facilities(roomSaveRequest.getFacilities())
                 .area(roomSaveRequest.getArea())
+                .view(roomSaveRequest.getView())
                 .people(roomSaveRequest.getPeople())
                 .price(roomSaveRequest.getPrice())
                 .build();
@@ -30,6 +31,7 @@ public class RoomConvertor {
                 .images(room.getImages())
                 .description(room.getDescription())
                 .facilities(room.getFacilities())
+                .view(room.getView())
                 .area(room.getArea())
                 .people(room.getPeople())
                 .price(room.getPrice())
