@@ -9,4 +9,8 @@ public interface RoomService {
     Room save(Room room);
 
     List<Room> findAll();
+
+    Room update(Long id, Room updatedRoom);
+
+    Room findById(Long id);
 }
