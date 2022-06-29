@@ -2,7 +2,7 @@ package team2.MoonLightHotelAndSpa.services.Implements;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import team2.MoonLightHotelAndSpa.exceptions.NotFoundRecordException;
+import team2.MoonLightHotelAndSpa.exceptions.RecordRequestException;
 import team2.MoonLightHotelAndSpa.models.rooms.Room;
 import team2.MoonLightHotelAndSpa.repositories.RoomRepository;
 import team2.MoonLightHotelAndSpa.services.RoomService;
@@ -49,7 +49,7 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public Room findById(Long id) {
         Objects.requireNonNull(id);
-        return roomRepository.findById(id).orElseThrow(() -> new NotFoundRecordException(
+        return roomRepository.findById(id).orElseThrow(() -> new RecordRequestException(
                 String.format("Room with id:%s, not found", id)));
     }
 }

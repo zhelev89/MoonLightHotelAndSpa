@@ -7,8 +7,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import team2.MoonLightHotelAndSpa.exceptions.DuplicateRecordException;
-import team2.MoonLightHotelAndSpa.exceptions.NotFoundRecordException;
 import team2.MoonLightHotelAndSpa.models.users.User;
 import team2.MoonLightHotelAndSpa.repositories.UserRepository;
 import team2.MoonLightHotelAndSpa.services.Implements.UserServiceImpl;
