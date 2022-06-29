@@ -48,6 +48,7 @@ public class RoomConvertor {
                 .area(roomUpdateRequest.getArea())
                 .people(roomUpdateRequest.getPeople())
                 .price(roomUpdateRequest.getPrice())
+                .view(roomUpdateRequest.getView())
                 .build();
     }
 }

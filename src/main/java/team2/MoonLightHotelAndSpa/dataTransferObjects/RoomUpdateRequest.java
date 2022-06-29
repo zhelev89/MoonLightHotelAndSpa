@@ -3,8 +3,8 @@ package team2.MoonLightHotelAndSpa.dataTransferObjects;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import team2.MoonLightHotelAndSpa.models.rooms.RoomBedType;
-import team2.MoonLightHotelAndSpa.models.rooms.RoomType;
+import team2.MoonLightHotelAndSpa.models.rooms.RoomFacilities;
+import team2.MoonLightHotelAndSpa.models.rooms.RoomTitle;
 import team2.MoonLightHotelAndSpa.models.rooms.RoomView;
 
 import javax.validation.constraints.NotNull;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class RoomUpdateRequest {
 
     @NotNull
-    private RoomType title;
+    private RoomTitle title;
 
     @NotNull
     private String image;
@@ -28,10 +28,13 @@ public class RoomUpdateRequest {
     private String description;
 
     @NotNull
-    private RoomBedType facilities;
+    private RoomFacilities facilities;
 
     @NotNull
-    private RoomView area;
+    private Integer area;
+
+    @NotNull
+    private RoomView view;
 
     @NotNull
     private Integer people;

@@ -64,14 +64,13 @@ public class UserConverter {
     }
 
     public User convert(UserUpdateRequest userUpdateRequest) {
-
         String role = "";
         for (String name : userUpdateRequest.getRoles()) {
             role = name;
         }
 
-        Role foundRole = roleService.findByRole(role.toLowerCase(Locale.ROOT));
-        foundRole.setRole(role.toLowerCase());
+        role = roleConverter.convertRoleRequest(role);
+        Role foundRole = roleService.findByRole(role);
 
         Set<Role> roles = new HashSet<>();
         roles.add(foundRole);
