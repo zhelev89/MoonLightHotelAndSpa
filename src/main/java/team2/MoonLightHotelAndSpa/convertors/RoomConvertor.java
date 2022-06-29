@@ -3,6 +3,7 @@ package team2.MoonLightHotelAndSpa.convertors;
 import org.springframework.stereotype.Component;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.RoomResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.RoomSaveRequest;
+import team2.MoonLightHotelAndSpa.dataTransferObjects.RoomUpdateRequest;
 import team2.MoonLightHotelAndSpa.models.rooms.Room;
 
 @Component
@@ -34,6 +35,20 @@ public class RoomConvertor {
                 .area(room.getArea())
                 .people(room.getPeople())
                 .price(room.getPrice())
+                .build();
+    }
+
+    public Room convert(RoomUpdateRequest roomUpdateRequest) {
+        return Room.builder()
+                .title(roomUpdateRequest.getTitle())
+                .image(roomUpdateRequest.getImage())
+                .images(roomUpdateRequest.getImages())
+                .description(roomUpdateRequest.getDescription())
+                .facilities(roomUpdateRequest.getFacilities())
+                .area(roomUpdateRequest.getArea())
+                .people(roomUpdateRequest.getPeople())
+                .price(roomUpdateRequest.getPrice())
+                .view(roomUpdateRequest.getView())
                 .build();
     }
 }
