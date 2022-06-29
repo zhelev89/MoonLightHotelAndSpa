@@ -2,6 +2,7 @@ package team2.MoonLightHotelAndSpa.services.Implements;
 
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,7 @@ public class UserServiceImpl implements UserService {
         Objects.requireNonNull(email);
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new RecordRequestException(
-                        String.format("User with email:%s, not found.", email)));
+                        String.format("User with email:%s, not found.", email, HttpStatus.UNAUTHORIZED)));
     }
 
     public Set<User> findAll() {
