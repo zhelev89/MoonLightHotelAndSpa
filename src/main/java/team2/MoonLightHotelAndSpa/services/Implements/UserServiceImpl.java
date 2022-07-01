@@ -1,6 +1,7 @@
 package team2.MoonLightHotelAndSpa.services.Implements;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.exceptions.RecordRequestException;
 import team2.MoonLightHotelAndSpa.models.users.User;
 import team2.MoonLightHotelAndSpa.repositories.UserRepository;
+import team2.MoonLightHotelAndSpa.services.EmailSenderService;
 import team2.MoonLightHotelAndSpa.services.UserService;
 
 import javax.transaction.Transactional;
@@ -25,9 +27,13 @@ public class UserServiceImpl implements UserService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    private final EmailSenderService emailSenderService;
+
     public User save(User user) {
+        String text = String.format("Може да достъпите до нашата система с емайл: %s и парола: %s.", user.getEmail(), user.getPassword());
         try {
             Objects.requireNonNull(user);
+            emailSenderService.sendEmail(user.getEmail(), "Достъп до Moonlight Hotel.", text);
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             return userRepository.save(user);
         } catch (DataIntegrityViolationException ex) {
