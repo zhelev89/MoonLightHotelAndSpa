@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import team2.MoonLightHotelAndSpa.exceptions.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.models.users.User;
 import team2.MoonLightHotelAndSpa.repositories.UserRepository;
 import team2.MoonLightHotelAndSpa.services.Implements.UserServiceImpl;
@@ -57,7 +58,7 @@ public class UserServiceImplTest {
     @Test
     public void verifyFindByIdThrowsException() {
         String message = "User with id:1, not found.";
-        NotFoundRecordException recordNotFoundException = assertThrows(NotFoundRecordException.class, () -> {
+        RecordNotFoundException recordNotFoundException = assertThrows(RecordNotFoundException.class, () -> {
             userService.findById(1L);
         });
         assertEquals(message, recordNotFoundException.getMessage());
