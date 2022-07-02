@@ -1,6 +1,11 @@
 package team2.MoonLightHotelAndSpa.exceptions;
 
-import org.springframework.http.HttpStatus;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-public record RecordResponseException(String message) {
+@Data
+@AllArgsConstructor
+public class RecordResponseException {
+
+    private String message;
 }

@@ -3,11 +3,13 @@ package team2.MoonLightHotelAndSpa.services.Implements;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import team2.MoonLightHotelAndSpa.exceptions.RecordRequestException;
+import team2.MoonLightHotelAndSpa.exceptions.RecordBadRequestException;
+import team2.MoonLightHotelAndSpa.exceptions.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.models.users.User;
 import team2.MoonLightHotelAndSpa.repositories.UserRepository;
 import team2.MoonLightHotelAndSpa.services.EmailSenderService;
@@ -24,7 +26,6 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public User save(User user) {
@@ -33,21 +34,21 @@ public class UserServiceImpl implements UserService {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             return userRepository.save(user);
         } catch (DataIntegrityViolationException ex) {
-            throw new RecordRequestException("User with this email or phone is already exist.", ex.getCause());
+            throw new RecordBadRequestException("User with this email or phone is already exist.", ex.getCause());
         }
     }
 
     public User findById(Long id) {
         Objects.requireNonNull(id);
         return userRepository.findById(id)
-                .orElseThrow(() -> new RecordRequestException(
+                .orElseThrow(() -> new RecordNotFoundException(
                         String.format("User with id:%s, not found.", id)));
     }
 
     public User findByEmail(String email) {
         Objects.requireNonNull(email);
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new RecordRequestException(
+                .orElseThrow(() -> new RecordNotFoundException(
                         String.format("User with email:%s, not found.", email, HttpStatus.UNAUTHORIZED)));
     }
 
@@ -70,7 +71,12 @@ public class UserServiceImpl implements UserService {
     }
 
     public void deleteById(Long id) {
-        userRepository.deleteById(id);
+        try {
+            userRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException ex) {
+            throw new RecordNotFoundException(
+                    String.format("User with id:%s, not found.", id));
+        }
     }
 
     @Override

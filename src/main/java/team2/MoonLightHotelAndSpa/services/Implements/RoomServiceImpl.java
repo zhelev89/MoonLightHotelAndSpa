@@ -1,8 +1,10 @@
 package team2.MoonLightHotelAndSpa.services.Implements;
 
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import team2.MoonLightHotelAndSpa.exceptions.RecordRequestException;
+import team2.MoonLightHotelAndSpa.exceptions.RecordBadRequestException;
+import team2.MoonLightHotelAndSpa.exceptions.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.models.rooms.Room;
 import team2.MoonLightHotelAndSpa.repositories.RoomRepository;
 import team2.MoonLightHotelAndSpa.services.RoomService;
@@ -10,8 +12,6 @@ import team2.MoonLightHotelAndSpa.services.RoomService;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
-
-import static java.util.Objects.requireNonNull;
 
 @Service
 @AllArgsConstructor
@@ -22,8 +22,8 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public Room save(Room room) {
-        requireNonNull(room);
-        return roomRepository.save(room);
+            Objects.requireNonNull(room);
+            return roomRepository.save(room);
     }
 
     public List<Room> findAll() {
@@ -49,7 +49,7 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public Room findById(Long id) {
         Objects.requireNonNull(id);
-        return roomRepository.findById(id).orElseThrow(() -> new RecordRequestException(
+        return roomRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
                 String.format("Room with id:%s, not found", id)));
     }
 }

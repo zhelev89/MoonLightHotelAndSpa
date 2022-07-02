@@ -43,4 +43,11 @@ public class RoomController {
         RoomResponse roomResponse = roomConvertor.convert(updatedRoom);
         return ResponseEntity.ok().body(roomResponse);
     }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<RoomResponse> findById(@PathVariable Long id) {
+        Room foundRoom = roomService.findById(id);
+        RoomResponse roomResponse = roomConvertor.convert(foundRoom);
+        return ResponseEntity.ok().body(roomResponse);
+    }
 }

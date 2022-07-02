@@ -3,7 +3,8 @@ package team2.MoonLightHotelAndSpa.services.Implements;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import team2.MoonLightHotelAndSpa.exceptions.RecordRequestException;
+import team2.MoonLightHotelAndSpa.exceptions.RecordBadRequestException;
+import team2.MoonLightHotelAndSpa.exceptions.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.models.users.Role;
 import team2.MoonLightHotelAndSpa.repositories.RoleRepository;
 import team2.MoonLightHotelAndSpa.services.RoleService;
@@ -21,7 +22,7 @@ public class RoleServiceImpl implements RoleService {
             Objects.requireNonNull(role);
             return roleRepository.save(role);
         } catch (DataIntegrityViolationException ex) {
-            throw new RecordRequestException(
+            throw new RecordBadRequestException(
                     String.format("UserRole with name: %s, is already exist.", role.getRole()));
         }
     }
@@ -29,11 +30,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Role findByRole(String role) {
         return roleRepository.findByRole(role).orElseThrow(
-                () -> new RecordRequestException(
+                () -> new RecordNotFoundException(
                         String.format("Role with name:%s, not found", role)));
-    }
-
-    public Role findAll() {
-        return null;
     }
 }
