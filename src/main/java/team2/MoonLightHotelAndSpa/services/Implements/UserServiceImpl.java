@@ -1,6 +1,7 @@
 package team2.MoonLightHotelAndSpa.services.Implements;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import team2.MoonLightHotelAndSpa.exceptions.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.exceptions.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.models.users.User;
 import team2.MoonLightHotelAndSpa.repositories.UserRepository;
+import team2.MoonLightHotelAndSpa.services.EmailSenderService;
 import team2.MoonLightHotelAndSpa.services.UserService;
 
 import javax.transaction.Transactional;
