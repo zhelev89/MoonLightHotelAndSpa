@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import team2.MoonLightHotelAndSpa.models.users.Role;
-import team2.MoonLightHotelAndSpa.repositories.RoleRepository;
-import team2.MoonLightHotelAndSpa.services.Implements.RoleServiceImpl;
+import team2.MoonLightHotelAndSpa.model.user.Role;
+import team2.MoonLightHotelAndSpa.repository.RoleRepository;
+import team2.MoonLightHotelAndSpa.service.implement.RoleServiceImpl;
 
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;

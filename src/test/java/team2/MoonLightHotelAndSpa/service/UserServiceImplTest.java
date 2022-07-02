@@ -7,9 +7,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import team2.MoonLightHotelAndSpa.models.users.User;
-import team2.MoonLightHotelAndSpa.repositories.UserRepository;
-import team2.MoonLightHotelAndSpa.services.Implements.UserServiceImpl;
+import team2.MoonLightHotelAndSpa.model.user.User;
+import team2.MoonLightHotelAndSpa.repository.UserRepository;
+import team2.MoonLightHotelAndSpa.service.implement.UserServiceImpl;
 
 import java.util.List;
 import java.util.Optional;
