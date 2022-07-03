@@ -29,9 +29,9 @@ public class LoginController {
     @PostMapping
     public ResponseEntity<TokenResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
         String token = loginService.authenticate(loginRequest);
-
         User user = (User) userService.loadUserByUsername(loginRequest.getEmail());
         UserResponse userResponse = userConverter.convert(user);
+
         return ResponseEntity.ok().body(TokenResponse.builder()
                 .token(token)
                 .user(userResponse)

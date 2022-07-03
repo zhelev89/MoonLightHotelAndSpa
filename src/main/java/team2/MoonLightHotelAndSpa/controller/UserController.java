@@ -3,6 +3,8 @@ package team2.MoonLightHotelAndSpa.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.dataTransferObject.user.UserUpdateRequest;
 import team2.MoonLightHotelAndSpa.convertor.UserConverter;
@@ -40,13 +42,15 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
     }
 
-    @GetMapping(value = "/id/{id}")
-    public ResponseEntity<UserResponse> findById(@PathVariable @Valid Long id) {
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<UserResponse> findById(@PathVariable Long id) {
         User foundUser = userService.findById(id);
         UserResponse userResponse = userConverter.convert(foundUser);
         return ResponseEntity.ok().body(userResponse);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping
     public ResponseEntity<Set<UserResponse>> findAll() {
         return ResponseEntity.ok()
@@ -55,6 +59,7 @@ public class UserController {
                         .collect(Collectors.toSet()));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<UserResponse> update(@RequestBody @Valid UserUpdateRequest userUpdateRequest, @PathVariable Long id) {
         User convertedUser = userConverter.convert(userUpdateRequest);
@@ -63,6 +68,7 @@ public class UserController {
         return ResponseEntity.ok().body(userResponse);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id) {
         userService.deleteById(id);

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.dataTransferObject.user.LoginRequest;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.LoginService;
+import team2.MoonLightHotelAndSpa.security.JwtTokenUtil;
 
 @Service
 @AllArgsConstructor

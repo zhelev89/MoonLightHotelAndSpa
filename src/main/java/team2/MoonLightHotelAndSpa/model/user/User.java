@@ -2,6 +2,7 @@ package team2.MoonLightHotelAndSpa.model.user;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
@@ -52,7 +53,7 @@ public class User implements UserDetails {
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -60,13 +61,11 @@ public class User implements UserDetails {
     private Set<Role> roles;
 
     @Override
-    public Collection<Role> getAuthorities() {
-        Set<Role> roleSet = new HashSet<>();
+    public Collection<SimpleGrantedAuthority> getAuthorities() {
+        Set<SimpleGrantedAuthority> roleSet = new HashSet<>();
         for (Role role : roles) {
-            roleSet.add(Role.builder()
-                    .id(role.getId())
-                    .role(role.getRole())
-                    .build());
+            String roleName = role.getAuthority();
+            roleSet.add(new SimpleGrantedAuthority(roleName));
         }
         return roleSet;
     }

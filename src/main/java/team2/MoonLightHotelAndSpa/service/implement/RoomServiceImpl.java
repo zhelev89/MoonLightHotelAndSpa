@@ -1,11 +1,7 @@
 package team2.MoonLightHotelAndSpa.service.implement;
 
 import lombok.AllArgsConstructor;
-<<<<<<< HEAD:src/main/java/team2/MoonLightHotelAndSpa/service/implement/RoomServiceImpl.java
-=======
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
->>>>>>> 89d583a1201d591310ebae26e7a60c33c66837ca:src/main/java/team2/MoonLightHotelAndSpa/services/Implements/RoomServiceImpl.java
 import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.room.Room;
