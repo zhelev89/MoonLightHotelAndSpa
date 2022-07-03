@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import team2.MoonLightHotelAndSpa.exceptions.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.models.users.Role;
 import team2.MoonLightHotelAndSpa.repositories.RoleRepository;
 import team2.MoonLightHotelAndSpa.services.Implements.RoleServiceImpl;
@@ -46,7 +47,7 @@ public class RoleServiceImplTest {
     @Test
     public void verifyFindByRoleThrowsException() {
         String message = "Role with name:Client, not found";
-        NotFoundRecordException exception = assertThrows(NotFoundRecordException.class, () -> {
+        RecordNotFoundException exception = assertThrows(RecordNotFoundException.class, () -> {
             roleService.findByRole("Client");
         });
         assertEquals(message, exception.getMessage());

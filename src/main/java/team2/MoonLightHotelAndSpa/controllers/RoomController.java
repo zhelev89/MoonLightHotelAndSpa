@@ -2,6 +2,7 @@ package team2.MoonLightHotelAndSpa.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.convertors.RoomConvertor;
@@ -49,5 +50,11 @@ public class RoomController {
         Room foundRoom = roomService.findById(id);
         RoomResponse roomResponse = roomConvertor.convert(foundRoom);
         return ResponseEntity.ok().body(roomResponse);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<HttpStatus> deleteById (@PathVariable Long id){
+        roomService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
