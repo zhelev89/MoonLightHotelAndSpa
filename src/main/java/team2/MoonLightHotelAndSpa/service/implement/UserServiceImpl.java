@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
         Objects.requireNonNull(email);
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new RecordNotFoundException(
-                        String.format("User with email:%s, not found.", email, HttpStatus.UNAUTHORIZED)));
+                        String.format("User with email:%s, not found.", email, HttpStatus.NOT_FOUND)));
     }
 
     public Set<User> findAll() {
