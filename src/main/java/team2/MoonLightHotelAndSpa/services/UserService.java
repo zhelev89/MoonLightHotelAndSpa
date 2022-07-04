@@ -18,4 +18,6 @@ public interface UserService extends UserDetailsService {
     User update(Long id, User updatedUser);
 
     void deleteById(Long id);
+
+
 }

@@ -71,4 +71,11 @@ public class UserController {
         userService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    //грешката която дава :  "message": "User with email:{\r\n    \"email\" : \"gmail@gmail.com\"\r\n}, not found."
+    @PostMapping(value = "/forgot")
+    public ResponseEntity<HttpStatus> forgotPassword(@RequestBody String email) {
+        emailSenderService.forgotPassword(email);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
