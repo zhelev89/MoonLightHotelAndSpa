@@ -26,4 +26,13 @@ public class RecordExceptionHandler {
         return new ResponseEntity<>(recordResponseException, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(value = {EmailNotSendException.class})
+    public ResponseEntity<Object> handleEmailNotSendException(EmailNotSendException ex) {
+
+        RecordResponseException recordResponseException =
+                new RecordResponseException(ex.getMessage());
+
+        return new ResponseEntity<>(recordResponseException, HttpStatus.BAD_REQUEST);
+    }
+
 }
