@@ -2,7 +2,6 @@ package team2.MoonLightHotelAndSpa.services.Implements;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,7 +17,6 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     @Autowired
     private final JavaMailSender mailSender;
     private final UserService userService;
-
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
