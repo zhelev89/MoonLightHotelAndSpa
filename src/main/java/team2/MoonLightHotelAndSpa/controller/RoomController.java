@@ -4,11 +4,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.convertor.RoomConvertor;
-import team2.MoonLightHotelAndSpa.dataTransferObject.RoomResponse;
-import team2.MoonLightHotelAndSpa.dataTransferObject.RoomSaveRequest;
-import team2.MoonLightHotelAndSpa.dataTransferObject.RoomUpdateRequest;
+import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
+import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomSaveRequest;
+import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomUpdateRequest;
 import team2.MoonLightHotelAndSpa.model.room.Room;
 import team2.MoonLightHotelAndSpa.service.RoomService;
 
@@ -24,6 +25,7 @@ public class RoomController {
     @Autowired
     private RoomConvertor roomConvertor;
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping
     private ResponseEntity<RoomResponse> save(@RequestBody RoomSaveRequest roomSaveRequest) {
         Room room = roomConvertor.convert(roomSaveRequest);
@@ -37,6 +39,7 @@ public class RoomController {
         return ResponseEntity.ok().body(roomService.findAll());
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<RoomResponse> update(@RequestBody RoomUpdateRequest roomUpdateRequest,@PathVariable Long id) {
         Room convertedRoom = roomConvertor.convert(roomUpdateRequest);
@@ -52,6 +55,7 @@ public class RoomController {
         return ResponseEntity.ok().body(roomResponse);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<HttpStatus> deleteById (@PathVariable Long id){
         roomService.deleteById(id);

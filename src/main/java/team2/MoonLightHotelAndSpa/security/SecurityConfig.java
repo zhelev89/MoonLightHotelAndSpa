@@ -19,15 +19,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtTokenFilter jwtTokenFilter;
-    private static final String[] PUBLIC_URL = {"/users", "/users/token", "/users/forgot", "/users/reset",
-    "/cars/categories", "/cars"};
-    private static final String[] PROTECTED_URL = {"/users", "/users/*"};
+    private static final String[] PUBLIC_URL = {"/users", "/users/token", "/users/forgot", "/users/reset"};
+    private static final String[] PROTECTED_URL = {"/users", "/users/**"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.POST ,PUBLIC_URL).permitAll()
+                        .antMatchers(HttpMethod.POST, PUBLIC_URL).permitAll()
                         .antMatchers(HttpMethod.GET, PROTECTED_URL).hasAnyAuthority("ROLE_ADMIN")
                         .anyRequest().denyAll())
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
@@ -39,7 +38,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 }

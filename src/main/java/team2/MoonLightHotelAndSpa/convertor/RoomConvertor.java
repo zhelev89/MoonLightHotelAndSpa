@@ -2,9 +2,9 @@ package team2.MoonLightHotelAndSpa.convertor;
 
 import org.springframework.stereotype.Component;
 
-import team2.MoonLightHotelAndSpa.dataTransferObject.RoomResponse;
-import team2.MoonLightHotelAndSpa.dataTransferObject.RoomSaveRequest;
-import team2.MoonLightHotelAndSpa.dataTransferObject.RoomUpdateRequest;
+import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
+import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomSaveRequest;
+import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomUpdateRequest;
 import team2.MoonLightHotelAndSpa.model.room.Room;
 
 @Component

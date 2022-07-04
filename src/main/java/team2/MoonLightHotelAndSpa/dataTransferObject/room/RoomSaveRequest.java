@@ -1,8 +1,9 @@
-package team2.MoonLightHotelAndSpa.dataTransferObject;
+package team2.MoonLightHotelAndSpa.dataTransferObject.room;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import team2.MoonLightHotelAndSpa.model.room.RoomFacilities;
 import team2.MoonLightHotelAndSpa.model.room.RoomTitle;
 import team2.MoonLightHotelAndSpa.model.room.RoomView;
@@ -13,7 +14,8 @@ import java.util.ArrayList;
 @Data
 @Builder
 @AllArgsConstructor
-public class RoomUpdateRequest {
+@NoArgsConstructor
+public class RoomSaveRequest {
 
     @NotNull
     private RoomTitle title;

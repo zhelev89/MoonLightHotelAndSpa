@@ -20,18 +20,16 @@ public class JwtTokenUtil {
     private String SECRET;
 
     public String generateToken(UserDetails userDetails) {
-
         return Jwts.builder()
                 .setClaims(getClaimsFromUser(userDetails))
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(Date.from(Instant.now()))
-                .setExpiration(Date.from(Instant.now().plus(60 * 10 * 1000 * 60, ChronoUnit.SECONDS)))
+                .setExpiration(Date.from(Instant.now().plus(60 * 60, ChronoUnit.SECONDS)))
                 .signWith(SignatureAlgorithm.HS256, SECRET)
                 .compact();
     }
 
     private Claims getClaimsFromUser(UserDetails user) {
-
         Claims claims = Jwts.claims();
         claims.put("authorities", user.getAuthorities());
         return claims;
