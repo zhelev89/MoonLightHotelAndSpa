@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team2.MoonLightHotelAndSpa.convertor.UserConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObject.user.LoginRequest;
-import team2.MoonLightHotelAndSpa.dataTransferObject.user.TokenResponse;
+import team2.MoonLightHotelAndSpa.dataTransferObject.user.LoginResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.user.UserResponse;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.LoginService;
@@ -27,12 +27,12 @@ public class LoginController {
     private final UserConverter userConverter;
 
     @PostMapping
-    public ResponseEntity<TokenResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
+    public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
         String token = loginService.authenticate(loginRequest);
         User user = (User) userService.loadUserByUsername(loginRequest.getEmail());
         UserResponse userResponse = userConverter.convert(user);
 
-        return ResponseEntity.ok().body(TokenResponse.builder()
+        return ResponseEntity.ok().body(LoginResponse.builder()
                 .token(token)
                 .user(userResponse)
                 .build());
