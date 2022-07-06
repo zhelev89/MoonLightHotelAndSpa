@@ -1,5 +1,6 @@
 package team2.MoonLightHotelAndSpa.controllers;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
@@ -27,6 +28,7 @@ public class LoginController {
     private final UserConverter userConverter;
 
     @PostMapping
+    @ApiOperation(value = "Login", notes = "Use this endpoint to login.", response = TokenResponse.class)
     public ResponseEntity<TokenResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
         String token = loginService.authenticate(loginRequest);
 
