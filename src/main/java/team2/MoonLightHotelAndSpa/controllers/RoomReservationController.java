@@ -1,5 +1,6 @@
 package team2.MoonLightHotelAndSpa.controllers;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "room/reservations")
+@Api(value = "Room Reservation", description = "Room Reservation")
 public class RoomReservationController {
 
     private RoomReservationService roomReservationService;

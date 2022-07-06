@@ -1,5 +1,6 @@
 package team2.MoonLightHotelAndSpa.controllers;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import javax.validation.Valid;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/users/token")
+@Api(value = "Login", description = "Login")
 public class LoginController {
 
     private final LoginService loginService;
