@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import team2.MoonLightHotelAndSpa.exceptions.PasswordNotMatchingException;
 import team2.MoonLightHotelAndSpa.exceptions.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.exceptions.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.models.users.User;
@@ -77,6 +78,17 @@ public class UserServiceImpl implements UserService {
             throw new RecordNotFoundException(
                     String.format("User with id:%s, not found.", id));
         }
+    }
+
+    @Override
+    public User changePassword(String newPassword, String currentPassword, String email) {
+        User user = findByEmail(email);
+        if(bCryptPasswordEncoder.matches(currentPassword, user.getPassword())) {
+            user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        }else {
+            throw new PasswordNotMatchingException("Your old password does not match");
+        }
+        return user;
     }
 
     @Override

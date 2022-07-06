@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.MoonLightHotelAndSpaApplication;
+import team2.MoonLightHotelAndSpa.dataTransferObjects.ResetPasswordDto;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.users.UserUpdateRequest;
 import team2.MoonLightHotelAndSpa.convertors.UserConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.users.UserResponse;
@@ -70,5 +71,12 @@ public class UserController {
     public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id) {
         userService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PostMapping(value = "/reset")
+    public ResponseEntity<UserResponse> resetPassword(@RequestBody ResetPasswordDto resetPasswordDto) {
+        User user = userService.changePassword(resetPasswordDto.getNewPassword(), resetPasswordDto.getCurrentPassword(), resetPasswordDto.getEmail());
+        UserResponse userResponse = userConverter.convert(user);
+        return ResponseEntity.ok().body(userResponse);
     }
 }

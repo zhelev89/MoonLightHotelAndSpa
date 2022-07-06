@@ -18,4 +18,7 @@ public interface UserService extends UserDetailsService {
     User update(Long id, User updatedUser);
 
     void deleteById(Long id);
+
+    User changePassword(String newPassword, String currentPassword, String email);
+
 }
