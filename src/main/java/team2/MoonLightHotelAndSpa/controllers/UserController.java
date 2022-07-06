@@ -77,7 +77,6 @@ public class UserController {
         return ResponseEntity.ok().body(userResponse);
     }
 
-    //грешката която дава :  "message": "User with email:{\r\n    \"email\" : \"gmail@gmail.com\"\r\n}, not found."
     @PostMapping(value = "/forgot")
     public ResponseEntity<HttpStatus> forgotPassword(@RequestBody EmailForPasswordDto dto) {
         emailSenderService.forgotPassword(dto.getEmail());
