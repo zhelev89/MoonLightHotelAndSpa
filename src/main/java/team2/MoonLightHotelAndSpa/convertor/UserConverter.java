@@ -8,7 +8,6 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.user.UserSaveRequest;
 import team2.MoonLightHotelAndSpa.model.user.Role;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.RoleService;
-
 import java.util.HashSet;
 import java.util.Set;
 

@@ -1,10 +1,11 @@
 package team2.MoonLightHotelAndSpa.convertor;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-
 import java.util.Locale;
 
 @Component
+@AllArgsConstructor
 public class RoleConverter {
 
     private static final String ROLE_PREFIX = "ROLE_";
