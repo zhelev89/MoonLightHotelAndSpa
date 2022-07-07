@@ -19,14 +19,14 @@ import java.util.List;
 public class RoomController {
 
     private final RoomService roomService;
-    private final RoomConvertor roomConvertor;
+//    private final RoomConvertor roomConvertor;
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping
     private ResponseEntity<RoomResponse> save(@RequestBody RoomSaveRequest roomSaveRequest) {
-        Room room = roomConvertor.convert(roomSaveRequest);
+        Room room = RoomConvertor.convert(roomSaveRequest);
         Room savedRoom = roomService.save(room);
-        RoomResponse response = roomConvertor.convert(savedRoom);
+        RoomResponse response = RoomConvertor.convert(savedRoom);
         return ResponseEntity.ok().body(response);
     }
 
@@ -37,16 +37,16 @@ public class RoomController {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<RoomResponse> update(@RequestBody RoomUpdateRequest roomUpdateRequest, @PathVariable Long id) {
-        Room convertedRoom = roomConvertor.convert(roomUpdateRequest);
+        Room convertedRoom = RoomConvertor.convert(roomUpdateRequest);
         Room updatedRoom = roomService.update(id, convertedRoom);
-        RoomResponse roomResponse = roomConvertor.convert(updatedRoom);
+        RoomResponse roomResponse = RoomConvertor.convert(updatedRoom);
         return ResponseEntity.ok().body(roomResponse);
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<RoomResponse> findById(@PathVariable Long id) {
         Room foundRoom = roomService.findById(id);
-        RoomResponse roomResponse = roomConvertor.convert(foundRoom);
+        RoomResponse roomResponse = RoomConvertor.convert(foundRoom);
         return ResponseEntity.ok().body(roomResponse);
     }
 

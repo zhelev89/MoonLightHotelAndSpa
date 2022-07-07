@@ -8,6 +8,7 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.user.UserSaveRequest;
 import team2.MoonLightHotelAndSpa.model.user.Role;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.RoleService;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,8 +16,9 @@ import java.util.Set;
 @AllArgsConstructor
 public class UserConverter {
 
-    private final RoleConverter roleConverter;
-    private final RoleService roleService;
+    //    private final RoleConverter roleConverter;
+
+    private RoleService roleService;
 
     public User convert(UserSaveRequest userSaveRequest) {
         String role = "";
@@ -24,7 +26,7 @@ public class UserConverter {
             role = name;
         }
 
-        role = roleConverter.convertRoleRequest(role);
+        role = RoleConverter.convertRoleRequest(role);
         Role foundRole = roleService.findByRole(role);
 
         Set<Role> roles = new HashSet<>();
@@ -46,7 +48,7 @@ public class UserConverter {
             role = roles.getRole();
         }
 
-        role = roleConverter.convertToRoleResponse(role);
+        role = RoleConverter.convertToRoleResponse(role);
         Set<String> roles = new HashSet<>();
         roles.add(role);
 
@@ -67,7 +69,7 @@ public class UserConverter {
             role = name;
         }
 
-        role = roleConverter.convertRoleRequest(role);
+        role = RoleConverter.convertRoleRequest(role);
         Role foundRole = roleService.findByRole(role);
 
         Set<Role> roles = new HashSet<>();

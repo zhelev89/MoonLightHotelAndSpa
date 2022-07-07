@@ -5,7 +5,6 @@ import team2.MoonLightHotelAndSpa.model.room.Room;
 import java.util.List;
 
 public interface RoomService {
-
     Room save(Room room);
 
     List<Room> findAll();

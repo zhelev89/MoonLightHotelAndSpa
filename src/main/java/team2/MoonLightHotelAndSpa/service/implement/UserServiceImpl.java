@@ -12,7 +12,6 @@ import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.repository.UserRepository;
 import team2.MoonLightHotelAndSpa.service.UserService;
-
 import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Objects;
