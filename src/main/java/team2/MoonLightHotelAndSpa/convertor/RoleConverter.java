@@ -1,21 +1,21 @@
 package team2.MoonLightHotelAndSpa.convertor;
 
-import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 import java.util.Locale;
 
-@AllArgsConstructor
+@Component
 public class RoleConverter {
 
-    private static final String ROLE_PREFIX = "ROLE_";
+    private final String ROLE = "ROLE_";
 
-    public static String convertRoleRequest(String role) {
-        if (!role.toUpperCase().startsWith(ROLE_PREFIX)) {
-            return ROLE_PREFIX + role.toUpperCase(Locale.ROOT);
+    public String convertRoleRequest(String role) {
+        if (!role.toUpperCase().startsWith(ROLE)) {
+            return ROLE + role.toUpperCase(Locale.ROOT);
         }
         return role.toUpperCase();
     }
 
-    public static String convertToRoleResponse(String role) {
+    public String convertToRoleResponse(String role) {
         return role.substring(5).toLowerCase(Locale.ROOT);
     }
 }
