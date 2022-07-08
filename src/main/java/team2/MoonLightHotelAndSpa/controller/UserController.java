@@ -13,7 +13,7 @@ import team2.MoonLightHotelAndSpa.exception.EmailNotSendException;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.EmailSenderService;
 import team2.MoonLightHotelAndSpa.service.UserService;
-
+import team2.MoonLightHotelAndSpa.dataTransferObjects.EmailForPasswordDto;
 import javax.validation.Valid;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -71,6 +71,19 @@ public class UserController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id) {
         userService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping(value = "/{email}")
+    public ResponseEntity<UserResponse> findByEmail(@PathVariable @RequestBody String email) {
+        User user = userService.findByEmail(email);
+        UserResponse userResponse = userConverter.convert(user);
+        return ResponseEntity.ok().body(userResponse);
+    }
+
+    @PostMapping(value = "/forgot")
+    public ResponseEntity<HttpStatus> forgotPassword(@RequestBody EmailForPasswordDto dto) {
+        emailSenderService.forgotPassword(dto.getEmail());
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
