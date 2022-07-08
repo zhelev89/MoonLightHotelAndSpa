@@ -13,7 +13,7 @@ import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.EmailSenderService;
 import team2.MoonLightHotelAndSpa.service.UserService;
 import team2.MoonLightHotelAndSpa.dataTransferObject.user.EmailForPasswordDto;
-
+import team2.MoonLightHotelAndSpa.dataTransferObjects.ResetPasswordDto;
 import javax.validation.Valid;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -68,6 +68,13 @@ public class UserController {
     public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id) {
         userService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PostMapping(value = "/reset")
+    public ResponseEntity<UserResponse> resetPassword(@RequestBody ResetPasswordDto resetPasswordDto) {
+        User user = userService.changePassword(resetPasswordDto.getNewPassword(), resetPasswordDto.getCurrentPassword(), resetPasswordDto.getEmail());
+        UserResponse userResponse = userConverter.convert(user);
+        return ResponseEntity.ok().body(userResponse);
     }
 
     @PostMapping(value = "/forgot")

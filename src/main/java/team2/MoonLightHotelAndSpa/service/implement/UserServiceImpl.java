@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,7 @@ import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.repository.UserRepository;
 import team2.MoonLightHotelAndSpa.security.JwtTokenUtil;
 import team2.MoonLightHotelAndSpa.service.UserService;
-
+import team2.MoonLightHotelAndSpa.exceptions.PasswordNotMatchingException;
 import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Objects;
@@ -83,6 +82,17 @@ public class UserServiceImpl implements UserService {
             throw new RecordNotFoundException(
                     String.format("User with id:%s, not found.", id));
         }
+    }
+
+    @Override
+    public User changePassword(String newPassword, String currentPassword, String email) {
+        User user = findByEmail(email);
+        if(bCryptPasswordEncoder.matches(currentPassword, user.getPassword())) {
+            user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        }else {
+            throw new PasswordNotMatchingException("Your old password does not match");
+        }
+        return user;
     }
 
     @Override
