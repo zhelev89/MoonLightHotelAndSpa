@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import team2.MoonLightHotelAndSpa.MoonLightHotelAndSpaApplication;
+import team2.MoonLightHotelAndSpa.dataTransferObjects.ResetPasswordDto;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.EmailForPasswordDto;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.users.UserUpdateRequest;
 import team2.MoonLightHotelAndSpa.convertors.UserConverter;
@@ -69,10 +71,9 @@ public class UserController {
         userService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
-    @GetMapping(value = "/{email}")
-    public ResponseEntity<UserResponse> findByEmail(@PathVariable @RequestBody String email) {
-        User user = userService.findByEmail(email);
+    @PostMapping(value = "/reset")
+    public ResponseEntity<UserResponse> resetPassword(@RequestBody ResetPasswordDto resetPasswordDto) {
+        User user = userService.changePassword(resetPasswordDto.getNewPassword(), resetPasswordDto.getCurrentPassword(), resetPasswordDto.getEmail());
         UserResponse userResponse = userConverter.convert(user);
         return ResponseEntity.ok().body(userResponse);
     }
