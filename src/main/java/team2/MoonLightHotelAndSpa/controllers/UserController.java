@@ -1,10 +1,13 @@
 package team2.MoonLightHotelAndSpa.controllers;
 
 import lombok.AllArgsConstructor;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import team2.MoonLightHotelAndSpa.MoonLightHotelAndSpaApplication;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.EmailForPasswordDto;
+import team2.MoonLightHotelAndSpa.dataTransferObjects.ResetPasswordDto;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.users.UserUpdateRequest;
 import team2.MoonLightHotelAndSpa.convertors.UserConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.users.UserResponse;
@@ -16,6 +19,7 @@ import team2.MoonLightHotelAndSpa.services.UserService;
 
 import javax.validation.Valid;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @RestController
@@ -31,12 +35,12 @@ public class UserController {
     public ResponseEntity<UserResponse> save(@RequestBody @Valid UserSaveRequest userSaveRequest) {
         User user = userConverter.convert(userSaveRequest);
         String text = String.format("You can access your system with your email: %s and password: %s.", user.getEmail(), user.getPassword());
-        User savedUser = userService.save(user);
         try {
             emailSenderService.sendEmail(user.getEmail(), "Access to Moonlight Hotel.", text);
         }catch (EmailNotSendException ex) {
             throw new EmailNotSendException("Failed to send email");
         }
+        User savedUser = userService.save(user);
         UserResponse userResponse = userConverter.convert(savedUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
     }
@@ -70,9 +74,9 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @GetMapping(value = "/{email}")
-    public ResponseEntity<UserResponse> findByEmail(@PathVariable @RequestBody String email) {
-        User user = userService.findByEmail(email);
+    @PostMapping(value = "/reset")
+    public ResponseEntity<UserResponse> resetPassword(@RequestBody ResetPasswordDto resetPasswordDto) {
+        User user = userService.changePassword(resetPasswordDto.getNewPassword(), resetPasswordDto.getCurrentPassword(), resetPasswordDto.getEmail());
         UserResponse userResponse = userConverter.convert(user);
         return ResponseEntity.ok().body(userResponse);
     }
