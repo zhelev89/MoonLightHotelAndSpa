@@ -13,11 +13,12 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.user.UserResponse;
 import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.security.JwtTokenUtil;
+import team2.MoonLightHotelAndSpa.service.LoginService;
 import team2.MoonLightHotelAndSpa.service.UserService;
 
 @Service
 @AllArgsConstructor
-public class LoginServiceImpl {
+public class LoginServiceImpl implements LoginService {
 
     private final AuthenticationManager authenticationManager;
     private final UserService userService;

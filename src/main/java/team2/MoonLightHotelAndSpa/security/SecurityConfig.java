@@ -17,12 +17,11 @@ import team2.MoonLightHotelAndSpa.service.UserService;
 @AllArgsConstructor
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
     private final JwtFilter jwtFilter;
-
     private static final String ROLE_ADMIN = "ROLE_ADMIN";
     private static final String[] PUBLIC_URL_POST = {"/users", "/users/token", "/users/forgot", "/users/reset"};
     private static final String[] PUBLIC_URL_GET = {"/rooms/id/*"};
@@ -43,9 +42,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers(HttpMethod.POST, PUBLIC_URL_POST).permitAll();
-        http.authorizeRequests().antMatchers(HttpMethod.GET, PROTECTED_URL_GET).hasAnyAuthority(ROLE_ADMIN);
-        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+//        http.authorizeRequests().antMatchers(HttpMethod.POST, PUBLIC_URL_POST).permitAll();
+//        http.authorizeRequests().antMatchers(HttpMethod.POST, PROTECTED_URL_POST).hasAnyAuthority("ROLE_CLIENT");
+//        http.authorizeRequests().antMatchers(HttpMethod.GET, PROTECTED_URL_GET).hasAnyAuthority(ROLE_ADMIN);
+//        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         http.formLogin().disable();
         http.logout().disable();
         http.csrf().disable();

@@ -43,6 +43,6 @@ public class RoomSaveRequest {
     @NotNull
     private Float price;
 
-    @NotNull
-    private Integer count;
+//    @NotNull
+//    private Integer count;
 }

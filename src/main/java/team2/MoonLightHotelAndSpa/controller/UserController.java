@@ -9,10 +9,9 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.user.*;
 import team2.MoonLightHotelAndSpa.convertor.UserConverter;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.EmailSenderService;
+import team2.MoonLightHotelAndSpa.service.LoginService;
 import team2.MoonLightHotelAndSpa.service.UserService;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.ResetPasswordDto;
-import team2.MoonLightHotelAndSpa.service.implement.LoginServiceImpl;
-
 import javax.validation.Valid;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,7 +23,7 @@ public class UserController {
 
     private final UserConverter userConverter;
     private final UserService userService;
-    private final LoginServiceImpl loginService;
+    private final LoginService loginService;
     private final EmailSenderService emailSenderService;
 
     @PostMapping

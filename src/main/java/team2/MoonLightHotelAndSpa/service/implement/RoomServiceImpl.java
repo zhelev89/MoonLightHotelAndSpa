@@ -1,5 +1,6 @@
 package team2.MoonLightHotelAndSpa.service.implement;
 
+
 import lombok.AllArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,6 @@ import java.util.Objects;
 
 @Service
 @AllArgsConstructor
-@Transactional
 public class RoomServiceImpl implements RoomService {
 
     private final RoomRepository roomRepository;
