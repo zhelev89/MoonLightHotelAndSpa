@@ -1,6 +1,7 @@
 package team2.MoonLightHotelAndSpa.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,7 +15,7 @@ import team2.MoonLightHotelAndSpa.service.RoomService;
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping(value = "/rooms")
 public class RoomController {
 

@@ -1,5 +1,6 @@
 package team2.MoonLightHotelAndSpa.convertor;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomSaveRequest;
@@ -7,6 +8,7 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomUpdateRequest;
 import team2.MoonLightHotelAndSpa.model.room.Room;
 
 @Component
+@AllArgsConstructor
 public class RoomConvertor {
 
     public Room convert(RoomSaveRequest roomSaveRequest) {
