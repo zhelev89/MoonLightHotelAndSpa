@@ -4,14 +4,21 @@ import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import team2.MoonLightHotelAndSpa.dataTransferObject.user.LoginRequest;
 import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.repository.UserRepository;
+import team2.MoonLightHotelAndSpa.security.JwtTokenUtil;
 import team2.MoonLightHotelAndSpa.service.UserService;
+
 import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Objects;
@@ -24,6 +31,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenUtil jwtTokenUtil;
 
     public User save(User user) {
         try {
@@ -79,5 +88,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
         return findByEmail(username);
+    }
+
+    public String authenticate(LoginRequest loginRequest) {
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
+
+        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        User user = (User) authentication.getDetails();
+
+        return jwtTokenUtil.generateToken(user);
     }
 }
