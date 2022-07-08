@@ -3,7 +3,6 @@ package team2.MoonLightHotelAndSpa.dataTransferObject.room;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import team2.MoonLightHotelAndSpa.model.room.RoomFacilities;
 import team2.MoonLightHotelAndSpa.model.room.RoomTitle;
 import team2.MoonLightHotelAndSpa.model.room.RoomView;
 
@@ -28,7 +27,7 @@ public class RoomUpdateRequest {
     private String description;
 
     @NotNull
-    private RoomFacilities facilities;
+    private String facilities;
 
     @NotNull
     private Integer area;

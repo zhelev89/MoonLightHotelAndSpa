@@ -31,7 +31,6 @@ public class LoginController {
         String token = loginService.authenticate(loginRequest);
         User user = (User) userService.loadUserByUsername(loginRequest.getEmail());
         UserResponse userResponse = userConverter.convert(user);
-
         return ResponseEntity.ok().body(LoginResponse.builder()
                 .token(token)
                 .user(userResponse)

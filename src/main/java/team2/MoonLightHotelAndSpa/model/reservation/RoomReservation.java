@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import team2.MoonLightHotelAndSpa.model.room.Room;
-import team2.MoonLightHotelAndSpa.model.room.RoomFacilities;
+import team2.MoonLightHotelAndSpa.model.room.RoomBedType;
 import team2.MoonLightHotelAndSpa.model.user.User;
 
 import javax.persistence.*;
@@ -25,29 +25,34 @@ public class RoomReservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     @CreationTimestamp
-    @Column(name = "created_at")
-    private Instant createdAt;
+    private Instant created;
 
     @NotNull
-    @Column(name = "check_in")
-    private Instant checkIn;
+    @Column(name = "start_date")
+    private Instant startDate;
+
+    @NotNull
+    @Column(name = "end_date")
+    private Instant endDate;
 
     @NotNull
     @Column(name = "check_out")
     private Instant checkOut;
 
     @NotNull
-    @Column(name = "guest_number")
-    private Integer guestNumber;
+    @Column(name = "adults")
+    private Integer adults;
 
     @NotNull
-    @Column(name = "total_price")
-    private Double totalPrice;
+    @Column(name = "kids")
+    private Integer kids;
+
+    @Column(name = "price")
+    private Double price;
 
     @Enumerated(EnumType.STRING)
-    private RoomFacilities roomFacilities;
+    private RoomBedType roomBedType;
 
     @NotNull
     @OneToOne

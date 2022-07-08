@@ -6,7 +6,6 @@ import team2.MoonLightHotelAndSpa.model.user.User;
 import java.util.Set;
 
 public interface UserService extends UserDetailsService {
-
     User save(User user);
 
     User findById(Long id);

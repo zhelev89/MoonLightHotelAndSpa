@@ -35,8 +35,8 @@ public class Room {
     @NotNull
     private String description;
 
-    @Enumerated(EnumType.STRING)
-    private RoomFacilities facilities;
+    @NotNull
+    private String facilities;
 
     @NotNull
     private Integer area;

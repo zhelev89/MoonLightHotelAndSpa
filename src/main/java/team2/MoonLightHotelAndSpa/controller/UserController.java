@@ -9,11 +9,11 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.user.UserUpdateRequest;
 import team2.MoonLightHotelAndSpa.convertor.UserConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObject.user.UserResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.user.UserSaveRequest;
-import team2.MoonLightHotelAndSpa.exception.EmailNotSendException;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.EmailSenderService;
 import team2.MoonLightHotelAndSpa.service.UserService;
-import team2.MoonLightHotelAndSpa.dataTransferObjects.EmailForPasswordDto;
+import team2.MoonLightHotelAndSpa.dataTransferObject.user.EmailForPasswordDto;
+
 import javax.validation.Valid;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -31,11 +31,7 @@ public class UserController {
     public ResponseEntity<UserResponse> save(@RequestBody @Valid UserSaveRequest userSaveRequest) {
         User user = userConverter.convert(userSaveRequest);
         String text = String.format("You can access your system with your email: %s and password: %s.", user.getEmail(), user.getPassword());
-        try {
-            emailSenderService.sendEmail(user.getEmail(), "Access to Moonlight Hotel.", text);
-        }catch (EmailNotSendException ex) {
-            throw new EmailNotSendException("Failed to send email");
-        }
+        emailSenderService.sendEmail(user.getEmail(), "Access to Moonlight Hotel.", text);
         User savedUser = userService.save(user);
         UserResponse userResponse = userConverter.convert(savedUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
@@ -72,13 +68,6 @@ public class UserController {
     public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id) {
         userService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
-
-    @GetMapping(value = "/{email}")
-    public ResponseEntity<UserResponse> findByEmail(@PathVariable @RequestBody String email) {
-        User user = userService.findByEmail(email);
-        UserResponse userResponse = userConverter.convert(user);
-        return ResponseEntity.ok().body(userResponse);
     }
 
     @PostMapping(value = "/forgot")
