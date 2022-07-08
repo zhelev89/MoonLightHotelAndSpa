@@ -1,16 +1,22 @@
 package team2.MoonLightHotelAndSpa.service.implement;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import team2.MoonLightHotelAndSpa.convertor.UserConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObject.user.LoginRequest;
+import team2.MoonLightHotelAndSpa.dataTransferObject.user.LoginResponse;
+import team2.MoonLightHotelAndSpa.dataTransferObject.user.UserResponse;
 import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.user.User;
@@ -18,6 +24,7 @@ import team2.MoonLightHotelAndSpa.repository.UserRepository;
 import team2.MoonLightHotelAndSpa.security.JwtTokenUtil;
 import team2.MoonLightHotelAndSpa.service.UserService;
 import team2.MoonLightHotelAndSpa.exceptions.PasswordNotMatchingException;
+
 import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Objects;
@@ -30,8 +37,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final AuthenticationManager authenticationManager;
-    private final JwtTokenUtil jwtTokenUtil;
 
     public User save(User user) {
         try {
@@ -87,9 +92,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User changePassword(String newPassword, String currentPassword, String email) {
         User user = findByEmail(email);
-        if(bCryptPasswordEncoder.matches(currentPassword, user.getPassword())) {
+        if (bCryptPasswordEncoder.matches(currentPassword, user.getPassword())) {
             user.setPassword(bCryptPasswordEncoder.encode(newPassword));
-        }else {
+        } else {
             throw new PasswordNotMatchingException("Your old password does not match");
         }
         return user;
@@ -98,15 +103,5 @@ public class UserServiceImpl implements UserService {
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
         return findByEmail(username);
-    }
-
-    public String authenticate(LoginRequest loginRequest) {
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
-
-        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-        User user = (User) authentication.getDetails();
-
-        return jwtTokenUtil.generateToken(user);
     }
 }

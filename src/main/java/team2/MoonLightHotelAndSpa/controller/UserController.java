@@ -5,15 +5,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import team2.MoonLightHotelAndSpa.dataTransferObject.user.UserUpdateRequest;
+import team2.MoonLightHotelAndSpa.dataTransferObject.user.*;
 import team2.MoonLightHotelAndSpa.convertor.UserConverter;
-import team2.MoonLightHotelAndSpa.dataTransferObject.user.UserResponse;
-import team2.MoonLightHotelAndSpa.dataTransferObject.user.UserSaveRequest;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.EmailSenderService;
 import team2.MoonLightHotelAndSpa.service.UserService;
-import team2.MoonLightHotelAndSpa.dataTransferObject.user.EmailForPasswordDto;
 import team2.MoonLightHotelAndSpa.dataTransferObjects.ResetPasswordDto;
+import team2.MoonLightHotelAndSpa.service.implement.LoginServiceImpl;
+
 import javax.validation.Valid;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,6 +24,7 @@ public class UserController {
 
     private final UserConverter userConverter;
     private final UserService userService;
+    private final LoginServiceImpl loginService;
     private final EmailSenderService emailSenderService;
 
     @PostMapping
@@ -35,6 +35,11 @@ public class UserController {
         User savedUser = userService.save(user);
         UserResponse userResponse = userConverter.convert(savedUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
+    }
+
+    @PostMapping("/token")
+    public ResponseEntity<LoginResponse> token(@RequestBody LoginRequest loginRequest) {
+        return ResponseEntity.ok().body(loginService.authenticate(loginRequest));
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
