@@ -31,12 +31,12 @@ public class UserController {
     public ResponseEntity<UserResponse> save(@RequestBody @Valid UserSaveRequest userSaveRequest) {
         User user = userConverter.convert(userSaveRequest);
         String text = String.format("You can access your system with your email: %s and password: %s.", user.getEmail(), user.getPassword());
+        User savedUser = userService.save(user);
         try {
             emailSenderService.sendEmail(user.getEmail(), "Access to Moonlight Hotel.", text);
         }catch (EmailNotSendException ex) {
             throw new EmailNotSendException("Failed to send email");
         }
-        User savedUser = userService.save(user);
         UserResponse userResponse = userConverter.convert(savedUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
     }
