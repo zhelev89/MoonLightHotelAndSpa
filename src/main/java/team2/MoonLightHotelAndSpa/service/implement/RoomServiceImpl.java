@@ -1,6 +1,5 @@
 package team2.MoonLightHotelAndSpa.service.implement;
 
-
 import lombok.AllArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -9,7 +8,6 @@ import team2.MoonLightHotelAndSpa.model.room.Room;
 import team2.MoonLightHotelAndSpa.repository.RoomRepository;
 import team2.MoonLightHotelAndSpa.service.RoomService;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,8 +19,8 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public Room save(Room room) {
-            Objects.requireNonNull(room);
-            return roomRepository.save(room);
+        Objects.requireNonNull(room);
+        return roomRepository.save(room);
     }
 
     public List<Room> findAll() {

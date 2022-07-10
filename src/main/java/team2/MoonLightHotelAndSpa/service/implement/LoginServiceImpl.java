@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.convertor.UserConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObject.user.LoginRequest;
@@ -40,6 +39,5 @@ public class LoginServiceImpl implements LoginService {
                 .token(jwtTokenUtil.generateToken(user))
                 .user(userResponse)
                 .build();
-
     }
 }

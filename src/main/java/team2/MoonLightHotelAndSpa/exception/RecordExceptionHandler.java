@@ -34,5 +34,4 @@ public class RecordExceptionHandler {
 
         return new ResponseEntity<>(recordResponseException, HttpStatus.BAD_REQUEST);
     }
-
 }

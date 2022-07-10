@@ -1,4 +1,4 @@
-package team2.MoonLightHotelAndSpa.exceptions;
+package team2.MoonLightHotelAndSpa.exception;
 
 public class PasswordNotMatchingException extends RuntimeException{
 
