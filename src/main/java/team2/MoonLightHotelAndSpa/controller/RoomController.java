@@ -1,5 +1,7 @@
 package team2.MoonLightHotelAndSpa.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/rooms")
+@Tag(name = "Room")
 public class RoomController {
 
     private final RoomService roomService;
@@ -23,6 +26,7 @@ public class RoomController {
 
     @PreAuthorize("hasAnyRole('ROLE_CLIENT')")
     @PostMapping
+    @Operation(summary = "Save room")
     private ResponseEntity<RoomResponse> save(@RequestBody RoomSaveRequest roomSaveRequest) {
         Room room = roomConvertor.convert(roomSaveRequest);
         Room savedRoom = roomService.save(room);
@@ -31,11 +35,13 @@ public class RoomController {
     }
 
     @GetMapping
+    @Operation(summary = "Get all rooms")
     private ResponseEntity<List<Room>> findAll() {
         return ResponseEntity.ok().body(roomService.findAll());
     }
 
     @PutMapping(value = "/{id}")
+    @Operation(summary = "Update room")
     public ResponseEntity<RoomResponse> update(@RequestBody RoomUpdateRequest roomUpdateRequest, @PathVariable Long id) {
         Room convertedRoom = roomConvertor.convert(roomUpdateRequest);
         Room updatedRoom = roomService.update(id, convertedRoom);
@@ -44,6 +50,7 @@ public class RoomController {
     }
 
     @GetMapping(value = "/{id}")
+    @Operation(summary = "Find room by ID")
     public ResponseEntity<RoomResponse> findById(@PathVariable Long id) {
         Room foundRoom = roomService.findById(id);
         RoomResponse roomResponse = roomConvertor.convert(foundRoom);
@@ -52,6 +59,7 @@ public class RoomController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
+    @Operation(summary = "Delete room by ID")
     public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id) {
         roomService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
