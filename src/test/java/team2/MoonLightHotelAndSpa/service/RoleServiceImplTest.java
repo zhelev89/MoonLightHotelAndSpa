@@ -5,10 +5,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+<<<<<<< HEAD
+import team2.MoonLightHotelAndSpa.model.user.Role;
+import team2.MoonLightHotelAndSpa.repository.RoleRepository;
+import team2.MoonLightHotelAndSpa.service.implement.RoleServiceImpl;
+=======
 import team2.MoonLightHotelAndSpa.exceptions.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.models.users.Role;
 import team2.MoonLightHotelAndSpa.repositories.RoleRepository;
 import team2.MoonLightHotelAndSpa.services.Implements.RoleServiceImpl;
+>>>>>>> 89d583a1201d591310ebae26e7a60c33c66837ca
 
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
