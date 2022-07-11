@@ -1,5 +1,7 @@
-package team2.MoonLightHotelAndSpa.controllers;
+package team2.MoonLightHotelAndSpa.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/users")
+@Tag(name = "User")
 public class UserController {
 
     private final UserConverter userConverter;
@@ -29,6 +32,7 @@ public class UserController {
     private final EmailSenderService emailSenderService;
 
     @PostMapping
+    @Operation(summary = "Save user")
     public ResponseEntity<UserResponse> save(@RequestBody @Valid UserSaveRequest userSaveRequest) {
         User user = userConverter.convert(userSaveRequest);
         String text = String.format("You can access your system with your email: %s and password: %s.", user.getEmail(), user.getPassword());
@@ -43,6 +47,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/id/{id}")
+    @Operation(summary = "Find user by ID")
     public ResponseEntity<UserResponse> findById(@PathVariable @Valid Long id) {
         User foundUser = userService.findById(id);
         UserResponse userResponse = userConverter.convert(foundUser);
@@ -50,6 +55,7 @@ public class UserController {
     }
 
     @GetMapping
+    @Operation(summary = "Get all users")
     public ResponseEntity<Set<UserResponse>> findAll() {
         return ResponseEntity.ok()
                 .body(userService.findAll().stream()
@@ -58,6 +64,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/{id}")
+    @Operation(summary = "Update user")
     public ResponseEntity<UserResponse> update(@RequestBody @Valid UserUpdateRequest userUpdateRequest, @PathVariable Long id) {
         User convertedUser = userConverter.convert(userUpdateRequest);
         User updatedUser = userService.update(id, convertedUser);
@@ -66,11 +73,13 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/{id}")
+    @Operation(summary = "Delete user by ID")
     public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id) {
         userService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     @PostMapping(value = "/reset")
+    @Operation(summary = "Reset the password")
     public ResponseEntity<UserResponse> resetPassword(@RequestBody ResetPasswordDto resetPasswordDto) {
         User user = userService.changePassword(resetPasswordDto.getNewPassword(), resetPasswordDto.getCurrentPassword(), resetPasswordDto.getEmail());
         UserResponse userResponse = userConverter.convert(user);
@@ -78,6 +87,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/forgot")
+    @Operation(summary = "Forgot password by email")
     public ResponseEntity<HttpStatus> forgotPassword(@RequestBody EmailForPasswordDto dto) {
         emailSenderService.forgotPassword(dto.getEmail());
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
