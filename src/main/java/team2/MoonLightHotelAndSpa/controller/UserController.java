@@ -29,6 +29,7 @@ public class UserController {
 
     private final UserConverter userConverter;
     private final UserService userService;
+    private final LoginService loginService;
     private final EmailSenderService emailSenderService;
 
     @PostMapping
@@ -44,6 +45,11 @@ public class UserController {
         }
         UserResponse userResponse = userConverter.convert(savedUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
+    }
+
+    @PostMapping("/token")
+    public ResponseEntity<LoginResponse> token(@RequestBody LoginRequest loginRequest) {
+        return ResponseEntity.ok().body(loginService.authenticate(loginRequest));
     }
 
     @GetMapping(value = "/id/{id}")
