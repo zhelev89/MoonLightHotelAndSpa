@@ -14,9 +14,8 @@ public class RoomResponse {
     private Long id;
     private RoomTitle title;
     private String image;
-    private ArrayList<String> images;
+    private String[] images;
     private String description;
-    private String facilities;
     private Integer area;
     private RoomView view;
     private Integer people;

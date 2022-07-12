@@ -29,13 +29,10 @@ public class Room {
 
     //Ако е само List не стартира проекта
     @NotNull
-    private ArrayList<String> images;
+    private String[] images;
 
     @NotNull
     private String description;
-
-    @NotNull
-    private String facilities;
 
     @NotNull
     private Integer area;
@@ -48,6 +45,8 @@ public class Room {
     private Integer people;
 
     @NotNull
-    @Column(name = "price")
     private Float price;
+
+    @NotNull
+    private Integer count;
 }

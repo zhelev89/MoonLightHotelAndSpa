@@ -21,7 +21,7 @@ public class RoomUpdateRequest {
     private String image;
 
     @NotNull
-    private ArrayList<String> images;
+    private String[] images;
 
     @NotNull
     private String description;

@@ -23,13 +23,10 @@ public class RoomSaveRequest {
     private String image;
 
     @NotNull
-    private ArrayList<String> images;
+    private String[] images;
 
     @NotNull
     private String description;
-
-    @NotNull
-    private String facilities;
 
     @NotNull
     private Integer area;
@@ -43,6 +40,6 @@ public class RoomSaveRequest {
     @NotNull
     private Float price;
 
-//    @NotNull
-//    private Integer count;
+    @NotNull
+    private Integer count;
 }
