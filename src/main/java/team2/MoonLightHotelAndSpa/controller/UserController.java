@@ -52,7 +52,7 @@ public class UserController {
         return ResponseEntity.ok().body(loginService.authenticate(loginRequest));
     }
 
-    @GetMapping(value = "/id/{id}")
+    @GetMapping(value = "/{id}")
     @Operation(summary = "Find user by ID")
     public ResponseEntity<UserResponse> findById(@PathVariable @Valid Long id) {
         User foundUser = userService.findById(id);
