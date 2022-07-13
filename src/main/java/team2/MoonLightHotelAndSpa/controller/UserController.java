@@ -32,7 +32,7 @@ public class UserController {
 
     @PostMapping
     @Operation(summary = "Save user")
-    public ResponseEntity<UserResponse> save(@RequestBody @Valid UserSaveRequest userSaveRequest) {
+    public ResponseEntity<UserResponse> save(@RequestBody UserSaveRequest userSaveRequest) {
         User user = userConverter.convert(userSaveRequest);
         String text = String.format("You can access your system with your email: %s and password: %s.", user.getEmail(), user.getPassword());
         User savedUser = userService.save(user);

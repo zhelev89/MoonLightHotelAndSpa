@@ -5,9 +5,6 @@ import lombok.Data;
 import team2.MoonLightHotelAndSpa.model.room.RoomTitle;
 import team2.MoonLightHotelAndSpa.model.room.RoomView;
 
-import java.util.ArrayList;
-
-
 @Builder
 @Data
 public class RoomResponse {
@@ -18,7 +15,7 @@ public class RoomResponse {
     private String description;
     private Integer area;
     private RoomView view;
-    private Integer people;
+    private Integer adults;
+    private Integer kids;
     private Float price;
-
 }

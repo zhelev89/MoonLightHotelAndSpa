@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 
 @Data
 @Builder
@@ -27,7 +26,6 @@ public class Room {
     @NotNull
     private String image;
 
-    //Ако е само List не стартира проекта
     @NotNull
     private String[] images;
 
@@ -42,7 +40,10 @@ public class Room {
     private RoomView view;
 
     @NotNull
-    private Integer people;
+    private Integer adults;
+
+    @NotNull
+    private Integer kids;
 
     @NotNull
     private Float price;

@@ -38,8 +38,10 @@ public class RoomServiceImpl implements RoomService {
         room.setDescription(updatedRoom.getDescription());
         room.setArea(updatedRoom.getArea());
         room.setView(updatedRoom.getView());
-        room.setPeople(updatedRoom.getPeople());
+        room.setAdults(updatedRoom.getAdults());
+        room.setKids(updatedRoom.getKids());
         room.setPrice(updatedRoom.getPrice());
+        room.setCount(updatedRoom.getCount());
         return room;
     }
 

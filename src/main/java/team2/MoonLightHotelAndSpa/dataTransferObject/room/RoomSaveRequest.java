@@ -35,7 +35,10 @@ public class RoomSaveRequest {
     private RoomView view;
 
     @NotNull
-    private Integer people;
+    private Integer adults;
+
+    @NotNull
+    private Integer kids;
 
     @NotNull
     private Float price;
