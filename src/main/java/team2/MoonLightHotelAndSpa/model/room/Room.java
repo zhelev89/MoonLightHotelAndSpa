@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
+import java.util.Set;
 
 @Data
 @Builder
@@ -27,15 +27,13 @@ public class Room {
     @NotNull
     private String image;
 
-    //Ако е само List не стартира проекта
     @NotNull
-    private ArrayList<String> images;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "images_id")
+    private Set<RoomImage> images;
 
     @NotNull
     private String description;
-
-    @NotNull
-    private String facilities;
 
     @NotNull
     private Integer area;
@@ -45,9 +43,14 @@ public class Room {
     private RoomView view;
 
     @NotNull
-    private Integer people;
+    private Integer adults;
 
     @NotNull
-    @Column(name = "price")
+    private Integer kids;
+
+    @NotNull
     private Float price;
+
+    @NotNull
+    private Integer count;
 }

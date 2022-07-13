@@ -6,6 +6,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver;
 import team2.MoonLightHotelAndSpa.exception.PasswordNotMatchingException;
 import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
@@ -13,6 +14,7 @@ import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.repository.UserRepository;
 import team2.MoonLightHotelAndSpa.service.UserService;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -31,7 +33,9 @@ public class UserServiceImpl implements UserService {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             return userRepository.save(user);
         } catch (DataIntegrityViolationException ex) {
-            throw new RecordBadRequestException("User with this email or phone is already exist.", ex.getCause());
+            throw new RecordBadRequestException("User with this email or phone is already exist.");
+        } catch (ConstraintViolationException ex) {
+            throw new RecordBadRequestException(ex.getMessage());
         }
     }
 

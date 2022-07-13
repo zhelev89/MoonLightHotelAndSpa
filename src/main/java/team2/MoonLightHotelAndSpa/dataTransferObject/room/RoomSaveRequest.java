@@ -8,7 +8,7 @@ import team2.MoonLightHotelAndSpa.model.room.RoomTitle;
 import team2.MoonLightHotelAndSpa.model.room.RoomView;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
+import java.util.Set;
 
 @Data
 @Builder
@@ -23,13 +23,10 @@ public class RoomSaveRequest {
     private String image;
 
     @NotNull
-    private ArrayList<String> images;
+    private Set<String> images;
 
     @NotNull
     private String description;
-
-    @NotNull
-    private String facilities;
 
     @NotNull
     private Integer area;
@@ -38,11 +35,14 @@ public class RoomSaveRequest {
     private RoomView view;
 
     @NotNull
-    private Integer people;
+    private Integer adults;
+
+    @NotNull
+    private Integer kids;
 
     @NotNull
     private Float price;
 
-//    @NotNull
-//    private Integer count;
+    @NotNull
+    private Integer count;
 }

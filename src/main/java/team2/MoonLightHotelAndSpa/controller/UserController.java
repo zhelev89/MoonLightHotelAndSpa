@@ -5,9 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 import team2.MoonLightHotelAndSpa.dataTransferObject.user.*;
 import team2.MoonLightHotelAndSpa.convertor.UserConverter;
 import team2.MoonLightHotelAndSpa.exception.EmailNotSendException;
@@ -29,24 +27,26 @@ public class UserController {
 
     private final UserConverter userConverter;
     private final UserService userService;
+    private final LoginService loginService;
     private final EmailSenderService emailSenderService;
 
     @PostMapping
     @Operation(summary = "Save user")
-    public ResponseEntity<UserResponse> save(@RequestBody @Valid UserSaveRequest userSaveRequest) {
+    public ResponseEntity<UserResponse> save(@RequestBody UserSaveRequest userSaveRequest) {
         User user = userConverter.convert(userSaveRequest);
         String text = String.format("You can access your system with your email: %s and password: %s.", user.getEmail(), user.getPassword());
         User savedUser = userService.save(user);
-        try {
-            emailSenderService.sendEmail(user.getEmail(), "Access to Moonlight Hotel.", text);
-        }catch (EmailNotSendException ex) {
-            throw new EmailNotSendException("Failed to send email");
-        }
+        emailSenderService.sendEmail(user.getEmail(), "Access to Moonlight Hotel.", text);
         UserResponse userResponse = userConverter.convert(savedUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
     }
 
-    @GetMapping(value = "/id/{id}")
+    @PostMapping("/token")
+    public ResponseEntity<LoginResponse> token(@RequestBody LoginRequest loginRequest) {
+        return ResponseEntity.ok().body(loginService.authenticate(loginRequest));
+    }
+
+    @GetMapping(value = "/{id}")
     @Operation(summary = "Find user by ID")
     public ResponseEntity<UserResponse> findById(@PathVariable @Valid Long id) {
         User foundUser = userService.findById(id);
@@ -78,6 +78,7 @@ public class UserController {
         userService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
     @PostMapping(value = "/reset")
     @Operation(summary = "Reset the password")
     public ResponseEntity<UserResponse> resetPassword(@RequestBody ResetPasswordDto resetPasswordDto) {
