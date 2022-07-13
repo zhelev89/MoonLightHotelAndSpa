@@ -8,11 +8,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.convertor.RoomConvertor;
+import team2.MoonLightHotelAndSpa.convertor.RoomReserveConvertor;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomSaveRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomUpdateRequest;
+import team2.MoonLightHotelAndSpa.dataTransferObject.roomReserve.RoomReserveSaveRequest;
+import team2.MoonLightHotelAndSpa.model.reserve.RoomReserve;
 import team2.MoonLightHotelAndSpa.model.room.Room;
+import team2.MoonLightHotelAndSpa.service.RoomReserveService;
 import team2.MoonLightHotelAndSpa.service.RoomService;
+
 import java.util.List;
 
 @RestController
@@ -23,6 +28,8 @@ public class RoomController {
 
     private final RoomService roomService;
     private final RoomConvertor roomConvertor;
+    private final RoomReserveService roomReserveService;
+    private final RoomReserveConvertor roomReserveConvertor;
 
     @PreAuthorize("hasAnyRole('ROLE_CLIENT')")
     @PostMapping
@@ -63,5 +70,17 @@ public class RoomController {
     public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id) {
         roomService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PostMapping(value = "/{id}/reservation")
+    private ResponseEntity<RoomReserve> save(@RequestBody RoomReserveSaveRequest roomReserveSaveRequest, @PathVariable Long id) {
+//        Room room = roomService.findById(id);
+        RoomReserve convert = roomReserveConvertor.convert(roomReserveSaveRequest, id);
+        RoomReserve savedReserve = roomReserveService.save(convert);
+
+//        RoomReserve roomReserve = RoomReserveConvertor.convert(roomReserveSaveRequest);
+//        RoomReserve savedRoomReserve = roomReservationService.save(roomReserve);
+        //RoomReservationResponse response = RoomReservationConvertor.convert(savedRoomReservation);
+        return ResponseEntity.ok().body(savedReserve);
     }
 }

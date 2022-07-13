@@ -2,9 +2,9 @@ package team2.MoonLightHotelAndSpa.service.implement;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
+import team2.MoonLightHotelAndSpa.model.reserve.RoomReserve;
 import team2.MoonLightHotelAndSpa.repository.RoomReservationRepository;
-import team2.MoonLightHotelAndSpa.service.RoomReservationService;
+import team2.MoonLightHotelAndSpa.service.RoomReserveService;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -13,16 +13,16 @@ import java.util.Objects;
 
 @Service
 @AllArgsConstructor
-public class RoomReservationServiceImpl implements RoomReservationService {
+public class RoomReserveServiceImpl implements RoomReserveService {
 
     private final RoomReservationRepository roomReservationRepository;
 
-    public RoomReservation save(RoomReservation roomReservation) {
-        Objects.requireNonNull(roomReservation);
-        return roomReservationRepository.save(roomReservation);
+    public RoomReserve save(RoomReserve roomReserve) {
+        Objects.requireNonNull(roomReserve);
+        return roomReservationRepository.save(roomReserve);
     }
 
-    public List<RoomReservation> findAll() {
+    public List<RoomReserve> findAll() {
         return roomReservationRepository.findAll();
     }
 
