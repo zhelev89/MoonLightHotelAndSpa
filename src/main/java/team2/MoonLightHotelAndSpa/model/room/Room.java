@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Data
 @Builder
@@ -27,7 +28,9 @@ public class Room {
     private String image;
 
     @NotNull
-    private String[] images;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "images_id")
+    private Set<RoomImage> images;
 
     @NotNull
     private String description;

@@ -6,6 +6,8 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomSaveRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomUpdateRequest;
 import team2.MoonLightHotelAndSpa.model.room.Room;
+import team2.MoonLightHotelAndSpa.model.room.RoomImage;
+import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -15,7 +17,9 @@ public class RoomConvertor {
         return Room.builder()
                 .title(roomSaveRequest.getTitle())
                 .image(roomSaveRequest.getImage())
-                .images(roomSaveRequest.getImages())
+                .images(roomSaveRequest.getImages().stream()
+                        .map(image -> RoomImage.builder().image(image).build())
+                        .collect(Collectors.toSet()))
                 .description(roomSaveRequest.getDescription())
                 .area(roomSaveRequest.getArea())
                 .view(roomSaveRequest.getView())
@@ -31,7 +35,9 @@ public class RoomConvertor {
                 .id(room.getId())
                 .title(room.getTitle())
                 .image(room.getImage())
-                .images(room.getImages())
+                .images(room.getImages().stream()
+                        .map(RoomImage::getImage)
+                        .collect(Collectors.toSet()))
                 .description(room.getDescription())
                 .view(room.getView())
                 .area(room.getArea())
@@ -45,7 +51,9 @@ public class RoomConvertor {
         return Room.builder()
                 .title(roomUpdateRequest.getTitle())
                 .image(roomUpdateRequest.getImage())
-                .images(roomUpdateRequest.getImages())
+                .images(roomUpdateRequest.getImages().stream()
+                        .map(image -> RoomImage.builder().image(image).build())
+                        .collect(Collectors.toSet()))
                 .description(roomUpdateRequest.getDescription())
                 .area(roomUpdateRequest.getArea())
                 .adults(roomUpdateRequest.getAdults())
