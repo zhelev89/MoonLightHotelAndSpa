@@ -17,10 +17,9 @@ public class RoomConvertor {
                 .image(roomSaveRequest.getImage())
                 .images(roomSaveRequest.getImages())
                 .description(roomSaveRequest.getDescription())
+                .facilities(roomSaveRequest.getFacilities())
                 .area(roomSaveRequest.getArea())
-                .view(roomSaveRequest.getView())
-                .adults(roomSaveRequest.getAdults())
-                .kids(roomSaveRequest.getKids())
+                .people(roomSaveRequest.getPeople())
                 .price(roomSaveRequest.getPrice())
                 .count(roomSaveRequest.getCount())
                 .build();
@@ -33,10 +32,9 @@ public class RoomConvertor {
                 .image(room.getImage())
                 .images(room.getImages())
                 .description(room.getDescription())
-                .view(room.getView())
+                .facilities(room.getFacilities())
                 .area(room.getArea())
-                .adults(room.getAdults())
-                .kids(room.getKids())
+                .people(room.getPeople())
                 .price(room.getPrice())
                 .build();
     }
@@ -47,11 +45,9 @@ public class RoomConvertor {
                 .image(roomUpdateRequest.getImage())
                 .images(roomUpdateRequest.getImages())
                 .description(roomUpdateRequest.getDescription())
+                .facilities(roomUpdateRequest.getFacilities())
                 .area(roomUpdateRequest.getArea())
-                .adults(roomUpdateRequest.getAdults())
-                .kids(roomUpdateRequest.getKids())
                 .price(roomUpdateRequest.getPrice())
-                .view(roomUpdateRequest.getView())
                 .count(roomUpdateRequest.getCount())
                 .build();
     }

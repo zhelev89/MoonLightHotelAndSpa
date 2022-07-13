@@ -13,9 +13,9 @@ public class RoomResponse {
     private String image;
     private String[] images;
     private String description;
+    private String facilities;
     private Integer area;
-    private RoomView view;
-    private Integer adults;
-    private Integer kids;
+//    private RoomView view;
+    private Integer people;
     private Float price;
 }

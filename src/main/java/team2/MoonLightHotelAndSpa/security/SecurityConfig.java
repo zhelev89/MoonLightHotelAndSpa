@@ -19,7 +19,7 @@ import team2.MoonLightHotelAndSpa.service.UserService;
 
 @AllArgsConstructor
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
@@ -49,15 +49,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers(HttpMethod.POST, PUBLIC_URL_POST).permitAll();
-        http.authorizeRequests().antMatchers(HttpMethod.GET, PUBLIC_URL_GET).permitAll();
-        http.authorizeRequests().antMatchers(HttpMethod.POST, PROTECTED_URL_POST).hasAnyAuthority(ROLE_ADMIN);
-        http.authorizeRequests().antMatchers(HttpMethod.GET, PROTECTED_URL_GET).hasAnyAuthority(ROLE_ADMIN);
-        http.authorizeRequests().antMatchers(HttpMethod.PUT, PROTECTED_URL_PUT).hasAnyAuthority(ROLE_ADMIN);
-        http.authorizeRequests().antMatchers(HttpMethod.DELETE, PROTECTED_URL_DELETE).hasAnyAuthority(ROLE_ADMIN);
-        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        http.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler)
-                .authenticationEntryPoint(customHttp403ForbiddenEntryPoint);
+//        http.authorizeRequests().antMatchers(HttpMethod.POST, PUBLIC_URL_POST).permitAll();
+//        http.authorizeRequests().antMatchers(HttpMethod.GET, PUBLIC_URL_GET).permitAll();
+//        http.authorizeRequests().antMatchers(HttpMethod.POST, PROTECTED_URL_POST).hasAnyAuthority(ROLE_ADMIN);
+//        http.authorizeRequests().antMatchers(HttpMethod.GET, PROTECTED_URL_GET).hasAnyAuthority(ROLE_ADMIN);
+//        http.authorizeRequests().antMatchers(HttpMethod.PUT, PROTECTED_URL_PUT).hasAnyAuthority(ROLE_ADMIN);
+//        http.authorizeRequests().antMatchers(HttpMethod.DELETE, PROTECTED_URL_DELETE).hasAnyAuthority(ROLE_ADMIN);
+//        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+//        http.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler)
+//                .authenticationEntryPoint(customHttp403ForbiddenEntryPoint);
         http.formLogin().disable();
         http.logout().disable();
         http.csrf().disable();

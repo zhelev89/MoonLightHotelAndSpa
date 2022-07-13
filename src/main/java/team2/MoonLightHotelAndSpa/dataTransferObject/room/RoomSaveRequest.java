@@ -29,16 +29,16 @@ public class RoomSaveRequest {
     private String description;
 
     @NotNull
+    private String facilities;
+
+    @NotNull
     private Integer area;
 
-    @NotNull
-    private RoomView view;
+//    @NotNull
+//    private RoomView view;
 
     @NotNull
-    private Integer adults;
-
-    @NotNull
-    private Integer kids;
+    private Integer people;
 
     @NotNull
     private Float price;
