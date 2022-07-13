@@ -15,12 +15,10 @@ import java.time.Instant;
 @NoArgsConstructor
 public class RoomReservationSaveRequest {
     private Long userId;
-    private Instant startDate;
-    private Instant endDate;
+    private String startDate;
+    private String endDate;
     private Integer adults;
     private Integer kids;
     private RoomBedType roomBedType;
     private RoomView view;
-    @CreationTimestamp
-    private Instant created;
 }

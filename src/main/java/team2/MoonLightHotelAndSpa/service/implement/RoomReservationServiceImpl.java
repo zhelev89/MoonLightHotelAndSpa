@@ -6,6 +6,8 @@ import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.repository.RoomReservationRepository;
 import team2.MoonLightHotelAndSpa.service.RoomReservationService;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,5 +24,11 @@ public class RoomReservationServiceImpl implements RoomReservationService {
 
     public List<RoomReservation> findAll() {
         return roomReservationRepository.findAll();
+    }
+
+    @Override
+    public Integer calculateDays(Instant startDate, Instant endDate) {
+        Long daysLong = Duration.between(startDate,endDate).toDays();
+        return daysLong.intValue();
     }
 }

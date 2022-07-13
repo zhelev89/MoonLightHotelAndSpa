@@ -26,10 +26,10 @@ public class RoomReservationController {
     }
 
     @PostMapping
-    private ResponseEntity<RoomReservationResponse> save(@RequestBody RoomReservationSaveRequest roomReservationSaveRequest) {
+    private ResponseEntity<RoomReservation> save(@RequestBody RoomReservationSaveRequest roomReservationSaveRequest) {
         RoomReservation roomReservation = RoomReservationConvertor.convert(roomReservationSaveRequest);
         RoomReservation savedRoomReservation = roomReservationService.save(roomReservation);
-        RoomReservationResponse response = RoomReservationConvertor.convert(savedRoomReservation);
-        return ResponseEntity.ok().body(response);
+        //RoomReservationResponse response = RoomReservationConvertor.convert(savedRoomReservation);
+        return ResponseEntity.ok().body(savedRoomReservation);
     }
 }

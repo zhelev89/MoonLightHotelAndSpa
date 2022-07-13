@@ -16,7 +16,6 @@ import java.time.Instant;
 
 @Component
 @AllArgsConstructor
-@NoArgsConstructor
 public class RoomReservationConvertor {
 
     private static UserService userService;
