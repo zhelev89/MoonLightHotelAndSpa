@@ -12,6 +12,7 @@ import team2.MoonLightHotelAndSpa.convertor.RoomReserveConvertor;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomSaveRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomUpdateRequest;
+import team2.MoonLightHotelAndSpa.dataTransferObject.roomReserve.RoomReserveResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReserve.RoomReserveSaveRequest;
 import team2.MoonLightHotelAndSpa.model.reserve.RoomReserve;
 import team2.MoonLightHotelAndSpa.model.room.Room;
@@ -73,14 +74,10 @@ public class RoomController {
     }
 
     @PostMapping(value = "/{id}/reservation")
-    private ResponseEntity<RoomReserve> save(@RequestBody RoomReserveSaveRequest roomReserveSaveRequest, @PathVariable Long id) {
-//        Room room = roomService.findById(id);
+    private ResponseEntity<RoomReserveResponse> save(@RequestBody RoomReserveSaveRequest roomReserveSaveRequest, @PathVariable Long id) {
         RoomReserve convert = roomReserveConvertor.convert(roomReserveSaveRequest, id);
         RoomReserve savedReserve = roomReserveService.save(convert);
-
-//        RoomReserve roomReserve = RoomReserveConvertor.convert(roomReserveSaveRequest);
-//        RoomReserve savedRoomReserve = roomReservationService.save(roomReserve);
-        //RoomReservationResponse response = RoomReservationConvertor.convert(savedRoomReservation);
-        return ResponseEntity.ok().body(savedReserve);
+        RoomReserveResponse response = roomReserveConvertor.convert(savedReserve);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

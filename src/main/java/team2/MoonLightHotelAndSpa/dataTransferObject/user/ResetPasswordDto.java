@@ -1,4 +1,4 @@
-package team2.MoonLightHotelAndSpa.dataTransferObjects;
+package team2.MoonLightHotelAndSpa.dataTransferObject.user;
 
 import lombok.Getter;
 

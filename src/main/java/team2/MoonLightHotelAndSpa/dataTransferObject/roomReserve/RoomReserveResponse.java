@@ -10,8 +10,8 @@ import java.time.Instant;
 @Data
 public class RoomReserveResponse {
     private Long id;
-//    private Instant startDate;
-//    private Instant endDate;
+    private String startDate;
+    private String endDate;
     private Integer days;
     private Integer adults;
     private Integer kids;

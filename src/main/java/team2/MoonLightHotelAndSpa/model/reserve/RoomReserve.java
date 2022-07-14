@@ -25,17 +25,17 @@ public class RoomReserve {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @NotNull
-//    @Column(name = "start_date")
-//    private Instant startDate;
-//
-//    @NotNull
-//    @Column(name = "end_date")
-//    private Instant endDate;
+    @NotNull
+    @Column(name = "start_date")
+    private Instant startDate;
 
-//    @NotNull
-//    @Column(name = "days")
-//    private Integer days;
+    @NotNull
+    @Column(name = "end_date")
+    private Instant endDate;
+
+    @NotNull
+    @Column(name = "days")
+    private Integer days;
 
     @NotNull
     private Integer adults;
