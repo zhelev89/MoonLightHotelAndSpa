@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import team2.MoonLightHotelAndSpa.convertor.RoomConvertor;
-import team2.MoonLightHotelAndSpa.convertor.RoomReserveConvertor;
+import team2.MoonLightHotelAndSpa.converter.RoomConverter;
+import team2.MoonLightHotelAndSpa.converter.RoomReserveConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomSaveRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomUpdateRequest;
@@ -28,17 +28,17 @@ import java.util.List;
 public class RoomController {
 
     private final RoomService roomService;
-    private final RoomConvertor roomConvertor;
+    private final RoomConverter roomConverter;
     private final RoomReserveService roomReserveService;
-    private final RoomReserveConvertor roomReserveConvertor;
+    private final RoomReserveConverter roomReserveConverter;
 
     @PreAuthorize("hasAnyRole('ROLE_CLIENT')")
     @PostMapping
     @Operation(summary = "Save room")
     private ResponseEntity<RoomResponse> save(@RequestBody RoomSaveRequest roomSaveRequest) {
-        Room room = roomConvertor.convert(roomSaveRequest);
+        Room room = roomConverter.convert(roomSaveRequest);
         Room savedRoom = roomService.save(room);
-        RoomResponse response = roomConvertor.convert(savedRoom);
+        RoomResponse response = roomConverter.convert(savedRoom);
         return ResponseEntity.ok().body(response);
     }
 
@@ -51,9 +51,9 @@ public class RoomController {
     @PutMapping(value = "/{id}")
     @Operation(summary = "Update room")
     public ResponseEntity<RoomResponse> update(@RequestBody RoomUpdateRequest roomUpdateRequest, @PathVariable Long id) {
-        Room convertedRoom = roomConvertor.convert(roomUpdateRequest);
+        Room convertedRoom = roomConverter.convert(roomUpdateRequest);
         Room updatedRoom = roomService.update(id, convertedRoom);
-        RoomResponse roomResponse = roomConvertor.convert(updatedRoom);
+        RoomResponse roomResponse = roomConverter.convert(updatedRoom);
         return ResponseEntity.ok().body(roomResponse);
     }
 
@@ -61,7 +61,7 @@ public class RoomController {
     @Operation(summary = "Find room by ID")
     public ResponseEntity<RoomResponse> findById(@PathVariable Long id) {
         Room foundRoom = roomService.findById(id);
-        RoomResponse roomResponse = roomConvertor.convert(foundRoom);
+        RoomResponse roomResponse = roomConverter.convert(foundRoom);
         return ResponseEntity.ok().body(roomResponse);
     }
 
@@ -76,9 +76,9 @@ public class RoomController {
     @PreAuthorize("hasAnyRole('ROLE_CLIENT')")
     @PostMapping(value = "/{id}/reservation")
     private ResponseEntity<RoomReserveResponse> save(@RequestBody RoomReserveSaveRequest roomReserveSaveRequest, @PathVariable Long id) {
-        RoomReserve convert = roomReserveConvertor.convert(roomReserveSaveRequest, id);
+        RoomReserve convert = roomReserveConverter.convert(roomReserveSaveRequest, id);
         RoomReserve savedReserve = roomReserveService.save(convert);
-        RoomReserveResponse response = roomReserveConvertor.convert(savedReserve);
+        RoomReserveResponse response = roomReserveConverter.convert(savedReserve);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

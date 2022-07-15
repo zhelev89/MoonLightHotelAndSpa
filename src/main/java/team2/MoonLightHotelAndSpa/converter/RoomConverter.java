@@ -1,4 +1,4 @@
-package team2.MoonLightHotelAndSpa.convertor;
+package team2.MoonLightHotelAndSpa.converter;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
-public class RoomConvertor {
+public class RoomConverter {
 
     public Room convert(RoomSaveRequest roomSaveRequest) {
         return Room.builder()

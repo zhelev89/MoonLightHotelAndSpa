@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.dataTransferObject.user.*;
-import team2.MoonLightHotelAndSpa.convertor.UserConverter;
+import team2.MoonLightHotelAndSpa.converter.UserConverter;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.EmailSenderService;
 import team2.MoonLightHotelAndSpa.service.LoginService;

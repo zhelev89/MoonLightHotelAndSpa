@@ -1,4 +1,4 @@
-package team2.MoonLightHotelAndSpa.convertor;
+package team2.MoonLightHotelAndSpa.converter;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -54,10 +54,10 @@ public class RoomReserve {
     @NotNull
     private Float price;
 
-//    @NotNull
-//    @CreationTimestamp
-//    @Column(name = "created")
-//    private Instant created;
+    @NotNull
+    @CreationTimestamp
+    @Column(name = "created")
+    private Instant created;
 
 //    @NotNull
 //    @Column(name = "status")

@@ -1,4 +1,4 @@
-package team2.MoonLightHotelAndSpa.convertor;
+package team2.MoonLightHotelAndSpa.converter;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,11 +16,11 @@ import java.time.Instant;
 
 @Component
 @AllArgsConstructor
-public class RoomReserveConvertor {
+public class RoomReserveConverter {
 
     private final RoomService roomService;
     private final UserService userService;
-    private final RoomConvertor roomConvertor;
+    private final RoomConverter roomConverter;
 
     private final RoomReserveService roomReserveService;
 
@@ -50,7 +50,7 @@ public class RoomReserveConvertor {
     public RoomReserveResponse convert(RoomReserve roomReserve) {
         String startDate = String.valueOf(roomReserve.getStartDate());
         String endDate = String.valueOf(roomReserve.getEndDate());
-        RoomResponse roomResponse = roomConvertor.convert(roomReserve.getRoom());
+        RoomResponse roomResponse = roomConverter.convert(roomReserve.getRoom());
         return RoomReserveResponse.builder()
                 .id(roomReserve.getId())
                 .startDate(startDate)

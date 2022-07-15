@@ -5,7 +5,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
-import team2.MoonLightHotelAndSpa.convertor.UserConverter;
+import team2.MoonLightHotelAndSpa.converter.UserConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObject.user.LoginRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.user.LoginResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.user.UserResponse;
