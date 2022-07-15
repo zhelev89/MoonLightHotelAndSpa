@@ -30,8 +30,8 @@ public class RoomReserveServiceImpl implements RoomReserveService, RoomReserveVa
 
     @Override
     public Integer calculateDays(Instant startDate, Instant endDate) {
-        Long daysLong = Duration.between(startDate,endDate).toDays();
-        if(daysLong <= 0) {
+        Long daysLong = Duration.between(startDate, endDate).toDays();
+        if (daysLong <= 0) {
             throw new RecordBadRequestException("Days should be more than 0");
         }
         return daysLong.intValue();
@@ -39,5 +39,13 @@ public class RoomReserveServiceImpl implements RoomReserveService, RoomReserveVa
 
     public boolean existsById(Long id) {
         return roomReserveRepository.existsById(id);
+    }
+
+    public boolean isValidDates(Instant startDate, Instant endDate) {
+        return endDate.isAfter(startDate) && startDate.isAfter(Instant.now());
+    }
+
+    public boolean isValidGuestNumber(Integer roomPeople, Integer roomReservePeople) {
+        return roomPeople >= roomReservePeople;
     }
 }

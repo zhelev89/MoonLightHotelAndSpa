@@ -9,6 +9,7 @@ import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.model.reserve.RoomReserve;
 import team2.MoonLightHotelAndSpa.model.room.Room;
 import team2.MoonLightHotelAndSpa.service.RoomReserveService;
+import team2.MoonLightHotelAndSpa.service.RoomReserveValidator;
 import team2.MoonLightHotelAndSpa.service.RoomService;
 import team2.MoonLightHotelAndSpa.service.UserService;
 
@@ -19,9 +20,9 @@ import java.time.Instant;
 public class RoomReserveConverter {
 
     private final RoomService roomService;
+    private final RoomReserveValidator roomReserveValidator;
     private final UserService userService;
     private final RoomConverter roomConverter;
-
     private final RoomReserveService roomReserveService;
 
     public RoomReserve convert(RoomReserveSaveRequest roomReserveSaveRequest, Long id) {
@@ -30,9 +31,15 @@ public class RoomReserveConverter {
         Integer days = roomReserveService.calculateDays(startDate, endDate);
         Room room = roomService.findById(id);
         Integer people = roomReserveSaveRequest.getKids() + roomReserveSaveRequest.getAdults();
-        if(room.getPeople() < people) {
+
+        if (!roomReserveValidator.isValidDates(startDate, endDate)) {
+            throw new RecordBadRequestException("Incorrect dates");
+        }
+
+        if (!roomReserveValidator.isValidGuestNumber(room.getPeople(), people)) {
             throw new RecordBadRequestException(String.format("This room is for %s people!", room.getPeople()));
         }
+
         return RoomReserve.builder()
                 .room(room)
                 .user(userService.findById(roomReserveSaveRequest.getUser()))
