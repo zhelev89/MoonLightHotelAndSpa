@@ -34,7 +34,6 @@ public class RoomReserve {
     private Instant endDate;
 
     @NotNull
-    @Column(name = "days")
     private Integer days;
 
     @NotNull
@@ -54,9 +53,7 @@ public class RoomReserve {
     @NotNull
     private Float price;
 
-    @NotNull
     @CreationTimestamp
-    @Column(name = "created")
     private Instant created;
 
 //    @NotNull
