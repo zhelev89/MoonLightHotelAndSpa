@@ -2,6 +2,7 @@ package team2.MoonLightHotelAndSpa.service.implement;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.model.reserve.RoomReserve;
 import team2.MoonLightHotelAndSpa.repository.RoomReservationRepository;
 import team2.MoonLightHotelAndSpa.service.RoomReserveService;
@@ -29,6 +30,9 @@ public class RoomReserveServiceImpl implements RoomReserveService {
     @Override
     public Integer calculateDays(Instant startDate, Instant endDate) {
         Long daysLong = Duration.between(startDate,endDate).toDays();
+        if(daysLong <= 0) {
+            throw new RecordBadRequestException("Days should be more than 0");
+        }
         return daysLong.intValue();
     }
 }
