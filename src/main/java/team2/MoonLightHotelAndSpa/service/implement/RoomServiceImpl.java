@@ -5,15 +5,17 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.room.Room;
+import team2.MoonLightHotelAndSpa.model.room.RoomTitle;
 import team2.MoonLightHotelAndSpa.repository.RoomRepository;
 import team2.MoonLightHotelAndSpa.service.RoomService;
+import team2.MoonLightHotelAndSpa.service.RoomValidator;
 
 import java.util.List;
 import java.util.Objects;
 
 @Service
 @AllArgsConstructor
-public class RoomServiceImpl implements RoomService {
+public class RoomServiceImpl implements RoomService, RoomValidator {
 
     private final RoomRepository roomRepository;
 
@@ -60,5 +62,14 @@ public class RoomServiceImpl implements RoomService {
             throw new RecordNotFoundException(
                     String.format("Room with id:%s, not found.", id));
         }
+    }
+
+    public boolean existById(Long id) {
+        return roomRepository.existsById(id);
+    }
+
+    @Override
+    public boolean existsByTitle(RoomTitle roomTitle) {
+        return roomRepository.existsByTitle(roomTitle);
     }
 }

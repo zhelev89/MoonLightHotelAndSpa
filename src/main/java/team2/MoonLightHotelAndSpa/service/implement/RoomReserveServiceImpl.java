@@ -4,8 +4,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.model.reserve.RoomReserve;
-import team2.MoonLightHotelAndSpa.repository.RoomReservationRepository;
+import team2.MoonLightHotelAndSpa.repository.RoomReserveRepository;
 import team2.MoonLightHotelAndSpa.service.RoomReserveService;
+import team2.MoonLightHotelAndSpa.service.RoomReserveValidator;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -14,17 +15,17 @@ import java.util.Objects;
 
 @Service
 @AllArgsConstructor
-public class RoomReserveServiceImpl implements RoomReserveService {
+public class RoomReserveServiceImpl implements RoomReserveService, RoomReserveValidator {
 
-    private final RoomReservationRepository roomReservationRepository;
+    private final RoomReserveRepository roomReserveRepository;
 
     public RoomReserve save(RoomReserve roomReserve) {
         Objects.requireNonNull(roomReserve);
-        return roomReservationRepository.save(roomReserve);
+        return roomReserveRepository.save(roomReserve);
     }
 
     public List<RoomReserve> findAll() {
-        return roomReservationRepository.findAll();
+        return roomReserveRepository.findAll();
     }
 
     @Override
@@ -34,5 +35,9 @@ public class RoomReserveServiceImpl implements RoomReserveService {
             throw new RecordBadRequestException("Days should be more than 0");
         }
         return daysLong.intValue();
+    }
+
+    public boolean existsById(Long id) {
+        return roomReserveRepository.existsById(id);
     }
 }

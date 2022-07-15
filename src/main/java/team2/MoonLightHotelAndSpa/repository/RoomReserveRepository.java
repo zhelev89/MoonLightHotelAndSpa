@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import team2.MoonLightHotelAndSpa.model.reserve.RoomReserve;
 
 @Repository
-public interface RoomReservationRepository extends JpaRepository<RoomReserve, Long> {
+public interface RoomReserveRepository extends JpaRepository<RoomReserve, Long> {
 }
