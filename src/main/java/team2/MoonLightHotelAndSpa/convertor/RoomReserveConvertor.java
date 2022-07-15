@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReserve.RoomReserveResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReserve.RoomReserveSaveRequest;
+import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.model.reserve.RoomReserve;
 import team2.MoonLightHotelAndSpa.model.room.Room;
 import team2.MoonLightHotelAndSpa.service.RoomReserveService;
@@ -28,6 +29,10 @@ public class RoomReserveConvertor {
         Instant endDate = Instant.parse(roomReserveSaveRequest.getEndDate());
         Integer days = roomReserveService.calculateDays(startDate, endDate);
         Room room = roomService.findById(id);
+        Integer people = roomReserveSaveRequest.getKids() + roomReserveSaveRequest.getAdults();
+        if(room.getPeople() < people) {
+            throw new RecordBadRequestException(String.format("This room is for %s people!", room.getPeople()));
+        }
         return RoomReserve.builder()
                 .room(room)
                 .user(userService.findById(roomReserveSaveRequest.getUser()))
