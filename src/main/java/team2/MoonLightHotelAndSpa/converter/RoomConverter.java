@@ -1,4 +1,4 @@
-package team2.MoonLightHotelAndSpa.convertor;
+package team2.MoonLightHotelAndSpa.converter;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
-public class RoomConvertor {
+public class RoomConverter {
 
     public Room convert(RoomSaveRequest roomSaveRequest) {
         return Room.builder()
@@ -21,10 +21,10 @@ public class RoomConvertor {
                         .map(image -> RoomImage.builder().image(image).build())
                         .collect(Collectors.toSet()))
                 .description(roomSaveRequest.getDescription())
+                .facilities(roomSaveRequest.getFacilities())
                 .area(roomSaveRequest.getArea())
+                .people(roomSaveRequest.getPeople())
                 .view(roomSaveRequest.getView())
-                .adults(roomSaveRequest.getAdults())
-                .kids(roomSaveRequest.getKids())
                 .price(roomSaveRequest.getPrice())
                 .count(roomSaveRequest.getCount())
                 .build();
@@ -39,10 +39,10 @@ public class RoomConvertor {
                         .map(RoomImage::getImage)
                         .collect(Collectors.toSet()))
                 .description(room.getDescription())
+                .facilities(room.getFacilities())
                 .view(room.getView())
                 .area(room.getArea())
-                .adults(room.getAdults())
-                .kids(room.getKids())
+                .people(room.getPeople())
                 .price(room.getPrice())
                 .build();
     }
@@ -55,9 +55,10 @@ public class RoomConvertor {
                         .map(image -> RoomImage.builder().image(image).build())
                         .collect(Collectors.toSet()))
                 .description(roomUpdateRequest.getDescription())
+                .facilities(roomUpdateRequest.getFacilities())
                 .area(roomUpdateRequest.getArea())
-                .adults(roomUpdateRequest.getAdults())
-                .kids(roomUpdateRequest.getKids())
+                .price(roomUpdateRequest.getPrice())
+                .people(roomUpdateRequest.getPeople())
                 .price(roomUpdateRequest.getPrice())
                 .view(roomUpdateRequest.getView())
                 .count(roomUpdateRequest.getCount())

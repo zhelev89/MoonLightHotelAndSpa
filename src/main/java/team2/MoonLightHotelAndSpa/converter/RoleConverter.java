@@ -1,4 +1,4 @@
-package team2.MoonLightHotelAndSpa.convertor;
+package team2.MoonLightHotelAndSpa.converter;
 
 import org.springframework.stereotype.Component;
 import java.util.Locale;

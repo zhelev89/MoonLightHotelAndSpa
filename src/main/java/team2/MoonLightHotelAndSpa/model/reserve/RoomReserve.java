@@ -1,4 +1,4 @@
-package team2.MoonLightHotelAndSpa.model.reservation;
+package team2.MoonLightHotelAndSpa.model.reserve;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import team2.MoonLightHotelAndSpa.model.room.Room;
 import team2.MoonLightHotelAndSpa.model.room.RoomBedType;
+import team2.MoonLightHotelAndSpa.model.room.RoomView;
 import team2.MoonLightHotelAndSpa.model.user.User;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
@@ -19,14 +19,11 @@ import java.time.Instant;
 @NoArgsConstructor
 @Entity
 @Table(name = "room_reservations")
-public class RoomReservation {
+public class RoomReserve {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @CreationTimestamp
-    private Instant created;
 
     @NotNull
     @Column(name = "start_date")
@@ -37,25 +34,37 @@ public class RoomReservation {
     private Instant endDate;
 
     @NotNull
-    @Column(name = "check_out")
-    private Instant checkOut;
+    @Column(name = "days")
+    private Integer days;
 
     @NotNull
-    @Column(name = "adults")
     private Integer adults;
 
     @NotNull
-    @Column(name = "kids")
     private Integer kids;
 
-    @Column(name = "price")
-    private Double price;
-
+    @NotNull
     @Enumerated(EnumType.STRING)
     private RoomBedType roomBedType;
 
     @NotNull
-    @OneToOne
+    @Enumerated(EnumType.STRING)
+    private RoomView roomView;
+
+    @NotNull
+    private Float price;
+
+    @NotNull
+    @CreationTimestamp
+    @Column(name = "created")
+    private Instant created;
+
+//    @NotNull
+//    @Column(name = "status")
+//    private String status;
+
+    @NotNull
+    @ManyToOne
     private Room room;
 
     @NotNull

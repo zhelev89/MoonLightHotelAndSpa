@@ -22,11 +22,13 @@ public class RoomSaveRequest {
     @NotNull
     private String image;
 
-    @NotNull
     private Set<String> images;
 
     @NotNull
     private String description;
+
+    @NotNull
+    private String facilities;
 
     @NotNull
     private Integer area;
@@ -35,10 +37,7 @@ public class RoomSaveRequest {
     private RoomView view;
 
     @NotNull
-    private Integer adults;
-
-    @NotNull
-    private Integer kids;
+    private Integer people;
 
     @NotNull
     private Float price;

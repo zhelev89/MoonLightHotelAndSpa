@@ -7,13 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.dataTransferObject.user.*;
-import team2.MoonLightHotelAndSpa.convertor.UserConverter;
-import team2.MoonLightHotelAndSpa.exception.EmailNotSendException;
+import team2.MoonLightHotelAndSpa.converter.UserConverter;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.EmailSenderService;
 import team2.MoonLightHotelAndSpa.service.LoginService;
 import team2.MoonLightHotelAndSpa.service.UserService;
-import team2.MoonLightHotelAndSpa.dataTransferObjects.ResetPasswordDto;
+import team2.MoonLightHotelAndSpa.dataTransferObject.user.ResetPasswordDto;
 
 import javax.validation.Valid;
 import java.util.Set;

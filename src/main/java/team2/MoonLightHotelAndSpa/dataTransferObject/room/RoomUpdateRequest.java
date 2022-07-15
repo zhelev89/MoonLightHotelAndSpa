@@ -20,11 +20,13 @@ public class RoomUpdateRequest {
     @NotNull
     private String image;
 
-    @NotNull
     private Set<String> images;
 
     @NotNull
     private String description;
+
+    @NotNull
+    private String facilities;
 
     @NotNull
     private Integer area;
@@ -33,10 +35,7 @@ public class RoomUpdateRequest {
     private RoomView view;
 
     @NotNull
-    private Integer adults;
-
-    @NotNull
-    private Integer kids;
+    private Integer people;
 
     @NotNull
     private Float price;
