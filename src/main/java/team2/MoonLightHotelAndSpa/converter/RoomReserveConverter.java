@@ -28,13 +28,14 @@ public class RoomReserveConverter {
     public RoomReserve convert(RoomReserveSaveRequest roomReserveSaveRequest, Long id) {
         Instant startDate = Instant.parse(roomReserveSaveRequest.getStartDate());
         Instant endDate = Instant.parse(roomReserveSaveRequest.getEndDate());
-        Integer days = roomReserveService.calculateDays(startDate, endDate);
         Room room = roomService.findById(id);
         Integer people = roomReserveSaveRequest.getKids() + roomReserveSaveRequest.getAdults();
 
         if (!roomReserveValidator.isValidDates(startDate, endDate)) {
             throw new RecordBadRequestException("Incorrect dates");
         }
+
+        Integer days = roomReserveService.calculateDays(startDate, endDate);
 
         if (!roomReserveValidator.isValidGuestNumber(room.getPeople(), people)) {
             throw new RecordBadRequestException(String.format("This room is for %s people!", room.getPeople()));
