@@ -73,6 +73,7 @@ public class RoomController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_CLIENT')")
     @PostMapping(value = "/{id}/reservation")
     private ResponseEntity<RoomReserveResponse> save(@RequestBody RoomReserveSaveRequest roomReserveSaveRequest, @PathVariable Long id) {
         RoomReserve convert = roomReserveConvertor.convert(roomReserveSaveRequest, id);
