@@ -3,7 +3,8 @@ package team2.MoonLightHotelAndSpa.converter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
-import team2.MoonLightHotelAndSpa.dataTransferObject.roomReserve.RoomReserveResponse;
+import team2.MoonLightHotelAndSpa.dataTransferObject.roomReserve.RoomReserveResponseV1;
+import team2.MoonLightHotelAndSpa.dataTransferObject.roomReserve.RoomReserveResponseV2;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReserve.RoomReserveSaveRequest;
 import team2.MoonLightHotelAndSpa.model.reserve.RoomReserve;
 import team2.MoonLightHotelAndSpa.model.room.Room;
@@ -13,16 +14,19 @@ import team2.MoonLightHotelAndSpa.service.UserService;
 import team2.MoonLightHotelAndSpa.validator.RoomReserveValidator;
 
 import java.time.Instant;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
 public class RoomReserveConverter {
 
     private final RoomService roomService;
-    private final RoomReserveValidator roomReserveValidator;
-    private final UserService userService;
     private final RoomConverter roomConverter;
     private final RoomReserveService roomReserveService;
+    private final RoomReserveValidator roomReserveValidator;
+    private final UserService userService;
+    private final UserConverter userConverter;
 
     public RoomReserve convert(RoomReserveSaveRequest roomReserveSaveRequest, Long id) {
         Instant startDate = Instant.parse(roomReserveSaveRequest.getStartDate());
@@ -46,19 +50,38 @@ public class RoomReserveConverter {
                 .build();
     }
 
-    public RoomReserveResponse convert(RoomReserve roomReserve) {
+    public RoomReserveResponseV1 convert(RoomReserve roomReserve) {
         String startDate = String.valueOf(roomReserve.getStartDate());
         String endDate = String.valueOf(roomReserve.getEndDate());
         RoomResponse roomResponse = roomConverter.convert(roomReserve.getRoom());
-        return RoomReserveResponse.builder()
+        return RoomReserveResponseV1.builder()
                 .id(roomReserve.getId())
-                .startDate(startDate)
-                .endDate(endDate)
+                .start_date(startDate)
+                .end_date(endDate)
                 .days(roomReserve.getDays())
                 .adults(roomReserve.getAdults())
                 .kids(roomReserve.getKids())
                 .price(roomReserve.getPrice())
-                .roomResponse(roomResponse)
+                .room(roomResponse)
                 .build();
+    }
+
+    public Set<RoomReserveResponseV2> convert(Set<RoomReserve> roomReserveSet) {
+        return roomReserveSet.stream()
+                .map(roomReserve -> RoomReserveResponseV2.builder()
+                        .id(roomReserve.getId())
+                        .adults(roomReserve.getAdults())
+                        .kids(roomReserve.getKids())
+                        .start_date(String.valueOf(roomReserve.getStartDate()))
+                        .end_date(String.valueOf(roomReserve.getEndDate()))
+                        .days(roomReserve.getDays())
+                        .type_bed(roomReserve.getRoomBedType())
+                        .view(roomReserve.getRoomView())
+                        .price(roomReserve.getPrice())
+                        .date(roomReserve.getCreated().toString())
+                        .room(roomConverter.convert(roomReserve.getRoom()))
+                        .user(userConverter.convert(roomReserve.getUser()))
+                        .build()).collect(Collectors.toSet());
+
     }
 }
