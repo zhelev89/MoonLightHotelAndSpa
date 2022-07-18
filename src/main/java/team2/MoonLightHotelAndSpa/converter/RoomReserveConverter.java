@@ -5,13 +5,12 @@ import org.springframework.stereotype.Component;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReserve.RoomReserveResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReserve.RoomReserveSaveRequest;
-import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.model.reserve.RoomReserve;
 import team2.MoonLightHotelAndSpa.model.room.Room;
 import team2.MoonLightHotelAndSpa.service.RoomReserveService;
-import team2.MoonLightHotelAndSpa.service.RoomReserveValidator;
 import team2.MoonLightHotelAndSpa.service.RoomService;
 import team2.MoonLightHotelAndSpa.service.UserService;
+import team2.MoonLightHotelAndSpa.validator.RoomReserveValidator;
 
 import java.time.Instant;
 
@@ -30,17 +29,9 @@ public class RoomReserveConverter {
         Instant endDate = Instant.parse(roomReserveSaveRequest.getEndDate());
         Room room = roomService.findById(id);
         Integer people = roomReserveSaveRequest.getKids() + roomReserveSaveRequest.getAdults();
-
-        if (!roomReserveValidator.isValidDates(startDate, endDate)) {
-            throw new RecordBadRequestException("Incorrect dates");
-        }
-
+        roomReserveValidator.validDates(startDate, endDate);
         Integer days = roomReserveService.calculateDays(startDate, endDate);
-
-        if (!roomReserveValidator.isValidGuestNumber(room.getPeople(), people)) {
-            throw new RecordBadRequestException(String.format("This room is for %s people!", room.getPeople()));
-        }
-
+        roomReserveValidator.validGuestNumber(room.getPeople(), people);
         return RoomReserve.builder()
                 .room(room)
                 .user(userService.findById(roomReserveSaveRequest.getUser()))

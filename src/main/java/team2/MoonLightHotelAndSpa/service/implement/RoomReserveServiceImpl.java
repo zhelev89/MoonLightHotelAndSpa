@@ -6,7 +6,6 @@ import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.model.reserve.RoomReserve;
 import team2.MoonLightHotelAndSpa.repository.RoomReserveRepository;
 import team2.MoonLightHotelAndSpa.service.RoomReserveService;
-import team2.MoonLightHotelAndSpa.service.RoomReserveValidator;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -15,7 +14,7 @@ import java.util.Objects;
 
 @Service
 @AllArgsConstructor
-public class RoomReserveServiceImpl implements RoomReserveService, RoomReserveValidator {
+public class RoomReserveServiceImpl implements RoomReserveService {
 
     private final RoomReserveRepository roomReserveRepository;
 
@@ -35,17 +34,5 @@ public class RoomReserveServiceImpl implements RoomReserveService, RoomReserveVa
             throw new RecordBadRequestException("Days should be more than 0");
         }
         return daysLong.intValue();
-    }
-
-    public boolean existsById(Long id) {
-        return roomReserveRepository.existsById(id);
-    }
-
-    public boolean isValidDates(Instant startDate, Instant endDate) {
-        return endDate.isAfter(startDate) && startDate.isAfter(Instant.now());
-    }
-
-    public boolean isValidGuestNumber(Integer roomPeople, Integer roomReservePeople) {
-        return roomPeople >= roomReservePeople;
     }
 }
