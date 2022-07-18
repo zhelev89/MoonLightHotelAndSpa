@@ -17,6 +17,7 @@ import java.time.Instant;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+
 @Component
 @AllArgsConstructor
 public class RoomReservationConverter {
@@ -58,12 +59,9 @@ public class RoomReservationConverter {
                 .id(roomReservation.getId())
                 .start_date(startDate)
                 .end_date(endDate)
-                .days(roomReservation.getDays())
-                .adults(roomReservation.getAdults())
-                .kids(roomReservation.getKids())
-                .price(roomReservation.getPrice())
                 .room(roomResponse)
                 .build();
+
     }
 
     public Set<RoomReservationResponseV2> convert(Set<RoomReservation> roomReservationSet) {
