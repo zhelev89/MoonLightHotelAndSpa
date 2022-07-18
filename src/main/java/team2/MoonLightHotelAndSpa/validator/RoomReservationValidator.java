@@ -3,18 +3,18 @@ package team2.MoonLightHotelAndSpa.validator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
-import team2.MoonLightHotelAndSpa.repository.RoomReserveRepository;
+import team2.MoonLightHotelAndSpa.repository.RoomReservationRepository;
 
 import java.time.Instant;
 
 @Component
 @AllArgsConstructor
-public class RoomReserveValidator {
+public class RoomReservationValidator {
 
-    private final RoomReserveRepository roomReserveRepository;
+    private final RoomReservationRepository roomReservationRepository;
 
     public void existsById(Long id) {
-        if (!roomReserveRepository.existsById(id)) {
+        if (!roomReservationRepository.existsById(id)) {
             throw new RecordBadRequestException(String.format("RoomReservation with id:%s, not exists.", id));
         }
     }
