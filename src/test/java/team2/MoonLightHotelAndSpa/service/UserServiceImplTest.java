@@ -145,7 +145,7 @@ public class UserServiceImplTest {
 //        User changedUser = userService.changePassword(newPassword, "12345678", email);
 //        assertEquals(changedUser.getPassword(), newPassword);
 //    }
-
+//
     @Test
     public void verifyChangePasswordThrowsException() {
         String password = bCryptPasswordEncoder.encode("321");
