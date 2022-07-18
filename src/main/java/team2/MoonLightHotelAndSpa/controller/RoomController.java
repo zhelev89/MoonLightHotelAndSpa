@@ -5,14 +5,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.converter.RoomConverter;
 import team2.MoonLightHotelAndSpa.converter.RoomReservationConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomSaveRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomUpdateRequest;
-import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationResponse;
+import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationResponseV1;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationSaveRequest;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.room.Room;
@@ -32,7 +31,6 @@ public class RoomController {
     private final RoomReservationService roomReservationService;
     private final RoomReservationConverter roomReservationConverter;
 
-    @PreAuthorize("hasAnyRole('ROLE_CLIENT')")
     @PostMapping
     @Operation(summary = "Save room")
     private ResponseEntity<RoomResponse> save(@RequestBody RoomSaveRequest roomSaveRequest) {
@@ -65,7 +63,6 @@ public class RoomController {
         return ResponseEntity.ok().body(roomResponse);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
     @Operation(summary = "Delete room by ID")
     public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id) {
@@ -73,12 +70,11 @@ public class RoomController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_CLIENT')")
     @PostMapping(value = "/{id}/reservation")
-    private ResponseEntity<RoomReservationResponse> save(@RequestBody RoomReservationSaveRequest roomReservationSaveRequest, @PathVariable Long id) {
+    private ResponseEntity<RoomReservationResponseV1> save(@RequestBody RoomReservationSaveRequest roomReservationSaveRequest, @PathVariable Long id) {
         RoomReservation convert = roomReservationConverter.convert(roomReservationSaveRequest, id);
         RoomReservation savedReserve = roomReservationService.save(convert);
-        RoomReservationResponse response = roomReservationConverter.convert(savedReserve);
+        RoomReservationResponseV1 response = roomReservationConverter.convert(savedReserve);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

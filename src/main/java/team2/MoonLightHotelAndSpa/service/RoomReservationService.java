@@ -3,13 +3,13 @@ package team2.MoonLightHotelAndSpa.service;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 
 import java.time.Instant;
-import java.util.List;
+import java.util.Set;
 
 public interface RoomReservationService {
 
     RoomReservation save(RoomReservation roomReservation);
 
-    List<RoomReservation> findAll();
+    Set<RoomReservation> findAll();
 
     Integer calculateDays(Instant startDate, Instant endDate);
 }

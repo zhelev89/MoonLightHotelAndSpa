@@ -9,8 +9,9 @@ import team2.MoonLightHotelAndSpa.service.RoomReservationService;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -23,8 +24,8 @@ public class RoomReservationServiceImpl implements RoomReservationService {
         return roomReservationRepository.save(roomReservation);
     }
 
-    public List<RoomReservation> findAll() {
-        return roomReservationRepository.findAll();
+    public Set<RoomReservation> findAll() {
+        return new HashSet<>(roomReservationRepository.findAll());
     }
 
     @Override
