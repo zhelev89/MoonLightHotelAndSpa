@@ -1,4 +1,4 @@
-package team2.MoonLightHotelAndSpa.model.reserve;
+package team2.MoonLightHotelAndSpa.model.reservation;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +19,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @Entity
 @Table(name = "room_reservations")
-public class RoomReserve {
+public class RoomReservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +34,6 @@ public class RoomReserve {
     private Instant endDate;
 
     @NotNull
-    @Column(name = "days")
     private Integer days;
 
     @NotNull
@@ -54,9 +53,7 @@ public class RoomReserve {
     @NotNull
     private Float price;
 
-    @NotNull
     @CreationTimestamp
-    @Column(name = "created")
     private Instant created;
 
 //    @NotNull

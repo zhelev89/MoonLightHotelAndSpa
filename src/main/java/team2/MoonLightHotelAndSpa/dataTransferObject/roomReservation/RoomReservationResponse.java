@@ -1,14 +1,12 @@
-package team2.MoonLightHotelAndSpa.dataTransferObject.roomReserve;
+package team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation;
 
 import lombok.Builder;
 import lombok.Data;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
 
-import java.time.Instant;
-
 @Builder
 @Data
-public class RoomReserveResponse {
+public class RoomReservationResponse {
     private Long id;
     private String startDate;
     private String endDate;
