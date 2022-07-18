@@ -3,9 +3,9 @@ package team2.MoonLightHotelAndSpa.service.implement;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
-import team2.MoonLightHotelAndSpa.model.reserve.RoomReserve;
-import team2.MoonLightHotelAndSpa.repository.RoomReserveRepository;
-import team2.MoonLightHotelAndSpa.service.RoomReserveService;
+import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
+import team2.MoonLightHotelAndSpa.repository.RoomReservationRepository;
+import team2.MoonLightHotelAndSpa.service.RoomReservationService;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -14,17 +14,17 @@ import java.util.Objects;
 
 @Service
 @AllArgsConstructor
-public class RoomReserveServiceImpl implements RoomReserveService {
+public class RoomReservationServiceImpl implements RoomReservationService {
 
-    private final RoomReserveRepository roomReserveRepository;
+    private final RoomReservationRepository roomReservationRepository;
 
-    public RoomReserve save(RoomReserve roomReserve) {
-        Objects.requireNonNull(roomReserve);
-        return roomReserveRepository.save(roomReserve);
+    public RoomReservation save(RoomReservation roomReservation) {
+        Objects.requireNonNull(roomReservation);
+        return roomReservationRepository.save(roomReservation);
     }
 
-    public List<RoomReserve> findAll() {
-        return roomReserveRepository.findAll();
+    public List<RoomReservation> findAll() {
+        return roomReservationRepository.findAll();
     }
 
     @Override
