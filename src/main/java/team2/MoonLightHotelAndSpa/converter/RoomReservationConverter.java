@@ -17,7 +17,6 @@ import java.time.Instant;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
 @Component
 @AllArgsConstructor
 public class RoomReservationConverter {
@@ -33,7 +32,7 @@ public class RoomReservationConverter {
         Instant startDate = Instant.parse(roomReservationSaveRequest.getStartDate());
         Instant endDate = Instant.parse(roomReservationSaveRequest.getEndDate());
         Room room = roomService.findById(id);
-        Integer people = roomReservationSaveRequest.getKids() + roomReservationSaveRequest.getAdults();
+        int people = roomReservationSaveRequest.getKids() + roomReservationSaveRequest.getAdults();
         roomReservationValidator.validDates(startDate, endDate);
         Integer days = roomReservationService.calculateDays(startDate, endDate);
         roomReservationValidator.validGuestNumber(room.getPeople(), people);
@@ -59,9 +58,12 @@ public class RoomReservationConverter {
                 .id(roomReservation.getId())
                 .start_date(startDate)
                 .end_date(endDate)
+                .days(roomReservation.getDays())
+                .adults(roomReservation.getAdults())
+                .kids(roomReservation.getKids())
+                .price(roomReservation.getPrice())
                 .room(roomResponse)
                 .build();
-
     }
 
     public Set<RoomReservationResponseV2> convert(Set<RoomReservation> roomReservationSet) {
@@ -80,6 +82,5 @@ public class RoomReservationConverter {
                         .room(roomConverter.convert(roomReserve.getRoom()))
                         .user(userConverter.convert(roomReserve.getUser()))
                         .build()).collect(Collectors.toSet());
-
     }
 }

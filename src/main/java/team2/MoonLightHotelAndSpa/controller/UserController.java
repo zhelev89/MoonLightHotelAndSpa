@@ -102,4 +102,11 @@ public class UserController {
     public ResponseEntity<Set<RoomReservationResponseV2>> userReservations() {
         return ResponseEntity.ok().body(roomReservationConverter.convert(roomReservationService.findAll()));
     }
+
+    @GetMapping(value = "/{uid}/reservations")
+    public ResponseEntity<Set<RoomReservationResponseV2>> setRoomReserveResponse(@PathVariable Long uid) {
+        Set<RoomReservationResponseV2> roomReservationResponseV2Set =
+                roomReservationConverter.convert(roomReservationService.findAllByUserId(uid));
+        return ResponseEntity.ok().body(roomReservationResponseV2Set);
+    }
 }
