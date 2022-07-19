@@ -17,6 +17,8 @@ import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.room.Room;
 import team2.MoonLightHotelAndSpa.service.RoomReservationService;
 import team2.MoonLightHotelAndSpa.service.RoomService;
+import team2.MoonLightHotelAndSpa.validator.RoomReservationValidator;
+import team2.MoonLightHotelAndSpa.validator.RoomValidator;
 
 import java.util.List;
 
@@ -30,6 +32,8 @@ public class RoomController {
     private final RoomConverter roomConverter;
     private final RoomReservationService roomReservationService;
     private final RoomReservationConverter roomReservationConverter;
+    private final RoomValidator roomValidator;
+    private final RoomReservationValidator roomReservationValidator;
 
     @PostMapping
     @Operation(summary = "Save room")
@@ -76,5 +80,15 @@ public class RoomController {
         RoomReservation savedReserve = roomReservationService.save(convert);
         RoomReservationResponseV1 response = roomReservationConverter.convert(savedReserve);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @DeleteMapping(value = "/{id}/reservation/{rid}")
+    @Operation(summary = "Delete reservation")
+    public ResponseEntity<HttpStatus> deleteReservationById(@PathVariable Long id, @PathVariable Long rid) {
+        roomValidator.existById(id);
+        roomReservationValidator.existsById(rid);
+        roomReservationService.roomReservationIdMatch(id, rid);
+        roomReservationService.deleteById(rid);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

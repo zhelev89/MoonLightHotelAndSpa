@@ -2,7 +2,9 @@ package team2.MoonLightHotelAndSpa.service.implement;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import team2.MoonLightHotelAndSpa.exception.IdDoesNotMatchException;
 import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
+import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.repository.RoomReservationRepository;
@@ -47,5 +49,25 @@ public class RoomReservationServiceImpl implements RoomReservationService {
             throw new RecordBadRequestException("Days should be more than 0");
         }
         return daysLong.intValue();
+    }
+
+    @Override
+    public RoomReservation findById(Long id) {
+        return roomReservationRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
+                String.format("Room reservation with id:%s, not found", id)));
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        roomReservationValidator.existsById(id);
+        roomReservationRepository.deleteById(id);
+    }
+
+    @Override
+    public void roomReservationIdMatch(Long roomId, Long roomReservationId) {
+        RoomReservation roomReservation = findById(roomReservationId);
+        if (!roomReservation.getRoom().getId().equals(roomId)) {
+            throw new IdDoesNotMatchException("Reservation ID doesn't match with the room ID.");
+        }
     }
 }
