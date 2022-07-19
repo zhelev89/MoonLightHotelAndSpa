@@ -18,6 +18,4 @@ public interface RoomReservationService {
     RoomReservation findById(Long id);
 
     void deleteById(Long id);
-
-    void roomReservationIdMatch(Long roomId, Long roomReservationId);
 }

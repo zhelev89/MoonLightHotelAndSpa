@@ -87,7 +87,7 @@ public class RoomController {
     public ResponseEntity<HttpStatus> deleteReservationById(@PathVariable Long id, @PathVariable Long rid) {
         roomValidator.existById(id);
         roomReservationValidator.existsById(rid);
-        roomReservationService.roomReservationIdMatch(id, rid);
+        roomReservationValidator.roomReservationIdMatch(id, rid);
         roomReservationService.deleteById(rid);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

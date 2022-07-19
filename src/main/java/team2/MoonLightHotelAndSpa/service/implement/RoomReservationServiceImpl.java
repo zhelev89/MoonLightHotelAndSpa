@@ -2,7 +2,6 @@ package team2.MoonLightHotelAndSpa.service.implement;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import team2.MoonLightHotelAndSpa.exception.IdDoesNotMatchException;
 import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
@@ -61,13 +60,5 @@ public class RoomReservationServiceImpl implements RoomReservationService {
     public void deleteById(Long id) {
         roomReservationValidator.existsById(id);
         roomReservationRepository.deleteById(id);
-    }
-
-    @Override
-    public void roomReservationIdMatch(Long roomId, Long roomReservationId) {
-        RoomReservation roomReservation = findById(roomReservationId);
-        if (!roomReservation.getRoom().getId().equals(roomId)) {
-            throw new IdDoesNotMatchException("Reservation ID doesn't match with the room ID.");
-        }
     }
 }
