@@ -132,20 +132,20 @@ public class UserServiceImplTest {
         verify(userRepository, times(1)).deleteById(user.getId());
     }
 
-    //Does not work
 //    @Test
 //    public void verifyChangePassword() {
 //        String email = "gmail@gmail.com";
 //        String newPassword = "87654321";
-//        String currentPassword = bCryptPasswordEncoder.encode("12345678");
+//        String password = "12345678";
+//        String currentPassword = bCryptPasswordEncoder.encode(password);
 //        when(userRepository.findByEmail(email)).thenReturn(Optional.of(User.builder()
 //                .email(email)
 //                .password(currentPassword)
 //                .build()));
 //        User changedUser = userService.changePassword(newPassword, "12345678", email);
-//        assertEquals(changedUser.getPassword(), newPassword);
+//        bCryptPasswordEncoder.matches(newPassword, changedUser.getPassword());
 //    }
-//
+
     @Test
     public void verifyChangePasswordThrowsException() {
         String password = bCryptPasswordEncoder.encode("321");
