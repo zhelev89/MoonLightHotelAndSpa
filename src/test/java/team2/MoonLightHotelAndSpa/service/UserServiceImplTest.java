@@ -19,8 +19,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -132,19 +131,21 @@ public class UserServiceImplTest {
         verify(userRepository, times(1)).deleteById(user.getId());
     }
 
-//    @Test
-//    public void verifyChangePassword() {
-//        String email = "gmail@gmail.com";
-//        String newPassword = "87654321";
-//        String password = "12345678";
-//        String currentPassword = bCryptPasswordEncoder.encode(password);
-//        when(userRepository.findByEmail(email)).thenReturn(Optional.of(User.builder()
-//                .email(email)
-//                .password(currentPassword)
-//                .build()));
-//        User changedUser = userService.changePassword(newPassword, "12345678", email);
-//        bCryptPasswordEncoder.matches(newPassword, changedUser.getPassword());
-//    }
+    @Test
+    public void verifyChangePassword() {
+        String email = "gmail@gmail.com";
+        String newPassword = "87654321";
+        String password = "12345678";
+        String currentHashedPassword = bCryptPasswordEncoder.encode(password);
+        User user = User.builder()
+                .email(email)
+                .password(currentHashedPassword)
+                .build();
+        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
+        User changedUser = userService.changePassword(newPassword, password, email);
+        boolean isMatching = bCryptPasswordEncoder.matches(newPassword, changedUser.getPassword());
+        assertTrue(isMatching);
+    }
 
     @Test
     public void verifyChangePasswordThrowsException() {
