@@ -95,4 +95,12 @@ public class UserServiceImpl implements UserService {
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
         return findByEmail(username);
     }
+
+    public boolean isUserExists(Long id) {
+        return userRepository.existsById(id);
+    }
+
+    public boolean isEmailExists(String email) {
+        return userRepository.existsByEmail(email);
+    }
 }
