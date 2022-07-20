@@ -9,6 +9,10 @@ public interface RoomReservationService {
 
     RoomReservation save(RoomReservation roomReservation);
 
+    RoomReservation findById(Long id);
+
+    RoomReservation findByUserIdAndReservationId(Long uid, Long rid);
+
     Set<RoomReservation> findAllByUserId(Long id);
 
     Set<RoomReservation> findAll();

@@ -13,7 +13,7 @@ public class UserValidator {
 
     private final UserRepository userRepository;
 
-    public void userDuplicate(Long id) {
+    public void userExistById(Long id) {
         Objects.requireNonNull(id);
         if (!userRepository.existsById(id)) {
             throw new RecordNotFoundException("User with id:%s, not exists.");
