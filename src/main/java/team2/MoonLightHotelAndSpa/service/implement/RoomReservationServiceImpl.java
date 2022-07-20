@@ -28,6 +28,24 @@ public class RoomReservationServiceImpl implements RoomReservationService {
         return roomReservationRepository.save(roomReservation);
     }
 
+    public RoomReservation findByUserIdAndReservationId(Long uid, Long rid) {
+        Objects.requireNonNull(uid);
+        Objects.requireNonNull(rid);
+
+        User foundUser = userService.findById(uid);
+        RoomReservation foundReservation = findById(rid);
+        if (!foundReservation.getUser().getId().equals(foundUser.getId())) {
+            throw new RecordBadRequestException("Reservation ID doesn't match with the User ID.");
+        }
+        return foundReservation;
+    }
+
+    public RoomReservation findById(Long id) {
+        Objects.requireNonNull(id);
+        return roomReservationRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
+                String.format("Reservation with id:%s, not found", id)));
+    }
+
     public Set<RoomReservation> findAllByUserId(Long id) {
         Objects.requireNonNull(id);
         User userById = userService.findById(id);
@@ -39,12 +57,13 @@ public class RoomReservationServiceImpl implements RoomReservationService {
     }
 
     @Override
-    public Integer calculateDays(Instant startDate, Instant endDate) {
-        Long daysLong = Duration.between(startDate, endDate).toDays();
+    public int calculateDays(Instant startDate, Instant endDate) {
+
+        long daysLong = Duration.between(startDate, endDate).toDays();
         if (daysLong <= 0) {
             throw new RecordBadRequestException("Days should be more than 0");
         }
-        return daysLong.intValue();
+        return (int) daysLong;
     }
 
     @Override
