@@ -40,12 +40,6 @@ public class RoomReservationServiceImpl implements RoomReservationService {
         return foundReservation;
     }
 
-    public RoomReservation findById(Long id) {
-        Objects.requireNonNull(id);
-        return roomReservationRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
-                String.format("Reservation with id:%s, not found", id)));
-    }
-
     public Set<RoomReservation> findAllByUserId(Long id) {
         Objects.requireNonNull(id);
         User userById = userService.findById(id);
@@ -53,6 +47,7 @@ public class RoomReservationServiceImpl implements RoomReservationService {
     }
 
     public Set<RoomReservation> findAll() {
+
         return new HashSet<>(roomReservationRepository.findAll());
     }
 
