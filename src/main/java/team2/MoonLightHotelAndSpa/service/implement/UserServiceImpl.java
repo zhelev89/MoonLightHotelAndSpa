@@ -104,4 +104,5 @@ public class UserServiceImpl implements UserService, UserValidator {
     public boolean isEmailExists(String email) {
         return userRepository.existsByEmail(email);
     }
+
 }
