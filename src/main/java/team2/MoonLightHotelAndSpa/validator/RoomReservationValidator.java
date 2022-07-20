@@ -3,7 +3,6 @@ package team2.MoonLightHotelAndSpa.validator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
-import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.repository.RoomReservationRepository;
 import team2.MoonLightHotelAndSpa.service.RoomReservationService;
 
@@ -31,13 +30,6 @@ public class RoomReservationValidator {
     public void validGuestNumber(Integer roomPeople, Integer roomReservePeople) {
         if (roomPeople < roomReservePeople) {
             throw new RecordBadRequestException(String.format("This room is for %s people!", roomPeople));
-        }
-    }
-
-    public void roomReservationIdMatch(Long roomId, Long roomReservationId) {
-        RoomReservation roomReservation = roomReservationService.findById(roomReservationId);
-        if (!roomReservation.getRoom().getId().equals(roomId)) {
-            throw new RecordBadRequestException("Reservation ID doesn't match with the room ID.");
         }
     }
 }

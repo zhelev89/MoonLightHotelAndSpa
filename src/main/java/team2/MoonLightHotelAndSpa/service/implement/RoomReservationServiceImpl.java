@@ -9,7 +9,6 @@ import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.repository.RoomReservationRepository;
 import team2.MoonLightHotelAndSpa.service.RoomReservationService;
 import team2.MoonLightHotelAndSpa.service.UserService;
-import team2.MoonLightHotelAndSpa.validator.RoomReservationValidator;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -23,7 +22,6 @@ public class RoomReservationServiceImpl implements RoomReservationService {
 
     private final UserService userService;
     private final RoomReservationRepository roomReservationRepository;
-    private final RoomReservationValidator roomReservationValidator;
 
     public RoomReservation save(RoomReservation roomReservation) {
         Objects.requireNonNull(roomReservation);
@@ -42,7 +40,6 @@ public class RoomReservationServiceImpl implements RoomReservationService {
 
     @Override
     public Integer calculateDays(Instant startDate, Instant endDate) {
-        roomReservationValidator.validDates(startDate, endDate);
         Long daysLong = Duration.between(startDate, endDate).toDays();
         if (daysLong <= 0) {
             throw new RecordBadRequestException("Days should be more than 0");
@@ -58,7 +55,14 @@ public class RoomReservationServiceImpl implements RoomReservationService {
 
     @Override
     public void deleteById(Long id) {
-        roomReservationValidator.existsById(id);
         roomReservationRepository.deleteById(id);
+    }
+
+    @Override
+    public void roomReservationIdMatch(Long roomId, Long roomReservationId) {
+        RoomReservation roomReservation = findById(roomReservationId);
+        if (!roomReservation.getRoom().getId().equals(roomId)) {
+            throw new RecordBadRequestException("Reservation ID doesn't match with the room ID.");
+        }
     }
 }
