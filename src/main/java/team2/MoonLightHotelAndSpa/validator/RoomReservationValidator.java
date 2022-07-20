@@ -18,7 +18,7 @@ public class RoomReservationValidator {
 
     public void existsById(Long id) {
         if (!roomReservationRepository.existsById(id)) {
-            throw new RecordBadRequestException(String.format("RoomReservation with id:%s, not exists.", id));
+            throw new RecordBadRequestException(String.format("Room reservation with id:%s, not exists.", id));
         }
     }
 

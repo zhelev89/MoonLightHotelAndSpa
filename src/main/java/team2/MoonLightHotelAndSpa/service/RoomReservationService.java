@@ -17,5 +17,9 @@ public interface RoomReservationService {
 
     Set<RoomReservation> findAll();
 
-    Integer calculateDays(Instant startDate, Instant endDate);
+    int calculateDays(Instant startDate, Instant endDate);
+
+    void deleteById(Long id);
+
+    void roomReservationIdMatch(Long roomId, Long roomReservationId);
 }

@@ -40,12 +40,6 @@ public class RoomReservationServiceImpl implements RoomReservationService {
         return foundReservation;
     }
 
-    public RoomReservation findById(Long id) {
-        Objects.requireNonNull(id);
-        return roomReservationRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
-                String.format("Reservation with id:%s, not found", id)));
-    }
-
     public Set<RoomReservation> findAllByUserId(Long id) {
         Objects.requireNonNull(id);
         User userById = userService.findById(id);
@@ -53,15 +47,36 @@ public class RoomReservationServiceImpl implements RoomReservationService {
     }
 
     public Set<RoomReservation> findAll() {
+
         return new HashSet<>(roomReservationRepository.findAll());
     }
 
     @Override
-    public Integer calculateDays(Instant startDate, Instant endDate) {
+    public int calculateDays(Instant startDate, Instant endDate) {
+
         long daysLong = Duration.between(startDate, endDate).toDays();
         if (daysLong <= 0) {
             throw new RecordBadRequestException("Days should be more than 0");
         }
         return (int) daysLong;
+    }
+
+    @Override
+    public RoomReservation findById(Long id) {
+        return roomReservationRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
+                String.format("Room reservation with id:%s, not found", id)));
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        roomReservationRepository.deleteById(id);
+    }
+
+    @Override
+    public void roomReservationIdMatch(Long roomId, Long roomReservationId) {
+        RoomReservation roomReservation = findById(roomReservationId);
+        if (!roomReservation.getRoom().getId().equals(roomId)) {
+            throw new RecordBadRequestException("Reservation ID doesn't match with the room ID.");
+        }
     }
 }
