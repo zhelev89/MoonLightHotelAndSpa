@@ -9,7 +9,6 @@ import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.user.Role;
 import team2.MoonLightHotelAndSpa.repository.RoleRepository;
 import team2.MoonLightHotelAndSpa.service.implement.RoleServiceImpl;
-
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
