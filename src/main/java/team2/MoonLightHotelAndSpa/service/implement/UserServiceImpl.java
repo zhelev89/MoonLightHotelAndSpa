@@ -12,7 +12,6 @@ import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.repository.UserRepository;
 import team2.MoonLightHotelAndSpa.service.UserService;
-import team2.MoonLightHotelAndSpa.service.UserValidator;
 
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
@@ -95,13 +94,5 @@ public class UserServiceImpl implements UserService, UserValidator {
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
         return findByEmail(username);
-    }
-
-    public boolean isUserExists(Long id) {
-        return userRepository.existsById(id);
-    }
-
-    public boolean isEmailExists(String email) {
-        return userRepository.existsByEmail(email);
     }
 }

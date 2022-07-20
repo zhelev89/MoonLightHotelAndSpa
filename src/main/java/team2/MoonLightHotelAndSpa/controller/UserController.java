@@ -6,11 +6,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import team2.MoonLightHotelAndSpa.converter.RoomReservationConverter;
+import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationResponseV2;
 import team2.MoonLightHotelAndSpa.dataTransferObject.user.*;
 import team2.MoonLightHotelAndSpa.converter.UserConverter;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.EmailSenderService;
 import team2.MoonLightHotelAndSpa.service.LoginService;
+import team2.MoonLightHotelAndSpa.service.RoomReservationService;
 import team2.MoonLightHotelAndSpa.service.UserService;
 import team2.MoonLightHotelAndSpa.dataTransferObject.user.ResetPasswordDto;
 
@@ -26,6 +29,8 @@ public class UserController {
 
     private final UserConverter userConverter;
     private final UserService userService;
+    private final RoomReservationService roomReservationService;
+    private final RoomReservationConverter roomReservationConverter;
     private final LoginService loginService;
     private final EmailSenderService emailSenderService;
 
@@ -91,5 +96,17 @@ public class UserController {
     public ResponseEntity<HttpStatus> forgotPassword(@RequestBody EmailForPasswordDto dto) {
         emailSenderService.forgotPassword(dto.getEmail());
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping(value = "/reservations")
+    public ResponseEntity<Set<RoomReservationResponseV2>> userReservations() {
+        return ResponseEntity.ok().body(roomReservationConverter.convert(roomReservationService.findAll()));
+    }
+
+    @GetMapping(value = "/{uid}/reservations")
+    public ResponseEntity<Set<RoomReservationResponseV2>> setRoomReserveResponse(@PathVariable Long uid) {
+        Set<RoomReservationResponseV2> roomReservationResponseV2Set =
+                roomReservationConverter.convert(roomReservationService.findAllByUserId(uid));
+        return ResponseEntity.ok().body(roomReservationResponseV2Set);
     }
 }
