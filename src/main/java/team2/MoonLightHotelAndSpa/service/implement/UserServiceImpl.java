@@ -12,7 +12,6 @@ import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.repository.UserRepository;
 import team2.MoonLightHotelAndSpa.service.UserService;
-import team2.MoonLightHotelAndSpa.service.UserValidator;
 
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
@@ -23,7 +22,7 @@ import java.util.Set;
 @Service
 @AllArgsConstructor
 @Transactional
-public class UserServiceImpl implements UserService, UserValidator {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -103,5 +102,4 @@ public class UserServiceImpl implements UserService, UserValidator {
 
     public boolean isEmailExists(String email) {
         return userRepository.existsByEmail(email);
-    }
 }

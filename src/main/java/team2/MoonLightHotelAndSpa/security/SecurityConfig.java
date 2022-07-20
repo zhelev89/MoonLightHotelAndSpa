@@ -32,7 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] PUBLIC_URL_GET = {"/rooms/{id}"};
     private static final String[] PROTECTED_URL_POST = {"/rooms"};
     private static final String[] PROTECTED_URL_POST_CLIENT = {"/rooms/{id}/reservation"};
-    private static final String[] PROTECTED_URL_GET = {"/users", "/users/{id}"};
+    private static final String[] PROTECTED_URL_GET = {"/users", "/users/{id}", "/users/reservations"};
+    private static final String[] PROTECTED_URL_GET_CLIENT = {"/users/{uid}/reservations", "/{uid}/reservations/{rid}"};
     private static final String[] PROTECTED_URL_PUT = {"/users/{id}"};
     private static final String[] PROTECTED_URL_DELETE = {"/users/{id}"};
 
@@ -55,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(HttpMethod.POST, PROTECTED_URL_POST).hasAnyAuthority(ADMIN);
         http.authorizeRequests().antMatchers(HttpMethod.POST, PROTECTED_URL_POST_CLIENT).hasAnyAuthority(CLIENT);
         http.authorizeRequests().antMatchers(HttpMethod.GET, PROTECTED_URL_GET).hasAnyAuthority(ADMIN);
+        http.authorizeRequests().antMatchers(HttpMethod.GET, PROTECTED_URL_GET_CLIENT).hasAnyAuthority(CLIENT);
         http.authorizeRequests().antMatchers(HttpMethod.PUT, PROTECTED_URL_PUT).hasAnyAuthority(ADMIN);
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, PROTECTED_URL_DELETE).hasAnyAuthority(ADMIN);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
