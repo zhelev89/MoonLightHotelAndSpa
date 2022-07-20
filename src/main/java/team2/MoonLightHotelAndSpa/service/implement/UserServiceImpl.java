@@ -22,7 +22,7 @@ import java.util.Set;
 @Service
 @AllArgsConstructor
 @Transactional
-public class UserServiceImpl implements UserService, UserValidator {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
