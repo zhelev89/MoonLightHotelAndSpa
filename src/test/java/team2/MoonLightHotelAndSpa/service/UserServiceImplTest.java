@@ -30,12 +30,12 @@ public class UserServiceImplTest {
 
     private UserServiceImpl userService;
 
-    @Autowired
     @Mock
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @BeforeEach
     public void setUp() {
+        bCryptPasswordEncoder = new BCryptPasswordEncoder();
         userService = new UserServiceImpl(userRepository, bCryptPasswordEncoder);
     }
 
@@ -49,7 +49,8 @@ public class UserServiceImplTest {
         userService.save(user);
         bCryptPasswordEncoder.matches(password, user.getPassword());
         verify(userRepository, times(1)).save(user);
-        assertEquals(bCryptPasswordEncoder.encode(password), user.getPassword());
+        boolean isMatching = bCryptPasswordEncoder.matches(password, user.getPassword());
+        assertTrue(isMatching);
     }
 
     @Test
