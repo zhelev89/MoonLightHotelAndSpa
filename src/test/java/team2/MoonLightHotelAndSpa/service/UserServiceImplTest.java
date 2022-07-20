@@ -150,7 +150,7 @@ public class UserServiceImplTest {
 
     @Test
     public void verifyChangePasswordThrowsException() {
-        String password = bCryptPasswordEncoder.encode("321");
+        String password = bCryptPasswordEncoder.encode("567");
         when(userRepository.findByEmail("email@gmail.com")).thenReturn(Optional.of(User.builder()
                 .email("email@gmail.com")
                 .password(password)
