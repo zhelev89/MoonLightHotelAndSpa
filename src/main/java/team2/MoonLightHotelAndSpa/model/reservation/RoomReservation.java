@@ -1,4 +1,4 @@
-package team2.MoonLightHotelAndSpa.model.reserve;
+package team2.MoonLightHotelAndSpa.model.reservation;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,7 @@ import team2.MoonLightHotelAndSpa.model.room.Room;
 import team2.MoonLightHotelAndSpa.model.room.RoomBedType;
 import team2.MoonLightHotelAndSpa.model.room.RoomView;
 import team2.MoonLightHotelAndSpa.model.user.User;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
@@ -19,7 +20,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @Entity
 @Table(name = "room_reservations")
-public class RoomReserve {
+public class RoomReservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +35,6 @@ public class RoomReserve {
     private Instant endDate;
 
     @NotNull
-    @Column(name = "days")
     private Integer days;
 
     @NotNull
@@ -54,9 +54,7 @@ public class RoomReserve {
     @NotNull
     private Float price;
 
-    @NotNull
     @CreationTimestamp
-    @Column(name = "created")
     private Instant created;
 
 //    @NotNull

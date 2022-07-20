@@ -1,4 +1,4 @@
-package team2.MoonLightHotelAndSpa.dataTransferObject.roomReserve;
+package team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,13 +7,11 @@ import lombok.NoArgsConstructor;
 import team2.MoonLightHotelAndSpa.model.room.RoomBedType;
 import team2.MoonLightHotelAndSpa.model.room.RoomView;
 
-import java.time.Instant;
-
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoomReserveSaveRequest {
+public class RoomReservationSaveRequest {
     private Long user;
     private String startDate;
     private String endDate;
