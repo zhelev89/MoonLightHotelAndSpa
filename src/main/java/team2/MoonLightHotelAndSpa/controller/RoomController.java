@@ -77,4 +77,12 @@ public class RoomController {
         RoomReservationResponseV1 response = roomReservationConverter.convert(savedReserve);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    @DeleteMapping(value = "/{id}/reservation/{rid}")
+    @Operation(summary = "Delete reservation")
+    public ResponseEntity<HttpStatus> deleteReservationById(@PathVariable Long id, @PathVariable Long rid) {
+        roomReservationService.roomReservationIdMatch(id, rid);
+        roomReservationService.deleteById(rid);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
