@@ -17,12 +17,15 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomSaveRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomUpdateRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationResponseV1;
+import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationResponseV2;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationSaveRequest;
+import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationUpdateRequest;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.room.Room;
 import team2.MoonLightHotelAndSpa.service.RoomReservationService;
 import team2.MoonLightHotelAndSpa.service.RoomService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -148,5 +151,23 @@ public class RoomController {
         roomReservationService.roomReservationIdMatch(id, rid);
         roomReservationService.deleteById(rid);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping(value = "/{id}/reservation/{rid}")
+    @Operation(summary = "Update a Reservation by ID and room ID")
+    public ResponseEntity<RoomReservationResponseV2> update(@RequestBody @Valid RoomReservationUpdateRequest roomReservationUpdateRequest, @PathVariable Long id, @PathVariable Long rid) {
+        roomReservationService.roomReservationIdMatch(id, rid);
+        RoomReservation convertedRoomReservation = roomReservationConverter.convert(roomReservationUpdateRequest);
+        RoomReservation updatedRoomReservation = roomReservationService.update(id, rid, convertedRoomReservation);
+        RoomReservationResponseV2 roomReservationResponseV2 = roomReservationConverter.convertForUpdate(updatedRoomReservation);
+        return ResponseEntity.ok().body(roomReservationResponseV2);
+    }
+
+    @GetMapping(value = "/{id}/reservation/{rid}")
+    public ResponseEntity<RoomReservationResponseV2> findReservationById(@PathVariable Long id, @PathVariable Long rid) {
+        roomReservationService.roomReservationIdMatch(id, rid);
+        RoomReservation foundRoomReservation = roomReservationService.findById(rid);
+        RoomReservationResponseV2 responseV2 = roomReservationConverter.convertForFindAll(foundRoomReservation);
+        return ResponseEntity.ok().body(responseV2);
     }
 }

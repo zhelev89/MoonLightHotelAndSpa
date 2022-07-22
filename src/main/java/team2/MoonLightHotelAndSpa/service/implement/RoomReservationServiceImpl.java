@@ -10,6 +10,7 @@ import team2.MoonLightHotelAndSpa.repository.RoomReservationRepository;
 import team2.MoonLightHotelAndSpa.service.RoomReservationService;
 import team2.MoonLightHotelAndSpa.service.UserService;
 
+import javax.transaction.Transactional;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.HashSet;
@@ -78,5 +79,20 @@ public class RoomReservationServiceImpl implements RoomReservationService {
         if (!roomReservation.getRoom().getId().equals(roomId)) {
             throw new RecordBadRequestException("Reservation ID doesn't match with the room ID.");
         }
+    }
+
+    @Override
+    @Transactional
+    public RoomReservation update(Long id, Long rid, RoomReservation updatedRoomReservation) {
+        Objects.requireNonNull(rid);
+        RoomReservation roomReservation = findById(rid);
+        roomReservation.setStartDate(updatedRoomReservation.getStartDate());
+        roomReservation.setEndDate(updatedRoomReservation.getEndDate());
+        roomReservation.setAdults(updatedRoomReservation.getAdults());
+        roomReservation.setKids(updatedRoomReservation.getKids());
+        roomReservation.setRoomBedType(updatedRoomReservation.getRoomBedType());
+        roomReservation.setRoomView(updatedRoomReservation.getRoomView());
+        roomReservation.setPrice(updatedRoomReservation.getPrice());
+        return roomReservation;
     }
 }

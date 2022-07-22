@@ -209,7 +209,7 @@ public class UserController {
     public ResponseEntity<RoomReservationResponseV2> getReservationByUserIdAndReservationId(
             @PathVariable Long uid, @PathVariable Long rid) {
         RoomReservation byUserIdAndReservationId = roomReservationService.findByUserIdAndReservationId(uid, rid);
-        RoomReservationResponseV2 roomReservationResponseV2 = roomReservationConverter.convertV2(byUserIdAndReservationId);
+        RoomReservationResponseV2 roomReservationResponseV2 = roomReservationConverter.convertForUpdate(byUserIdAndReservationId);
         return ResponseEntity.ok().body(roomReservationResponseV2);
     }
 }
