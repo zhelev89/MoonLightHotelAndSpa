@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationResponseV1;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationResponseV2;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationSaveRequest;
+import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationUpdateRequest;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.room.Room;
 import team2.MoonLightHotelAndSpa.service.RoomReservationService;
@@ -81,16 +82,46 @@ public class RoomReservationConverter {
                         .user(userConverter.convert(roomReserve.getUser()))
                         .build()).collect(Collectors.toSet());
     }
+    
+    public RoomReservation convert(RoomReservationUpdateRequest roomReservationUpdateRequest) {
+        Instant startDate = Instant.parse(roomReservationUpdateRequest.getStart_date());
+        Instant endDate = Instant.parse(roomReservationUpdateRequest.getEnd_date());
+        Integer days = roomReservationService.calculateDays(startDate, endDate);
+        return RoomReservation.builder()
+                .startDate(Instant.parse(roomReservationUpdateRequest.getStart_date()))
+                .endDate(Instant.parse(roomReservationUpdateRequest.getEnd_date()))
+                .adults(roomReservationUpdateRequest.getAdults())
+                .kids(roomReservationUpdateRequest.getKids())
+                .roomBedType(roomReservationUpdateRequest.getType_bed())
+                .roomView(roomReservationUpdateRequest.getView())
+                .price(roomReservationUpdateRequest.getPrice()*days)
+                .build();
+    }
 
-    public RoomReservationResponseV2 convertV2(RoomReservation roomReservation) {
-        String startDate = String.valueOf(roomReservation.getStartDate());
-        String endDate = String.valueOf(roomReservation.getEndDate());
+    public RoomReservationResponseV2 convertForUpdate(RoomReservation roomReservation) {
+        return RoomReservationResponseV2.builder()
+                        .id(roomReservation.getId())
+                        .adults(roomReservation.getAdults())
+                        .kids(roomReservation.getKids())
+                        .start_date(String.valueOf(roomReservation.getStartDate()))
+                        .end_date(String.valueOf(roomReservation.getEndDate()))
+                        .days(roomReservation.getDays())
+                        .type_bed(roomReservation.getRoomBedType())
+                        .view(roomReservation.getRoomView())
+                        .price(roomReservation.getPrice())
+                        .date(roomReservation.getCreated().toString())
+                        .room(roomConverter.convert(roomReservation.getRoom()))
+                        .user(userConverter.convert(roomReservation.getUser()))
+                        .build();
+    }
+
+    public RoomReservationResponseV2 convertForFindAll(RoomReservation roomReservation) {
         return RoomReservationResponseV2.builder()
                 .id(roomReservation.getId())
                 .adults(roomReservation.getAdults())
                 .kids(roomReservation.getKids())
-                .start_date(startDate)
-                .end_date(endDate)
+                .start_date(String.valueOf(roomReservation.getStartDate()))
+                .end_date(String.valueOf(roomReservation.getEndDate()))
                 .days(roomReservation.getDays())
                 .type_bed(roomReservation.getRoomBedType())
                 .view(roomReservation.getRoomView())
