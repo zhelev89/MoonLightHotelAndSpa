@@ -65,4 +65,18 @@ public class RoomReservationServiceImpl implements RoomReservationService {
             throw new RecordBadRequestException("Reservation ID doesn't match with the room ID.");
         }
     }
+
+    @Override
+    public RoomReservation update(Long id, Long rid, RoomReservation updatedRoomReservation) {
+        Objects.requireNonNull(rid);
+        RoomReservation roomReservation = findById(rid);
+        roomReservation.setStartDate(updatedRoomReservation.getStartDate());
+        roomReservation.setEndDate(updatedRoomReservation.getEndDate());
+        roomReservation.setAdults(updatedRoomReservation.getAdults());
+        roomReservation.setKids(updatedRoomReservation.getKids());
+        roomReservation.setRoomBedType(updatedRoomReservation.getRoomBedType());
+        roomReservation.setRoomView(updatedRoomReservation.getRoomView());
+        roomReservation.setPrice(updatedRoomReservation.getPrice());
+        return roomReservation;
+    }
 }

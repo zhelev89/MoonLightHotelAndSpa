@@ -12,12 +12,18 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomSaveRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomUpdateRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationResponseV1;
+import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationResponseV2;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationSaveRequest;
+import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationUpdateRequest;
+import team2.MoonLightHotelAndSpa.dataTransferObject.user.UserResponse;
+import team2.MoonLightHotelAndSpa.dataTransferObject.user.UserUpdateRequest;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.room.Room;
+import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.RoomReservationService;
 import team2.MoonLightHotelAndSpa.service.RoomService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -84,5 +90,14 @@ public class RoomController {
         roomReservationService.roomReservationIdMatch(id, rid);
         roomReservationService.deleteById(rid);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping(value = "/rooms/{id}/reservation/{rid}")
+    @Operation(summary = "Update room reservation")
+    public ResponseEntity<RoomReservationResponseV2> update(@RequestBody @Valid RoomReservationUpdateRequest roomReservationUpdateRequest, @PathVariable Long id, @PathVariable Long rid) {
+        RoomReservation convertedRoomReservation = roomReservationConverter.convert(roomReservationUpdateRequest);
+        RoomReservation updatedRoomReservation = roomReservationService.update(id, rid, convertedRoomReservation);
+        RoomReservationResponseV2 roomReservationResponseV2 = roomReservationConverter.convertForUpdate(updatedRoomReservation);
+        return ResponseEntity.ok().body(roomReservationResponseV2);
     }
 }

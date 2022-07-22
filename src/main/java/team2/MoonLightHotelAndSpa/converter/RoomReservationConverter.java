@@ -6,6 +6,7 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationResponseV1;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationResponseV2;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationSaveRequest;
+import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationUpdateRequest;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.room.Room;
 import team2.MoonLightHotelAndSpa.service.RoomReservationService;
@@ -82,5 +83,34 @@ public class RoomReservationConverter {
                         .room(roomConverter.convert(roomReserve.getRoom()))
                         .user(userConverter.convert(roomReserve.getUser()))
                         .build()).collect(Collectors.toSet());
+    }
+
+    public RoomReservation convert(RoomReservationUpdateRequest roomReservationUpdateRequest) {
+        return RoomReservation.builder()
+                .startDate(Instant.parse(roomReservationUpdateRequest.getStart_date()))
+                .endDate(Instant.parse(roomReservationUpdateRequest.getEnd_date()))
+                .adults(roomReservationUpdateRequest.getAdults())
+                .kids(roomReservationUpdateRequest.getKids())
+                .roomBedType(roomReservationUpdateRequest.getType_bed())
+                .roomView(roomReservationUpdateRequest.getView())
+                .price(roomReservationUpdateRequest.getPrice())
+                .build();
+    }
+
+    public RoomReservationResponseV2 convertForUpdate(RoomReservation roomReservation) {
+        return RoomReservationResponseV2.builder()
+                        .id(roomReservation.getId())
+                        .adults(roomReservation.getAdults())
+                        .kids(roomReservation.getKids())
+                        .start_date(String.valueOf(roomReservation.getStartDate()))
+                        .end_date(String.valueOf(roomReservation.getEndDate()))
+                        .days(roomReservation.getDays())
+                        .type_bed(roomReservation.getRoomBedType())
+                        .view(roomReservation.getRoomView())
+                        .price(roomReservation.getPrice())
+                        .date(roomReservation.getCreated().toString())
+                        .room(roomConverter.convert(roomReservation.getRoom()))
+                        .user(userConverter.convert(roomReservation.getUser()))
+                        .build();
     }
 }
