@@ -9,13 +9,15 @@ public interface RoomReservationService {
 
     RoomReservation save(RoomReservation roomReservation);
 
+    RoomReservation findById(Long id);
+
+    RoomReservation findByUserIdAndReservationId(Long uid, Long rid);
+
     Set<RoomReservation> findAllByUserId(Long id);
 
     Set<RoomReservation> findAll();
 
-    Integer calculateDays(Instant startDate, Instant endDate);
-
-    RoomReservation findById(Long id);
+    int calculateDays(Instant startDate, Instant endDate);
 
     void deleteById(Long id);
 

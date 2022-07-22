@@ -2,7 +2,6 @@ package team2.MoonLightHotelAndSpa.converter;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationResponseV1;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationResponseV2;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationSaveRequest;
@@ -54,7 +53,6 @@ public class RoomReservationConverter {
     public RoomReservationResponseV1 convert(RoomReservation roomReservation) {
         String startDate = String.valueOf(roomReservation.getStartDate());
         String endDate = String.valueOf(roomReservation.getEndDate());
-        RoomResponse roomResponse = roomConverter.convert(roomReservation.getRoom());
         return RoomReservationResponseV1.builder()
                 .id(roomReservation.getId())
                 .start_date(startDate)
@@ -63,7 +61,7 @@ public class RoomReservationConverter {
                 .adults(roomReservation.getAdults())
                 .kids(roomReservation.getKids())
                 .price(roomReservation.getPrice())
-                .room(roomResponse)
+                .room(roomConverter.convert(roomReservation.getRoom()))
                 .build();
     }
 
@@ -84,7 +82,7 @@ public class RoomReservationConverter {
                         .user(userConverter.convert(roomReserve.getUser()))
                         .build()).collect(Collectors.toSet());
     }
-
+    
     public RoomReservation convert(RoomReservationUpdateRequest roomReservationUpdateRequest) {
         Instant startDate = Instant.parse(roomReservationUpdateRequest.getStart_date());
         Instant endDate = Instant.parse(roomReservationUpdateRequest.getEnd_date());
