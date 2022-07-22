@@ -22,4 +22,6 @@ public interface RoomReservationService {
     void deleteById(Long id);
 
     void roomReservationIdMatch(Long roomId, Long roomReservationId);
+
+    RoomReservation update(Long id, Long rid, RoomReservation updatedRoomReservation);
 }
