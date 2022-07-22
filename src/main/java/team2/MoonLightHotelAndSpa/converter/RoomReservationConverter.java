@@ -86,6 +86,9 @@ public class RoomReservationConverter {
     }
 
     public RoomReservation convert(RoomReservationUpdateRequest roomReservationUpdateRequest) {
+        Instant startDate = Instant.parse(roomReservationUpdateRequest.getStart_date());
+        Instant endDate = Instant.parse(roomReservationUpdateRequest.getEnd_date());
+        Integer days = roomReservationService.calculateDays(startDate, endDate);
         return RoomReservation.builder()
                 .startDate(Instant.parse(roomReservationUpdateRequest.getStart_date()))
                 .endDate(Instant.parse(roomReservationUpdateRequest.getEnd_date()))
@@ -93,7 +96,7 @@ public class RoomReservationConverter {
                 .kids(roomReservationUpdateRequest.getKids())
                 .roomBedType(roomReservationUpdateRequest.getType_bed())
                 .roomView(roomReservationUpdateRequest.getView())
-                .price(roomReservationUpdateRequest.getPrice())
+                .price(roomReservationUpdateRequest.getPrice()*days)
                 .build();
     }
 
@@ -112,5 +115,22 @@ public class RoomReservationConverter {
                         .room(roomConverter.convert(roomReservation.getRoom()))
                         .user(userConverter.convert(roomReservation.getUser()))
                         .build();
+    }
+
+    public RoomReservationResponseV2 convertForFindAll(RoomReservation roomReservation) {
+        return RoomReservationResponseV2.builder()
+                .id(roomReservation.getId())
+                .adults(roomReservation.getAdults())
+                .kids(roomReservation.getKids())
+                .start_date(String.valueOf(roomReservation.getStartDate()))
+                .end_date(String.valueOf(roomReservation.getEndDate()))
+                .days(roomReservation.getDays())
+                .type_bed(roomReservation.getRoomBedType())
+                .view(roomReservation.getRoomView())
+                .price(roomReservation.getPrice())
+                .date(roomReservation.getCreated().toString())
+                .room(roomConverter.convert(roomReservation.getRoom()))
+                .user(userConverter.convert(roomReservation.getUser()))
+                .build();
     }
 }
