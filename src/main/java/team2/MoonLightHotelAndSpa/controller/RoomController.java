@@ -26,7 +26,9 @@ import team2.MoonLightHotelAndSpa.service.RoomReservationService;
 import team2.MoonLightHotelAndSpa.service.RoomService;
 
 import javax.validation.Valid;
+import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -169,5 +171,14 @@ public class RoomController {
         RoomReservation foundRoomReservation = roomReservationService.findById(rid);
         RoomReservationResponseV2 responseV2 = roomReservationConverter.convertForFindAll(foundRoomReservation);
         return ResponseEntity.ok().body(responseV2);
+    }
+
+    @GetMapping(value = "/query")
+    public ResponseEntity<List<RoomResponse>> findAllAvailableRooms(String start_date,String end_date ,int people) {
+        Instant startDate = Instant.parse(start_date);
+        Instant endDate = Instant.parse(end_date);
+        List<Room> allAvailableRooms = roomReservationService.findAllAvailableRooms(startDate, endDate, people);
+        List<RoomResponse> allAvailableRoomsResponse = allAvailableRooms.stream().map(roomConverter::convert).collect(Collectors.toList());
+        return ResponseEntity.ok().body(allAvailableRoomsResponse);
     }
 }
