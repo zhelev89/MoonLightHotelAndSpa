@@ -15,6 +15,16 @@ import java.util.Set;
 public interface RoomReservationRepository extends JpaRepository<RoomReservation, Long> {
     Set<RoomReservation> findAllByUser(User user);
 
-    @Query("SELECT r FROM r WHERE r.id NOT IN rr.room")
-    List<Room> findAllAvailableRooms(Instant start_date, Instant end_date, int people);
+    @Query("SELECT r, COUNT(*) FROM Room r " +
+            "WHERE r.people >= :people " +
+            "AND r.id NOT IN " +
+            "(SELECT rr.room " +
+            "FROM RoomReservation rr) " +
+            "AND r.id IN (SELECT rrm.room " +
+            "FROM RoomReservation rrm " +
+            "WHERE " +
+            "rrm.startDate NOT BETWEEN :start AND :end " +
+            "AND rrm.endDate NOT BETWEEN :start AND :end) " +
+            "GROUP BY r HAVING COUNT(*) <= r.count")
+    List<Room> findAllAvailableRooms(Instant start, Instant end, int people);
 }
