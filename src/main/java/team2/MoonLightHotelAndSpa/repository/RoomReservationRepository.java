@@ -20,11 +20,11 @@ public interface RoomReservationRepository extends JpaRepository<RoomReservation
             "AND r.id NOT IN " +
             "(SELECT rr.room " +
             "FROM RoomReservation rr) " +
-            "AND r.id IN (SELECT rrm.room " +
-            "FROM RoomReservation rrm " +
+            "AND r.id IN (SELECT roomReserve.room " +
+            "FROM RoomReservation roomReserve " +
             "WHERE " +
-            "rrm.startDate NOT BETWEEN :start AND :end " +
-            "AND rrm.endDate NOT BETWEEN :start AND :end) " +
+            "roomReserve.startDate NOT BETWEEN :start_date AND :end_date " +
+            "AND roomReserve.endDate NOT BETWEEN :start_date AND :end_date) " +
             "GROUP BY r HAVING COUNT(*) <= r.count")
-    List<Room> findAllAvailableRooms(Instant start, Instant end, int people);
+    List<Room> findAllAvailableRooms(Instant start_date, Instant end_date, int people);
 }
