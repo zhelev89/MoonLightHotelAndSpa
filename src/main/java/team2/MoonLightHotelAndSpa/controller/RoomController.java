@@ -16,10 +16,7 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.exceptionMessage.ResponseMe
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomSaveRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomUpdateRequest;
-import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationResponseV1;
-import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationResponseV2;
-import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationSaveRequest;
-import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationUpdateRequest;
+import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.*;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.room.Room;
 import team2.MoonLightHotelAndSpa.service.RoomReservationService;
@@ -174,10 +171,10 @@ public class RoomController {
     }
 
     @GetMapping(value = "/query")
-    public ResponseEntity<List<RoomResponse>> findAllAvailableRooms(String start_date,String end_date ,int people) {
-        Instant startDate = Instant.parse(start_date);
-        Instant endDate = Instant.parse(end_date);
-        List<Room> allAvailableRooms = roomReservationService.findAllAvailableRooms(startDate, endDate, people);
+    public ResponseEntity<List<RoomResponse>> findAllAvailableRooms(@RequestBody RoomReservationQuery roomReservationQuery) {
+        Instant startDate = Instant.parse(roomReservationQuery.getStart_date());
+        Instant endDate = Instant.parse(roomReservationQuery.getEnd_date());
+        List<Room> allAvailableRooms = roomReservationService.findAllAvailableRooms(startDate, endDate, roomReservationQuery.getPeople());
         List<RoomResponse> allAvailableRoomsResponse = allAvailableRooms.stream().map(roomConverter::convert).collect(Collectors.toList());
         return ResponseEntity.ok().body(allAvailableRoomsResponse);
     }
