@@ -46,7 +46,7 @@ public class RoomReservationServiceImplTest {
     @BeforeEach
     public void setUp() {
         userService = new UserServiceImpl(userRepository, bCryptPasswordEncoder);
-        roomReservationService = new RoomReservationServiceImpl(userService, roomReservationRepository, roomReservationValidator);
+        roomReservationService = new RoomReservationServiceImpl(userService, roomReservationRepository);
     }
 
     @Test
