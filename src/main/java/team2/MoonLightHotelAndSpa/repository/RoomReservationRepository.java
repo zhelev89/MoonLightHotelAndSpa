@@ -18,7 +18,7 @@ public interface RoomReservationRepository extends JpaRepository<RoomReservation
     @Query("SELECT r, COUNT(*) FROM Room r " +
             "WHERE r.people >= :people " +
             "AND r.id NOT IN (SELECT rr.room FROM RoomReservation rr) " +
-            "AND r.id IN (SELECT rrIn.room FROM RoomReservation rrIn " +
+            "OR r.id IN (SELECT rrIn.room FROM RoomReservation rrIn " +
             "WHERE rrIn.startDate NOT BETWEEN :start_date AND :end_date " +
             "AND rrIn.endDate NOT BETWEEN :start_date AND :end_date) " +
             "GROUP BY r HAVING COUNT(*) <= r.count")
