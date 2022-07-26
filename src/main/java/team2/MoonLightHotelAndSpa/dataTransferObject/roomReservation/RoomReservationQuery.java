@@ -8,5 +8,6 @@ import lombok.Data;
 public class RoomReservationQuery {
     private String start_date;
     private String end_date;
-    private int people;
+    private int adults;
+    private int kids;
 }
