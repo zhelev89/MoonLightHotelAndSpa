@@ -28,7 +28,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomHttp403ForbiddenEntryPoint customHttp403ForbiddenEntryPoint;
     private static final String ADMIN = "ROLE_ADMIN";
     private static final String CLIENT = "ROLE_CLIENT";
-    private static final String[] PUBLIC_URL_POST = {"/users", "/users/token", "/users/forgot", "/users/reset"};
+    private static final String[] PUBLIC_URL_POST = {"/users", "/users/token", "/users/forgot", "/users/reset",
+            "/contact"};
     private static final String[] PUBLIC_URL_GET = {"/rooms/{id}"};
     private static final String[] PROTECTED_URL_POST = {"/rooms"};
     private static final String[] PROTECTED_URL_POST_CLIENT = {"/rooms/{id}/reservation"};
