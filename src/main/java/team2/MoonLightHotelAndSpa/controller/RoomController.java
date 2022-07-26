@@ -56,7 +56,7 @@ public class RoomController {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping
+    @GetMapping(value = "/getAllRooms")
     @Operation(summary = "Get all rooms", responses = {
             @ApiResponse(description = "Successful operation", responseCode = "200",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Room.class))),
@@ -170,11 +170,12 @@ public class RoomController {
         return ResponseEntity.ok().body(responseV2);
     }
 
-    @GetMapping(value = "/query")
+    @GetMapping
     public ResponseEntity<List<RoomResponse>> findAllAvailableRooms(@RequestBody RoomReservationQuery roomReservationQuery) {
         Instant startDate = Instant.parse(roomReservationQuery.getStart_date());
         Instant endDate = Instant.parse(roomReservationQuery.getEnd_date());
-        List<Room> allAvailableRooms = roomReservationService.findAllAvailableRooms(startDate, endDate, roomReservationQuery.getPeople());
+        int people = roomReservationQuery.getAdults() + roomReservationQuery.getKids();
+        List<Room> allAvailableRooms = roomReservationService.findAllAvailableRooms(startDate, endDate, people);
         List<RoomResponse> allAvailableRoomsResponse = allAvailableRooms.stream().map(roomConverter::convert).collect(Collectors.toList());
         return ResponseEntity.ok().body(allAvailableRoomsResponse);
     }

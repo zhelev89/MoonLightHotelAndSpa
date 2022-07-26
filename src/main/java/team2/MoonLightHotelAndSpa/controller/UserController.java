@@ -189,7 +189,7 @@ public class UserController {
             @ApiResponse(description = "Forbidden", responseCode = "403",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
     })
-    public ResponseEntity<Set<RoomReservationResponseV2>> setRoomReserveResponse(@PathVariable Long uid) {
+    public ResponseEntity<Set<RoomReservationResponseV2>> showReservationsByUserId(@PathVariable Long uid) {
         Set<RoomReservationResponseV2> roomReservationResponseV2Set =
                 roomReservationConverter.convert(roomReservationService.findAllByUserId(uid));
         return ResponseEntity.ok().body(roomReservationResponseV2Set);
