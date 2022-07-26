@@ -7,5 +7,6 @@ import team2.MoonLightHotelAndSpa.model.room.RoomTitle;
 
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Long> {
+
     boolean existsByTitle(RoomTitle roomTitle);
 }

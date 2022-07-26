@@ -9,5 +9,6 @@ import java.util.Set;
 
 @Repository
 public interface RoomReservationRepository extends JpaRepository<RoomReservation, Long> {
+
     Set<RoomReservation> findAllByUser(User user);
 }

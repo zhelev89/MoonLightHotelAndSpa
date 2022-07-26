@@ -80,7 +80,7 @@ public class UserController {
             @ApiResponse(description = "NotFound", responseCode = "404",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
     })
-    public ResponseEntity<UserResponse> findById(@PathVariable @Valid Long id) {
+    public ResponseEntity<UserResponse> findById(@PathVariable @Valid long id) {
         User foundUser = userService.findById(id);
         UserResponse userResponse = userConverter.convert(foundUser);
         return ResponseEntity.ok().body(userResponse);
@@ -115,7 +115,7 @@ public class UserController {
             @ApiResponse(description = "NotFound", responseCode = "404",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
     })
-    public ResponseEntity<UserResponse> update(@RequestBody @Valid UserUpdateRequest userUpdateRequest, @PathVariable Long id) {
+    public ResponseEntity<UserResponse> update(@RequestBody @Valid UserUpdateRequest userUpdateRequest, @PathVariable long id) {
         User convertedUser = userConverter.convert(userUpdateRequest);
         User updatedUser = userService.update(id, convertedUser);
         UserResponse userResponse = userConverter.convert(updatedUser);
@@ -133,7 +133,7 @@ public class UserController {
             @ApiResponse(description = "NotFound", responseCode = "404",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
     })
-    public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id) {
+    public ResponseEntity<HttpStatus> deleteById(@PathVariable long id) {
         userService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -189,7 +189,7 @@ public class UserController {
             @ApiResponse(description = "Forbidden", responseCode = "403",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
     })
-    public ResponseEntity<Set<RoomReservationResponseV2>> setRoomReserveResponse(@PathVariable Long uid) {
+    public ResponseEntity<Set<RoomReservationResponseV2>> setRoomReserveResponse(@PathVariable long uid) {
         Set<RoomReservationResponseV2> roomReservationResponseV2Set =
                 roomReservationConverter.convert(roomReservationService.findAllByUserId(uid));
         return ResponseEntity.ok().body(roomReservationResponseV2Set);
@@ -207,7 +207,7 @@ public class UserController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
     })
     public ResponseEntity<RoomReservationResponseV2> getReservationByUserIdAndReservationId(
-            @PathVariable Long uid, @PathVariable Long rid) {
+            @PathVariable long uid, @PathVariable long rid) {
         RoomReservation byUserIdAndReservationId = roomReservationService.findByUserIdAndReservationId(uid, rid);
         RoomReservationResponseV2 roomReservationResponseV2 = roomReservationConverter.convertForUpdate(byUserIdAndReservationId);
         return ResponseEntity.ok().body(roomReservationResponseV2);

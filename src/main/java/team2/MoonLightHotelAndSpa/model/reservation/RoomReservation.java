@@ -24,7 +24,7 @@ public class RoomReservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @NotNull
     @Column(name = "start_date")
@@ -35,13 +35,13 @@ public class RoomReservation {
     private Instant endDate;
 
     @NotNull
-    private Integer days;
+    private int days;
 
     @NotNull
-    private Integer adults;
+    private int adults;
 
     @NotNull
-    private Integer kids;
+    private int kids;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -52,7 +52,7 @@ public class RoomReservation {
     private RoomView roomView;
 
     @NotNull
-    private Float price;
+    private float price;
 
     @CreationTimestamp
     private Instant created;

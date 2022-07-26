@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public User findById(Long id) {
+    public User findById(long id) {
         Objects.requireNonNull(id);
         return userRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException(
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
         return new HashSet<>(userRepository.findAll());
     }
 
-    public User update(Long id, User updatedUser) {
+    public User update(long id, User updatedUser) {
         Objects.requireNonNull(id);
 
         User user = findById(id);
@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(long id) {
         try {
             userRepository.deleteById(id);
         } catch (EmptyResultDataAccessException ex) {
@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService {
         return findByEmail(username);
     }
 
-    public boolean isUserExists(Long id) {
+    public boolean isUserExists(long id) {
         return userRepository.existsById(id);
     }
 
