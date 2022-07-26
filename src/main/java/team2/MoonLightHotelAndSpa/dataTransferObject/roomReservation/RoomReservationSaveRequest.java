@@ -12,11 +12,11 @@ import team2.MoonLightHotelAndSpa.model.room.RoomView;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoomReservationSaveRequest {
-    private Long user;
+    private long user;
     private String startDate;
     private String endDate;
-    private Integer adults;
-    private Integer kids;
+    private int adults;
+    private int kids;
     private RoomBedType type_bed;
     private RoomView view;
 }

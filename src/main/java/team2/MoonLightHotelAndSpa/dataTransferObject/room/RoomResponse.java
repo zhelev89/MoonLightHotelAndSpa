@@ -9,14 +9,14 @@ import java.util.Set;
 @Builder
 @Data
 public class RoomResponse {
-    private Long id;
+    private long id;
     private RoomTitle title;
     private String image;
     private Set<String> images;
     private String description;
     private String facilities;
-    private Integer area;
+    private int area;
     private RoomView view;
-    private Integer people;
-    private Float price;
+    private int people;
+    private float price;
 }

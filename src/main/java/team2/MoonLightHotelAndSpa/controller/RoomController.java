@@ -82,7 +82,7 @@ public class RoomController {
             @ApiResponse(description = "NotFound", responseCode = "404",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
     })
-    public ResponseEntity<RoomResponse> update(@RequestBody RoomUpdateRequest roomUpdateRequest, @PathVariable Long id) {
+    public ResponseEntity<RoomResponse> update(@RequestBody RoomUpdateRequest roomUpdateRequest, @PathVariable long id) {
         Room convertedRoom = roomConverter.convert(roomUpdateRequest);
         Room updatedRoom = roomService.update(id, convertedRoom);
         RoomResponse roomResponse = roomConverter.convert(updatedRoom);
@@ -98,7 +98,7 @@ public class RoomController {
             @ApiResponse(description = "NotFound", responseCode = "404",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
     })
-    public ResponseEntity<RoomResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<RoomResponse> findById(@PathVariable long id) {
         Room foundRoom = roomService.findById(id);
         RoomResponse roomResponse = roomConverter.convert(foundRoom);
         return ResponseEntity.ok().body(roomResponse);
@@ -115,7 +115,7 @@ public class RoomController {
             @ApiResponse(description = "NotFound", responseCode = "404",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
     })
-    public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id) {
+    public ResponseEntity<HttpStatus> deleteById(@PathVariable long id) {
         roomService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -129,7 +129,7 @@ public class RoomController {
             @ApiResponse(description = "Unauthorized", responseCode = "401",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
     })
-    private ResponseEntity<RoomReservationResponseV1> save(@RequestBody RoomReservationSaveRequest roomReservationSaveRequest, @PathVariable Long id) {
+    private ResponseEntity<RoomReservationResponseV1> save(@RequestBody RoomReservationSaveRequest roomReservationSaveRequest, @PathVariable long id) {
         RoomReservation convert = roomReservationConverter.convert(roomReservationSaveRequest, id);
         RoomReservation savedReserve = roomReservationService.save(convert);
         RoomReservationResponseV1 response = roomReservationConverter.convert(savedReserve);
@@ -147,7 +147,7 @@ public class RoomController {
             @ApiResponse(description = "NotFound", responseCode = "404",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
     })
-    public ResponseEntity<HttpStatus> deleteReservationById(@PathVariable Long id, @PathVariable Long rid) {
+    public ResponseEntity<HttpStatus> deleteReservationById(@PathVariable long id, @PathVariable long rid) {
         roomReservationService.roomReservationIdMatch(id, rid);
         roomReservationService.deleteById(rid);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -155,7 +155,7 @@ public class RoomController {
 
     @PutMapping(value = "/{id}/reservation/{rid}")
     @Operation(summary = "Update a Reservation by ID and room ID")
-    public ResponseEntity<RoomReservationResponseV2> update(@RequestBody @Valid RoomReservationUpdateRequest roomReservationUpdateRequest, @PathVariable Long id, @PathVariable Long rid) {
+    public ResponseEntity<RoomReservationResponseV2> update(@RequestBody @Valid RoomReservationUpdateRequest roomReservationUpdateRequest, @PathVariable long id, @PathVariable long rid) {
         roomReservationService.roomReservationIdMatch(id, rid);
         RoomReservation convertedRoomReservation = roomReservationConverter.convert(roomReservationUpdateRequest);
         RoomReservation updatedRoomReservation = roomReservationService.update(id, rid, convertedRoomReservation);
@@ -164,7 +164,7 @@ public class RoomController {
     }
 
     @GetMapping(value = "/{id}/reservation/{rid}")
-    public ResponseEntity<RoomReservationResponseV2> findReservationById(@PathVariable Long id, @PathVariable Long rid) {
+    public ResponseEntity<RoomReservationResponseV2> findReservationById(@PathVariable long id, @PathVariable long rid) {
         roomReservationService.roomReservationIdMatch(id, rid);
         RoomReservation foundRoomReservation = roomReservationService.findById(rid);
         RoomReservationResponseV2 responseV2 = roomReservationConverter.convertForFindAll(foundRoomReservation);
