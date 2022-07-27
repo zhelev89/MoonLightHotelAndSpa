@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class RecordExceptionHandler {
@@ -20,7 +20,19 @@ public class RecordExceptionHandler {
         RecordResponseException recordResponseException =
                 new RecordResponseException(ex.getMessage());
 
-        return new ResponseEntity<>(recordResponseException, HttpStatus.BAD_REQUEST);
+        BadRequestMessageDto badRequestMessage = new BadRequestMessageDto();
+        ErrorFieldDto errorField = new ErrorFieldDto();
+        List<String> field_name = errorField.getField_name();
+        for(Throwable cause : ex.getSuppressed()) {
+            String causeString = cause.toString();
+            field_name.add(causeString);
+        }
+        errorField.setField_name(field_name);
+
+        badRequestMessage.setErrors(errorField);
+        badRequestMessage.setMessage(ex.getMessage());
+
+        return new ResponseEntity<>(badRequestMessage, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = {RecordNotFoundException.class})
@@ -30,15 +42,6 @@ public class RecordExceptionHandler {
                 new RecordResponseException(ex.getMessage());
 
         return new ResponseEntity<>(recordResponseException, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(value = {EmailNotSendException.class})
-    public ResponseEntity<Object> handleEmailNotSendException(EmailNotSendException ex) {
-
-        RecordResponseException recordResponseException =
-                new RecordResponseException(ex.getMessage());
-
-        return new ResponseEntity<>(recordResponseException, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = ConstraintViolationException.class)

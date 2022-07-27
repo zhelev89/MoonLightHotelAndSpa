@@ -6,7 +6,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import team2.MoonLightHotelAndSpa.exception.EmailNotSendException;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.EmailSenderService;
 import team2.MoonLightHotelAndSpa.service.UserService;
@@ -22,17 +21,12 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 
     @Override
     public void sendEmail(String to, String subject, String text) {
-
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        try {
-            simpleMailMessage.setFrom("noreply@nasbg.com");
-            simpleMailMessage.setTo(to);
-            simpleMailMessage.setSubject(subject);
-            simpleMailMessage.setText(text);
-        }catch (EmailNotSendException ex) {
-            throw new EmailNotSendException("Failed to send email");
-        }
 
+        simpleMailMessage.setFrom("noreply@nasbg.com");
+        simpleMailMessage.setTo(to);
+        simpleMailMessage.setSubject(subject);
+        simpleMailMessage.setText(text);
 
         this.mailSender.send(simpleMailMessage);
     }

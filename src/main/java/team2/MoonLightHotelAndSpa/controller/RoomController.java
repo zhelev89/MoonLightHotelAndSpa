@@ -11,8 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.converter.RoomConverter;
 import team2.MoonLightHotelAndSpa.converter.RoomReservationConverter;
-import team2.MoonLightHotelAndSpa.dataTransferObject.exceptionMessage.BadRequestMessageDto;
-import team2.MoonLightHotelAndSpa.dataTransferObject.exceptionMessage.ResponseMessageDto;
+import team2.MoonLightHotelAndSpa.exception.BadRequestMessageDto;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomSaveRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomUpdateRequest;
@@ -20,6 +19,7 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReserva
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationResponseV2;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationSaveRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationUpdateRequest;
+import team2.MoonLightHotelAndSpa.exception.RecordResponseException;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.room.Room;
 import team2.MoonLightHotelAndSpa.service.RoomReservationService;
@@ -46,9 +46,9 @@ public class RoomController {
             @ApiResponse(description = "Bad request", responseCode = "400",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = BadRequestMessageDto.class))),
             @ApiResponse(description = "Unauthorized", responseCode = "401",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class))),
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecordResponseException.class))),
             @ApiResponse(description = "Forbidden", responseCode = "403",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecordResponseException.class)))
     })
     private ResponseEntity<RoomResponse> save(@RequestBody RoomSaveRequest roomSaveRequest) {
         Room room = roomConverter.convert(roomSaveRequest);
@@ -62,7 +62,7 @@ public class RoomController {
             @ApiResponse(description = "Successful operation", responseCode = "200",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Room.class))),
             @ApiResponse(description = "Not found", responseCode = "404",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecordResponseException.class)))
 
     })
     private ResponseEntity<List<Room>> findAll() {
@@ -76,11 +76,11 @@ public class RoomController {
             @ApiResponse(description = "Bad request", responseCode = "400",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = BadRequestMessageDto.class))),
             @ApiResponse(description = "Unauthorized", responseCode = "401",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class))),
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecordResponseException.class))),
             @ApiResponse(description = "Forbidden", responseCode = "403",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class))),
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecordResponseException.class))),
             @ApiResponse(description = "NotFound", responseCode = "404",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecordResponseException.class)))
     })
     public ResponseEntity<RoomResponse> update(@RequestBody RoomUpdateRequest roomUpdateRequest, @PathVariable Long id) {
         Room convertedRoom = roomConverter.convert(roomUpdateRequest);
@@ -96,7 +96,7 @@ public class RoomController {
             @ApiResponse(description = "Bad request", responseCode = "400",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = BadRequestMessageDto.class))),
             @ApiResponse(description = "NotFound", responseCode = "404",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecordResponseException.class)))
     })
     public ResponseEntity<RoomResponse> findById(@PathVariable Long id) {
         Room foundRoom = roomService.findById(id);
@@ -109,11 +109,11 @@ public class RoomController {
             @ApiResponse(description = "No content", responseCode = "204",
                     content = @Content),
             @ApiResponse(description = "Unauthorized", responseCode = "401",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class))),
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecordResponseException.class))),
             @ApiResponse(description = "Forbidden", responseCode = "403",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class))),
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecordResponseException.class))),
             @ApiResponse(description = "NotFound", responseCode = "404",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecordResponseException.class)))
     })
     public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id) {
         roomService.deleteById(id);
@@ -127,7 +127,7 @@ public class RoomController {
             @ApiResponse(description = "Bad request", responseCode = "400",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = BadRequestMessageDto.class))),
             @ApiResponse(description = "Unauthorized", responseCode = "401",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecordResponseException.class)))
     })
     private ResponseEntity<RoomReservationResponseV1> save(@RequestBody RoomReservationSaveRequest roomReservationSaveRequest, @PathVariable Long id) {
         RoomReservation convert = roomReservationConverter.convert(roomReservationSaveRequest, id);
@@ -141,11 +141,11 @@ public class RoomController {
             @ApiResponse(description = "No content", responseCode = "204",
                     content = @Content),
             @ApiResponse(description = "Unauthorized", responseCode = "401",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class))),
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecordResponseException.class))),
             @ApiResponse(description = "Forbidden", responseCode = "403",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class))),
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecordResponseException.class))),
             @ApiResponse(description = "NotFound", responseCode = "404",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = RecordResponseException.class)))
     })
     public ResponseEntity<HttpStatus> deleteReservationById(@PathVariable Long id, @PathVariable Long rid) {
         roomReservationService.roomReservationIdMatch(id, rid);
