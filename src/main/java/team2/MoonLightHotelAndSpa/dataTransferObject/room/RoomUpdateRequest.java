@@ -29,17 +29,17 @@ public class RoomUpdateRequest {
     private String facilities;
 
     @NotNull
-    private Integer area;
+    private int area;
 
     @NotNull
     private RoomView view;
 
     @NotNull
-    private Integer people;
+    private int people;
 
     @NotNull
-    private Float price;
+    private float price;
 
     @NotNull
-    private Integer count;
+    private int count;
 }

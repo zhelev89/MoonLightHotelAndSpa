@@ -7,12 +7,12 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
 @Data
 @Builder
 public class RoomReservationResponseV1 {
-    private Long id;
+    private long id;
     private String start_date;
     private String end_date;
-    private Integer days;
-    private Integer adults;
-    private Integer kids;
-    private Float price;
+    private int days;
+    private int adults;
+    private int kids;
+    private float price;
     private RoomResponse room;
 }

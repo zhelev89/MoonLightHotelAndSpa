@@ -28,7 +28,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Room update(Long id, Room updatedRoom) {
+    public Room update(long id, Room updatedRoom) {
         Objects.requireNonNull(id);
 
         Room room = findById(id);
@@ -46,14 +46,14 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Room findById(Long id) {
+    public Room findById(long id) {
         Objects.requireNonNull(id);
         return roomRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
                 String.format("Room with id:%s, not found", id)));
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(long id) {
         try {
             roomRepository.deleteById(id);
         } catch (EmptyResultDataAccessException ex) {

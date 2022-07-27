@@ -16,7 +16,7 @@ public class RoomReservationValidator {
     private final RoomReservationRepository roomReservationRepository;
     private final RoomReservationService roomReservationService;
 
-    public void existsById(Long id) {
+    public void existsById(long id) {
         if (!roomReservationRepository.existsById(id)) {
             throw new RecordBadRequestException(String.format("Room reservation with id:%s, not exists.", id));
         }
@@ -28,15 +28,15 @@ public class RoomReservationValidator {
         }
     }
 
-    public void validGuestNumber(Integer roomPeople, Integer roomReservePeople) {
+    public void validGuestNumber(int roomPeople, int roomReservePeople) {
         if (roomPeople < roomReservePeople) {
             throw new RecordBadRequestException(String.format("This room is for %s people!", roomPeople));
         }
     }
 
-    public void roomReservationIdMatchWithUserId(Long userid, Long roomReservationId) {
+    public void roomReservationIdMatchWithUserId(long userid, long roomReservationId) {
         RoomReservation foundReservation = roomReservationService.findById(roomReservationId);
-        if (!foundReservation.getUser().getId().equals(userid)) {
+        if (foundReservation.getUser().getId() != userid) {
             throw new RecordBadRequestException("Reservation ID doesn't match with the User ID.");
         }
     }

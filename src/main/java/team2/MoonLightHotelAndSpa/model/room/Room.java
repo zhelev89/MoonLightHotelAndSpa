@@ -18,7 +18,7 @@ public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -39,18 +39,18 @@ public class Room {
     private String facilities;
 
     @NotNull
-    private Integer area;
+    private int area;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private RoomView view;
 
     @NotNull
-    private Integer people;
+    private int people;
 
     @NotNull
-    private Float price;
+    private float price;
 
     @NotNull
-    private Integer count;
+    private int count;
 }

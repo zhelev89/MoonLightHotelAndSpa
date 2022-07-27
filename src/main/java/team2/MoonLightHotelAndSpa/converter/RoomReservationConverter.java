@@ -28,7 +28,7 @@ public class RoomReservationConverter {
     private final UserService userService;
     private final UserConverter userConverter;
 
-    public RoomReservation convert(RoomReservationSaveRequest roomReservationSaveRequest, Long id) {
+    public RoomReservation convert(RoomReservationSaveRequest roomReservationSaveRequest, long id) {
         Instant startDate = Instant.parse(roomReservationSaveRequest.getStartDate());
         Instant endDate = Instant.parse(roomReservationSaveRequest.getEndDate());
         Room room = roomService.findById(id);
