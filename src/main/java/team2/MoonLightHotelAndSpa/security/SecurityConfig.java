@@ -32,11 +32,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/contact"};
     private static final String[] PUBLIC_URL_GET = {"/rooms/{id}"};
     private static final String[] PROTECTED_URL_POST = {"/rooms"};
-    private static final String[] PROTECTED_URL_POST_CLIENT = {"/rooms/{id}/reservation"};
+    private static final String[] PROTECTED_URL_POST_CLIENT = {"/rooms/{id}/reservation", "/users/reset", "/users/forgot"};
     private static final String[] PROTECTED_URL_GET = {"/users", "/users/{id}", "/users/reservations"};
-    private static final String[] PROTECTED_URL_GET_CLIENT = {"/users/{uid}/reservations", "/{uid}/reservations/{rid}"};
+    private static final String[] PROTECTED_URL_GET_CLIENT = {"/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/rooms/{id}/reservation/{rid}", "/rooms", "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}"};
     private static final String[] PROTECTED_URL_PUT = {"/users/{id}"};
-    private static final String[] PROTECTED_URL_DELETE = {"/users/{id}"};
+    private static final String[] PROTECTED_URL_PUT_CLIENT = {"/rooms/{id}/reservation/{rid}"};
+    private static final String[] PROTECTED_URL_DELETE = {"/users/{id}", "/rooms/{id}"};
+    private static final String[] PROTECTED_URL_DELETE_CLIENT = {"/rooms/{id}/reservation/{rid}"};
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -59,7 +61,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(HttpMethod.GET, PROTECTED_URL_GET).hasAnyAuthority(ADMIN);
         http.authorizeRequests().antMatchers(HttpMethod.GET, PROTECTED_URL_GET_CLIENT).hasAnyAuthority(CLIENT);
         http.authorizeRequests().antMatchers(HttpMethod.PUT, PROTECTED_URL_PUT).hasAnyAuthority(ADMIN);
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, PROTECTED_URL_PUT_CLIENT).hasAnyAuthority(CLIENT);
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, PROTECTED_URL_DELETE).hasAnyAuthority(ADMIN);
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, PROTECTED_URL_DELETE_CLIENT).hasAnyAuthority(CLIENT);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         http.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler)
                 .authenticationEntryPoint(customHttp403ForbiddenEntryPoint);

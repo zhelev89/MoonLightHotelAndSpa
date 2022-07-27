@@ -56,18 +56,6 @@ public class RoomController {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping(value = "/getAllRooms")
-    @Operation(summary = "Get all rooms", responses = {
-            @ApiResponse(description = "Successful operation", responseCode = "200",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Room.class))),
-            @ApiResponse(description = "Not found", responseCode = "404",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
-
-    })
-    private ResponseEntity<List<Room>> findAll() {
-        return ResponseEntity.ok().body(roomService.findAll());
-    }
-
     @PutMapping(value = "/{id}")
     @Operation(summary = "Update room", responses = {
             @ApiResponse(description = "Successful operation", responseCode = "200",
