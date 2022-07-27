@@ -9,9 +9,9 @@ public interface RoomService {
 
     List<Room> findAll();
 
-    Room update(Long id, Room updatedRoom);
+    Room update(long id, Room updatedRoom);
 
-    Room findById(Long id);
+    Room findById(long id);
 
-    void deleteById(Long id);
+    void deleteById(long id);
 }

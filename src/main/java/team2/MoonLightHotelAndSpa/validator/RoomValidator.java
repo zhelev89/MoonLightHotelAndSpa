@@ -12,7 +12,7 @@ public class RoomValidator {
 
     private final RoomRepository roomRepository;
 
-    public void existById(Long id) {
+    public void existById(long id) {
         if (!roomRepository.existsById(id)) {
             throw new RecordBadRequestException(String.format("Room with id:%s, not exists.", id));
         }

@@ -8,15 +8,15 @@ import java.util.Set;
 public interface UserService extends UserDetailsService {
     User save(User user);
 
-    User findById(Long id);
+    User findById(long id);
 
     User findByEmail(String email);
 
     Set<User> findAll();
 
-    User update(Long id, User updatedUser);
+    User update(long id, User updatedUser);
 
-    void deleteById(Long id);
+    void deleteById(long id);
 
     User changePassword(String newPassword, String currentPassword, String email);
 }

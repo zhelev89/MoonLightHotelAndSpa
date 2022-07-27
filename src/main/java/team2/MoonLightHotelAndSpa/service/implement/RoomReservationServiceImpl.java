@@ -31,19 +31,19 @@ public class RoomReservationServiceImpl implements RoomReservationService {
         return roomReservationRepository.save(roomReservation);
     }
 
-    public RoomReservation findByUserIdAndReservationId(Long uid, Long rid) {
+    public RoomReservation findByUserIdAndReservationId(long uid, long rid) {
         Objects.requireNonNull(uid);
         Objects.requireNonNull(rid);
 
         User foundUser = userService.findById(uid);
         RoomReservation foundReservation = findById(rid);
-        if (!foundReservation.getUser().getId().equals(foundUser.getId())) {
+        if (foundReservation.getUser().getId() != foundUser.getId()) {
             throw new RecordBadRequestException("Reservation ID doesn't match with the User ID.");
         }
         return foundReservation;
     }
 
-    public Set<RoomReservation> findAllByUserId(Long id) {
+    public Set<RoomReservation> findAllByUserId(long id) {
         Objects.requireNonNull(id);
         User userById = userService.findById(id);
         return roomReservationRepository.findAllByUser(userById);
@@ -65,27 +65,27 @@ public class RoomReservationServiceImpl implements RoomReservationService {
     }
 
     @Override
-    public RoomReservation findById(Long id) {
+    public RoomReservation findById(long id) {
         return roomReservationRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
                 String.format("Room reservation with id:%s, not found", id)));
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(long id) {
         roomReservationRepository.deleteById(id);
     }
 
     @Override
-    public void roomReservationIdMatch(Long roomId, Long roomReservationId) {
+    public void roomReservationIdMatch(long roomId, long roomReservationId) {
         RoomReservation roomReservation = findById(roomReservationId);
-        if (!roomReservation.getRoom().getId().equals(roomId)) {
+        if (roomReservation.getRoom().getId() != roomId) {
             throw new RecordBadRequestException("Reservation ID doesn't match with the room ID.");
         }
     }
 
     @Override
     @Transactional
-    public RoomReservation update(Long id, Long rid, RoomReservation updatedRoomReservation) {
+    public RoomReservation update(long id, long rid, RoomReservation updatedRoomReservation) {
         Objects.requireNonNull(rid);
         RoomReservation roomReservation = findById(rid);
         roomReservation.setStartDate(updatedRoomReservation.getStartDate());
