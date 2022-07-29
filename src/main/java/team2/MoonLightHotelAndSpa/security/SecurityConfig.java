@@ -28,16 +28,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomHttp403ForbiddenEntryPoint customHttp403ForbiddenEntryPoint;
     private static final String ADMIN = "ROLE_ADMIN";
     private static final String CLIENT = "ROLE_CLIENT";
-    private static final String[] PUBLIC_URL_POST = {"/users", "/users/token", "/users/forgot", "/users/reset", "/contact"};
+    private static final String[] PUBLIC_URL_POST = {"/users", "/users/token", "/users/forgot", "/contact"};
     private static final String[] PUBLIC_URL_GET = {"/rooms", "/rooms/{id}"};
-    private static final String[] PROTECTED_URL_POST = {"/rooms", "/**"};
-    private static final String[] PROTECTED_URL_POST_CLIENT = {"/rooms/{id}/reservation", "/users/reset", "/**"};
-    private static final String[] PROTECTED_URL_GET = {"/users", "/users/{id}", "/users/reservations", "/**"};
-    private static final String[] PROTECTED_URL_GET_CLIENT = {"/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/rooms/{id}/reservation/{rid}", "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/**"};
-    private static final String[] PROTECTED_URL_PUT = {"/users/{id}", "/**"};
-    private static final String[] PROTECTED_URL_PUT_CLIENT = {"/rooms/{id}/reservation/{rid}", "/**"};
-    private static final String[] PROTECTED_URL_DELETE = {"/users/{id}", "/rooms/{id}", "/**"};
-    private static final String[] PROTECTED_URL_DELETE_CLIENT = {"/rooms/{id}/reservation/{rid}", "/**"};
+    private static final String[] PROTECTED_URL_POST = {"/rooms", "/rooms/{id}/reservation", "/users/reset", "/**"};
+    private static final String[] PROTECTED_URL_POST_CLIENT = {"/rooms/{id}/reservation", "/users/reset", "/users/reset", "/**"};
+    private static final String[] PROTECTED_URL_GET = {"/users", "/users/{id}", "/users/reservations", "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/rooms/{id}/reservation/{rid}", "/users/{uid}/reservations", "/**"};
+    private static final String[] PROTECTED_URL_GET_CLIENT = {"/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/**"};
+    private static final String[] PROTECTED_URL_PUT = {"/users/{id}", "/rooms/{id}/reservation/{rid}", "/rooms/{id}", "/**"};
+    private static final String[] PROTECTED_URL_PUT_CLIENT = {"/**"};
+    private static final String[] PROTECTED_URL_DELETE = {"/users/{id}", "/rooms/{id}", "/rooms/{id}/reservation/{rid}", "/**"};
+    private static final String[] PROTECTED_URL_DELETE_CLIENT = {"/**"};
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

@@ -34,7 +34,7 @@ public class RoomReservationConverter {
         Room room = roomService.findById(id);
         int people = roomReservationSaveRequest.getKids() + roomReservationSaveRequest.getAdults();
         roomReservationValidator.validDates(startDate, endDate);
-        Integer days = roomReservationService.calculateDays(startDate, endDate);
+        int days = roomReservationService.calculateDays(startDate, endDate);
         roomReservationValidator.validGuestNumber(room.getPeople(), people);
         return RoomReservation.builder()
                 .room(room)
@@ -86,7 +86,7 @@ public class RoomReservationConverter {
     public RoomReservation convert(RoomReservationUpdateRequest roomReservationUpdateRequest) {
         Instant startDate = Instant.parse(roomReservationUpdateRequest.getStart_date());
         Instant endDate = Instant.parse(roomReservationUpdateRequest.getEnd_date());
-        Integer days = roomReservationService.calculateDays(startDate, endDate);
+        int days = roomReservationService.calculateDays(startDate, endDate);
         return RoomReservation.builder()
                 .startDate(Instant.parse(roomReservationUpdateRequest.getStart_date()))
                 .endDate(Instant.parse(roomReservationUpdateRequest.getEnd_date()))
