@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
+import team2.MoonLightHotelAndSpa.model.room.Room;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.repository.RoomReservationRepository;
 import team2.MoonLightHotelAndSpa.service.RoomReservationService;
@@ -14,6 +15,7 @@ import javax.transaction.Transactional;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -94,5 +96,10 @@ public class RoomReservationServiceImpl implements RoomReservationService {
         roomReservation.setRoomView(updatedRoomReservation.getRoomView());
         roomReservation.setPrice(updatedRoomReservation.getPrice());
         return roomReservation;
+    }
+
+    @Override
+    public List<Room> findAllAvailableRooms(Instant start_date, Instant end_date, int people) {
+        return roomReservationRepository.findAllAvailableRooms(start_date, end_date ,people);
     }
 }

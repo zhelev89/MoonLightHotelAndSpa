@@ -16,17 +16,16 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.exceptionMessage.ResponseMe
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomSaveRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomUpdateRequest;
-import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationResponseV1;
-import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationResponseV2;
-import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationSaveRequest;
-import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationUpdateRequest;
+import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.*;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.room.Room;
 import team2.MoonLightHotelAndSpa.service.RoomReservationService;
 import team2.MoonLightHotelAndSpa.service.RoomService;
 
 import javax.validation.Valid;
+import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -55,18 +54,6 @@ public class RoomController {
         Room savedRoom = roomService.save(room);
         RoomResponse response = roomConverter.convert(savedRoom);
         return ResponseEntity.ok().body(response);
-    }
-
-    @GetMapping
-    @Operation(summary = "Get all rooms", responses = {
-            @ApiResponse(description = "Successful operation", responseCode = "200",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Room.class))),
-            @ApiResponse(description = "Not found", responseCode = "404",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
-
-    })
-    private ResponseEntity<List<Room>> findAll() {
-        return ResponseEntity.ok().body(roomService.findAll());
     }
 
     @PutMapping(value = "/{id}")
@@ -169,5 +156,15 @@ public class RoomController {
         RoomReservation foundRoomReservation = roomReservationService.findById(rid);
         RoomReservationResponseV2 responseV2 = roomReservationConverter.convertForFindAll(foundRoomReservation);
         return ResponseEntity.ok().body(responseV2);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<RoomResponse>> findAllAvailableRooms(@RequestParam String start_date, @RequestParam String end_date, @RequestParam int adults, @RequestParam int kids) {
+        Instant startDate = Instant.parse(start_date);
+        Instant endDate = Instant.parse(end_date);
+        int people = adults + kids;
+        List<Room> allAvailableRooms = roomReservationService.findAllAvailableRooms(startDate, endDate, people);
+        List<RoomResponse> allAvailableRoomsResponse = allAvailableRooms.stream().map(roomConverter::convert).collect(Collectors.toList());
+        return ResponseEntity.ok().body(allAvailableRoomsResponse);
     }
 }
