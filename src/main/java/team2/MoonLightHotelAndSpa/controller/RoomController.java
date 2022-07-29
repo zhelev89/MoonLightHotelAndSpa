@@ -159,10 +159,10 @@ public class RoomController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RoomResponse>> findAllAvailableRooms(@RequestBody RoomReservationQuery roomReservationQuery) {
-        Instant startDate = Instant.parse(roomReservationQuery.getStart_date());
-        Instant endDate = Instant.parse(roomReservationQuery.getEnd_date());
-        int people = roomReservationQuery.getAdults() + roomReservationQuery.getKids();
+    public ResponseEntity<List<RoomResponse>> findAllAvailableRooms(@RequestParam String start_date, @RequestParam String end_date, @RequestParam int adults, @RequestParam int kids) {
+        Instant startDate = Instant.parse(start_date);
+        Instant endDate = Instant.parse(end_date);
+        int people = adults + kids;
         List<Room> allAvailableRooms = roomReservationService.findAllAvailableRooms(startDate, endDate, people);
         List<RoomResponse> allAvailableRoomsResponse = allAvailableRooms.stream().map(roomConverter::convert).collect(Collectors.toList());
         return ResponseEntity.ok().body(allAvailableRoomsResponse);
