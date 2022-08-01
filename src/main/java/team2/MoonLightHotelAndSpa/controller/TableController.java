@@ -4,10 +4,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.converter.TableConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObject.table.TableResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.table.TableSaveRequest;
@@ -29,5 +26,11 @@ public class TableController {
         Table savedTable = tableService.save(table);
         TableResponse tableResponse = tableConverter.convert(savedTable);
         return ResponseEntity.status(HttpStatus.CREATED).body(tableResponse);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<HttpStatus> deleteById(@PathVariable long id) {
+        tableService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

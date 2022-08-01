@@ -30,13 +30,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String CLIENT = "ROLE_CLIENT";
     private static final String[] PUBLIC_URL_POST = {"/users", "/users/token", "/users/forgot", "/contact"};
     private static final String[] PUBLIC_URL_GET = {"/rooms", "/rooms/{id}"};
-    private static final String[] PROTECTED_URL_POST = {"/rooms", "/rooms/{id}/reservation", "/users/reset", "/**"};
+    private static final String[] PROTECTED_URL_POST = {"/rooms", "/rooms/{id}/reservation", "/users/reset", "/tables", "/**"};
     private static final String[] PROTECTED_URL_POST_CLIENT = {"/rooms/{id}/reservation", "/users/reset", "/users/reset", "/**"};
     private static final String[] PROTECTED_URL_GET = {"/users", "/users/{id}", "/users/reservations", "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/rooms/{id}/reservation/{rid}", "/users/{uid}/reservations", "/**"};
     private static final String[] PROTECTED_URL_GET_CLIENT = {"/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/**"};
-    private static final String[] PROTECTED_URL_PUT = {"/users/{id}", "/rooms/{id}/reservation/{rid}", "/rooms/{id}", "/**"};
+    private static final String[] PROTECTED_URL_PUT = {"/users/{id}", "/rooms/{id}/reservation/{rid}", "/rooms/{id}", "/tables/{id}", "/tables/{id}", "/**"};
     private static final String[] PROTECTED_URL_PUT_CLIENT = {"/**"};
-    private static final String[] PROTECTED_URL_DELETE = {"/users/{id}", "/rooms/{id}", "/rooms/{id}/reservation/{rid}", "/**"};
+    private static final String[] PROTECTED_URL_DELETE = {"/users/{id}", "/rooms/{id}", "/rooms/{id}/reservation/{rid}", "/tables/{id}", "/**"};
     private static final String[] PROTECTED_URL_DELETE_CLIENT = {"/**"};
 
     @Override
@@ -53,17 +53,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//        http.authorizeRequests().antMatchers(HttpMethod.POST, PUBLIC_URL_POST).permitAll();
-//        http.authorizeRequests().antMatchers(HttpMethod.GET, PUBLIC_URL_GET).permitAll();
-//        http.authorizeRequests().antMatchers(HttpMethod.POST, PROTECTED_URL_POST).hasAnyAuthority(ADMIN);
-//        http.authorizeRequests().antMatchers(HttpMethod.POST, PROTECTED_URL_POST_CLIENT).hasAnyAuthority(CLIENT);
-//        http.authorizeRequests().antMatchers(HttpMethod.GET, PROTECTED_URL_GET).hasAnyAuthority(ADMIN);
-//        http.authorizeRequests().antMatchers(HttpMethod.GET, PROTECTED_URL_GET_CLIENT).hasAnyAuthority(CLIENT);
-//        http.authorizeRequests().antMatchers(HttpMethod.PUT, PROTECTED_URL_PUT).hasAnyAuthority(ADMIN);
-//        http.authorizeRequests().antMatchers(HttpMethod.PUT, PROTECTED_URL_PUT_CLIENT).hasAnyAuthority(CLIENT);
-//        http.authorizeRequests().antMatchers(HttpMethod.DELETE, PROTECTED_URL_DELETE).hasAnyAuthority(ADMIN);
-//        http.authorizeRequests().antMatchers(HttpMethod.DELETE, PROTECTED_URL_DELETE_CLIENT).hasAnyAuthority(CLIENT);
-//        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        http.authorizeRequests().antMatchers(HttpMethod.POST, PUBLIC_URL_POST).permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET, PUBLIC_URL_GET).permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.POST, PROTECTED_URL_POST).hasAnyAuthority(ADMIN);
+        http.authorizeRequests().antMatchers(HttpMethod.POST, PROTECTED_URL_POST_CLIENT).hasAnyAuthority(CLIENT);
+        http.authorizeRequests().antMatchers(HttpMethod.GET, PROTECTED_URL_GET).hasAnyAuthority(ADMIN);
+        http.authorizeRequests().antMatchers(HttpMethod.GET, PROTECTED_URL_GET_CLIENT).hasAnyAuthority(CLIENT);
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, PROTECTED_URL_PUT).hasAnyAuthority(ADMIN);
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, PROTECTED_URL_PUT_CLIENT).hasAnyAuthority(CLIENT);
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, PROTECTED_URL_DELETE).hasAnyAuthority(ADMIN);
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE, PROTECTED_URL_DELETE_CLIENT).hasAnyAuthority(CLIENT);
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         http.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler)
                 .authenticationEntryPoint(customHttp403ForbiddenEntryPoint);
         http.formLogin().disable();

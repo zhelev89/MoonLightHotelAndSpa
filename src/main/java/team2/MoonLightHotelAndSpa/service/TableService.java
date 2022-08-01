@@ -5,4 +5,6 @@ import team2.MoonLightHotelAndSpa.model.table.Table;
 public interface TableService {
 
     Table save(Table table);
+
+    void deleteById(long id);
 }
