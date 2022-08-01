@@ -9,8 +9,6 @@ import team2.MoonLightHotelAndSpa.model.table.TableZone;
 import team2.MoonLightHotelAndSpa.repository.TableRepository;
 import team2.MoonLightHotelAndSpa.service.TableService;
 
-import java.util.Objects;
-
 @Service
 @AllArgsConstructor
 public class TableServiceImpl implements TableService {
@@ -18,7 +16,6 @@ public class TableServiceImpl implements TableService {
     private final TableRepository tableRepository;
 
     public Table save(Table table) {
-        Objects.nonNull(table);
         try {
             if (table.getZone().equals(TableZone.TERRACE)) {
                 table.setSmoking(true);
