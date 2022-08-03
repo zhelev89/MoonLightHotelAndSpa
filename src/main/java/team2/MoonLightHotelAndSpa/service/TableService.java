@@ -9,4 +9,6 @@ public interface TableService {
     Table findById(long id);
 
     Table update(Table updatedTable, long id);
+
+    void deleteById(long id);
 }

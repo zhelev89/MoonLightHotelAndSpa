@@ -2,6 +2,7 @@ package team2.MoonLightHotelAndSpa.service.implement;
 
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
@@ -46,5 +47,13 @@ public class TableServiceImpl implements TableService {
         table.setPeople(updatedTable.getPeople());
 
         return table;
+
+    public void deleteById(long id) {
+        try {
+            tableRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException ex) {
+            throw new RecordNotFoundException(
+                    String.format("Table with id:%s, not found.", id));
+        } 
     }
 }
