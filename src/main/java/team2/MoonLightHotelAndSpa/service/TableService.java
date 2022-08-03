@@ -6,5 +6,7 @@ public interface TableService {
 
     Table save(Table table);
 
+    Table findById(Long id);
+
     void deleteById(long id);
 }
