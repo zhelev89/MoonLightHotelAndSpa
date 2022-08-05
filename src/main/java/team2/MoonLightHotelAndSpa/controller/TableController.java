@@ -30,7 +30,7 @@ public class TableController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<TableResponse> update(@RequestBody TableUpdateRequest tableUpdateRequest,@PathVariable long id) {
+    public ResponseEntity<TableResponse> update(@RequestBody TableUpdateRequest tableUpdateRequest, @PathVariable long id) {
         Table table = tableConverter.convert(tableUpdateRequest);
         Table updatedTable = tableService.update(table, id);
         TableResponse tableResponse = tableConverter.convert(updatedTable);
@@ -42,9 +42,9 @@ public class TableController {
         Table table = tableService.findById(id);
         TableResponse tableResponse = tableConverter.convert(table);
         return ResponseEntity.ok().body(tableResponse);
-        
+    }
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<HttpStatus> deleteById(@PathVariable long id) {
+    public ResponseEntity<HttpStatus> deleteById ( @PathVariable long id){
         tableService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

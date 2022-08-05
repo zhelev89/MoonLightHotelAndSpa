@@ -47,6 +47,7 @@ public class TableServiceImpl implements TableService {
         table.setPeople(updatedTable.getPeople());
 
         return table;
+    }
 
     public void deleteById(long id) {
         try {
@@ -54,6 +55,6 @@ public class TableServiceImpl implements TableService {
         } catch (EmptyResultDataAccessException ex) {
             throw new RecordNotFoundException(
                     String.format("Table with id:%s, not found.", id));
-        } 
+        }
     }
 }
