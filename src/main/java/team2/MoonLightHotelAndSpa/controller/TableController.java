@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.converter.TableConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObject.table.TableResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.table.TableSaveRequest;
+import team2.MoonLightHotelAndSpa.dataTransferObject.table.TableUpdateRequest;
 import team2.MoonLightHotelAndSpa.model.table.Table;
 import team2.MoonLightHotelAndSpa.service.TableService;
 
@@ -28,8 +29,22 @@ public class TableController {
         return ResponseEntity.status(HttpStatus.CREATED).body(tableResponse);
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<TableResponse> update(@RequestBody TableUpdateRequest tableUpdateRequest, @PathVariable long id) {
+        Table table = tableConverter.convert(tableUpdateRequest);
+        Table updatedTable = tableService.update(table, id);
+        TableResponse tableResponse = tableConverter.convert(updatedTable);
+        return ResponseEntity.ok().body(tableResponse);
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<TableResponse> findById(@PathVariable long id) {
+        Table table = tableService.findById(id);
+        TableResponse tableResponse = tableConverter.convert(table);
+        return ResponseEntity.ok().body(tableResponse);
+    }
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<HttpStatus> deleteById(@PathVariable long id) {
+    public ResponseEntity<HttpStatus> deleteById ( @PathVariable long id){
         tableService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
