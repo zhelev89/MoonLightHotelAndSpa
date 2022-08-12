@@ -13,15 +13,14 @@ import team2.MoonLightHotelAndSpa.converter.RoomReservationConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObject.exceptionMessage.BadRequestMessageDto;
 import team2.MoonLightHotelAndSpa.dataTransferObject.exceptionMessage.ResponseMessageDto;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationResponseV2;
-import team2.MoonLightHotelAndSpa.dataTransferObject.user.*;
 import team2.MoonLightHotelAndSpa.converter.UserConverter;
+import team2.MoonLightHotelAndSpa.dataTransferObject.user.*;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.EmailSenderService;
 import team2.MoonLightHotelAndSpa.service.LoginService;
 import team2.MoonLightHotelAndSpa.service.RoomReservationService;
 import team2.MoonLightHotelAndSpa.service.UserService;
-import team2.MoonLightHotelAndSpa.dataTransferObject.user.ResetPasswordDto;
 
 import javax.validation.Valid;
 import java.util.Set;

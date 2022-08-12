@@ -14,6 +14,7 @@ public class TableReservationServiceImpl implements TableReservationService {
 
     private final TableReservationRepository tableReservationRepository;
 
+    @Override
     public TableReservation save(TableReservation tableReservation) {
         Objects.requireNonNull(tableReservation);
         return tableReservationRepository.save(tableReservation);
