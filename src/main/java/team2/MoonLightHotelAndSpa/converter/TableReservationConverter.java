@@ -20,7 +20,8 @@ public class TableReservationConverter {
     private final UserConverter userConverter;
 
     public TableReservation convert(TableReservationRequest tableReservationRequest, long tableId, User user) {
-        Instant instantDate= Instant.parse(tableReservationRequest.getDate());
+        String combinedDate = tableReservationRequest.getDate() + " " + tableReservationRequest.getHour();
+        Instant instantDate = Instant.parse(combinedDate);
         Table table = tableService.findById(tableId);
         return TableReservation.builder()
                 .date(instantDate)
