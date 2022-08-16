@@ -10,6 +10,9 @@ import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.TableService;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 @Component
 @AllArgsConstructor
@@ -20,11 +23,9 @@ public class TableReservationConverter {
     private final UserConverter userConverter;
 
     public TableReservation convert(TableReservationRequest tableReservationRequest, long tableId, User user) {
-        String combinedDate = tableReservationRequest.getDate() + " " + tableReservationRequest.getHour();
-        Instant instantDate = Instant.parse(combinedDate);
         Table table = tableService.findById(tableId);
         return TableReservation.builder()
-                .date(instantDate)
+                .date(convertRequestDateAndHourToInstant(tableReservationRequest.getDate(), tableReservationRequest.getHour()))
 //                .updated()
                 .people(tableReservationRequest.getPeople())
                 .price(tableReservationRequest.getPrice())
@@ -44,5 +45,14 @@ public class TableReservationConverter {
                 .tableResponse(tableConverter.convert(tableReservation.getTable()))
                 .userResponse(userConverter.convert(tableReservation.getUser()))
                 .build();
+    }
+
+    private Instant convertRequestDateAndHourToInstant(String date, String hour) {
+        String concatenatedDate = date + " " + hour;
+
+        return LocalDateTime
+                .parse(concatenatedDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                .atZone(ZoneId.systemDefault())
+                .toInstant();
     }
 }
