@@ -27,7 +27,6 @@ import team2.MoonLightHotelAndSpa.service.UserService;
 @Tag(name = "Table")
 public class TableController {
 
-    private final JwtTokenUtil jwtTokenUtil;
     private final TableService tableService;
     private final TableConverter tableConverter;
     private final UserService userService;
