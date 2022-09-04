@@ -15,7 +15,6 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.tableReservation.TableReser
 import team2.MoonLightHotelAndSpa.model.reservation.TableReservation;
 import team2.MoonLightHotelAndSpa.model.table.Table;
 import team2.MoonLightHotelAndSpa.model.user.User;
-import team2.MoonLightHotelAndSpa.security.JwtTokenUtil;
 import team2.MoonLightHotelAndSpa.service.TableReservationService;
 import team2.MoonLightHotelAndSpa.service.TableService;
 import team2.MoonLightHotelAndSpa.service.UserService;
@@ -47,7 +46,8 @@ public class TableController {
     }
 
     @PostMapping(value = "/{id}/reservations")
-    public ResponseEntity<TableReservationResponse> save(@RequestBody TableReservationRequest tableReservationRequest, @PathVariable long id, @AuthenticationPrincipal User user) {
+    public ResponseEntity<TableReservationResponse> save(@RequestBody TableReservationRequest tableReservationRequest,
+                                                         @PathVariable long id, @AuthenticationPrincipal User user) {
         User foundUser = userService.findById(user.getId());
         TableReservation tableReservation = tableReservationConverter.convert(tableReservationRequest, id, foundUser);
         TableReservation savedTableReservation = tableReservationService.save(tableReservation);
