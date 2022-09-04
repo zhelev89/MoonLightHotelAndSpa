@@ -27,6 +27,6 @@ public class TableReservationServiceImpl implements TableReservationService {
     @Override
     public List<TableReservation> findAllByTable(long id) {
         Table table = tableService.findById(id);
-        return tableReservationRepository.findAllByTable(table);
+        return tableReservationRepository.findByTable(table);
     }
 }

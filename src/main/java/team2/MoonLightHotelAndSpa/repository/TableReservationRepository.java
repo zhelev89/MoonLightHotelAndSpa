@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface TableReservationRepository extends JpaRepository<TableReservation, Long> {
 
-    List<TableReservation> findAllByTable(Table table);
+    List<TableReservation> findByTable(Table table);
 }
