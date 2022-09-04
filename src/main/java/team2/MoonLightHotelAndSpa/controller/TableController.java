@@ -16,7 +16,6 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.tableReservation.TableReser
 import team2.MoonLightHotelAndSpa.model.reservation.TableReservation;
 import team2.MoonLightHotelAndSpa.model.table.Table;
 import team2.MoonLightHotelAndSpa.model.user.User;
-import team2.MoonLightHotelAndSpa.security.JwtTokenUtil;
 import team2.MoonLightHotelAndSpa.service.TableReservationService;
 import team2.MoonLightHotelAndSpa.service.TableService;
 import team2.MoonLightHotelAndSpa.service.UserService;
@@ -56,7 +55,7 @@ public class TableController {
         return ResponseEntity.ok().body(tableResponse);
     }
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<HttpStatus> deleteById(@PathVariable long id) {
+    public ResponseEntity<HttpStatus> deleteById ( @PathVariable long id){
         tableService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
