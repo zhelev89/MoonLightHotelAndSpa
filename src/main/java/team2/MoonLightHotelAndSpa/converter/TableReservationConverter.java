@@ -42,8 +42,8 @@ public class TableReservationConverter {
                 .people(tableReservation.getPeople())
                 .price(tableReservation.getPrice())
 //                .updated()
-                .tableResponse(tableConverter.convert(tableReservation.getTable()))
-                .userResponse(userConverter.convert(tableReservation.getUser()))
+                .table(tableConverter.convert(tableReservation.getTable()))
+                .user(userConverter.convert(tableReservation.getUser()))
                 .build();
     }
 
