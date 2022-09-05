@@ -13,6 +13,7 @@ import team2.MoonLightHotelAndSpa.service.TableReservationService;
 import team2.MoonLightHotelAndSpa.service.TableService;
 import team2.MoonLightHotelAndSpa.service.UserService;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -71,5 +72,9 @@ public class TableReservationServiceImpl implements TableReservationService {
         }
 
         return tableReservation;
+    }
+
+    public Set<TableReservation> findAll() {
+        return new HashSet<>(tableReservationRepository.findAll());
     }
 }

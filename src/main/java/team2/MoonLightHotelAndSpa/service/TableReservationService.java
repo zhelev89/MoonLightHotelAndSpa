@@ -18,4 +18,6 @@ public interface TableReservationService {
     TableReservation findByTableIdAndReservationId(long tableId, long rid);
 
     TableReservation findByUserIdAndTableReservationId(long userId, long tableReservationId);
+
+    Set<TableReservation> findAll();
 }

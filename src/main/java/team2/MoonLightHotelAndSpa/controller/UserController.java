@@ -215,6 +215,15 @@ public class UserController {
         return ResponseEntity.ok().body(roomReservationResponseV2);
     }
 
+    @GetMapping(value = "/tables/reservations")
+    public ResponseEntity<Set<TableReservationResponse>> getTableReservationByUserId() {
+        Set<TableReservation> all = tableReservationService.findAll();
+        return ResponseEntity.ok().body(all.stream()
+                .map(tableReservationConverter::convert)
+                .collect(Collectors.toSet()));
+    }
+
+
     @GetMapping(value = "/{uid}/tables/reservations")
     public ResponseEntity<Set<TableReservationResponse>> getTableReservationByUserId(@PathVariable long uid) {
         Set<TableReservation> allByUserId = tableReservationService.findAllByUserId(uid);
