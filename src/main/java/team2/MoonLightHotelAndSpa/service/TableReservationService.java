@@ -3,6 +3,7 @@ package team2.MoonLightHotelAndSpa.service;
 import team2.MoonLightHotelAndSpa.model.reservation.TableReservation;
 
 import java.util.List;
+import java.util.Set;
 
 public interface TableReservationService {
 
@@ -12,5 +13,9 @@ public interface TableReservationService {
 
     List<TableReservation> findAllByTable(long id);
 
+    Set<TableReservation> findAllByUserId(long userId);
+
     TableReservation findByTableIdAndReservationId(long tableId, long rid);
+
+    TableReservation findByUserIdAndTableReservationId(long userId, long tableReservationId);
 }
