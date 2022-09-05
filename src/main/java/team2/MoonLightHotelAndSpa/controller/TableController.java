@@ -13,6 +13,7 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.table.TableSaveRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.table.TableUpdateRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.tableReservation.TableReservationRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.tableReservation.TableReservationResponse;
+import team2.MoonLightHotelAndSpa.dataTransferObject.tableReservation.TableReservationUpdateRequest;
 import team2.MoonLightHotelAndSpa.model.reservation.TableReservation;
 import team2.MoonLightHotelAndSpa.model.table.Table;
 import team2.MoonLightHotelAndSpa.model.user.User;
@@ -86,5 +87,13 @@ public class TableController {
         TableReservation byTableIdAndReservationId = tableReservationService.findByTableIdAndReservationId(id, rid);
         TableReservationResponse convert = tableReservationConverter.convert(byTableIdAndReservationId);
         return ResponseEntity.ok().body(convert);
+    }
+
+    @PutMapping(value = "/{id}/reservations/{rid}")
+    public ResponseEntity<TableReservationResponse> update(@RequestBody TableReservationUpdateRequest tableReservationUpdateRequest, @PathVariable long id, @PathVariable long rid) {
+        TableReservation tableReservation = tableReservationConverter.convert(tableReservationUpdateRequest);
+        TableReservation updatedTableReservation = tableReservationService.update(tableReservation, id, rid);
+        TableReservationResponse tableReservationResponse = tableReservationConverter.convert(updatedTableReservation);
+        return ResponseEntity.ok().body(tableReservationResponse);
     }
 }

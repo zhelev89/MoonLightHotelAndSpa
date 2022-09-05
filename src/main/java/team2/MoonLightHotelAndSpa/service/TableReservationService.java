@@ -20,4 +20,8 @@ public interface TableReservationService {
     TableReservation findByUserIdAndTableReservationId(long userId, long tableReservationId);
 
     Set<TableReservation> findAll();
+
+    TableReservation update(TableReservation updatedTableReservation, long id, long rid);
+
+    void tableReservationIdMatch(long tableId, long tableReservationId);
 }
