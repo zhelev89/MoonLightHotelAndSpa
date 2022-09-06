@@ -2,6 +2,8 @@ package team2.MoonLightHotelAndSpa.service;
 
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.room.Room;
+import team2.MoonLightHotelAndSpa.model.room.RoomTitle;
+import team2.MoonLightHotelAndSpa.model.room.RoomView;
 
 import java.time.Instant;
 import java.util.List;
@@ -28,4 +30,6 @@ public interface RoomReservationService {
     RoomReservation update(long id, long rid, RoomReservation updatedRoomReservation);
 
     List<Room> findAllAvailableRooms(Instant start_date, Instant end_date, int people);
+
+    List<Room> findAllAvailableRoomsDetailed(List<Room> rooms, RoomView roomView, RoomTitle roomTitle);
 }

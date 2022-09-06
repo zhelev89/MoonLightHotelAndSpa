@@ -22,6 +22,8 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReserva
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationUpdateRequest;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.room.Room;
+import team2.MoonLightHotelAndSpa.model.room.RoomTitle;
+import team2.MoonLightHotelAndSpa.model.room.RoomView;
 import team2.MoonLightHotelAndSpa.service.RoomReservationService;
 import team2.MoonLightHotelAndSpa.service.RoomService;
 
@@ -169,5 +171,21 @@ public class RoomController {
         List<Room> allAvailableRooms = roomReservationService.findAllAvailableRooms(startDate, endDate, people);
         List<RoomResponse> allAvailableRoomsResponse = allAvailableRooms.stream().map(roomConverter::convert).collect(Collectors.toList());
         return ResponseEntity.ok().body(allAvailableRoomsResponse);
+    }
+
+    @GetMapping(value = "/detailed")
+    public ResponseEntity<List<RoomResponse>> findAllAvailableRoomsDetailed(@RequestParam String start_date, @RequestParam String end_date,
+                                                                            @RequestParam int adults, @RequestParam int kids,
+                                                                            @RequestParam RoomView roomView, @RequestParam RoomTitle roomTitle) {
+        Instant startDate = Instant.parse(start_date);
+        Instant endDate = Instant.parse(end_date);
+        int people = adults + kids;
+        List<Room> allAvailableRooms = roomReservationService.findAllAvailableRooms(startDate, endDate, people);
+        List<Room> allAvailableRoomsDetailed = roomReservationService.findAllAvailableRoomsDetailed(allAvailableRooms, roomView, roomTitle);
+        List<RoomResponse> roomResponses = allAvailableRoomsDetailed.stream().map(roomConverter::convert).toList();
+        if (roomResponses.size() == 0) {
+            // return message
+        }
+        return ResponseEntity.ok().body(roomResponses);
     }
 }

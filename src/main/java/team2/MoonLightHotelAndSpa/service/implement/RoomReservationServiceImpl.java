@@ -6,6 +6,8 @@ import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.room.Room;
+import team2.MoonLightHotelAndSpa.model.room.RoomTitle;
+import team2.MoonLightHotelAndSpa.model.room.RoomView;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.repository.RoomReservationRepository;
 import team2.MoonLightHotelAndSpa.service.RoomReservationService;
@@ -18,6 +20,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -25,6 +29,7 @@ public class RoomReservationServiceImpl implements RoomReservationService {
 
     private final UserService userService;
     private final RoomReservationRepository roomReservationRepository;
+    private Logger logger;
 
     public RoomReservation save(RoomReservation roomReservation) {
         Objects.requireNonNull(roomReservation);
@@ -101,5 +106,20 @@ public class RoomReservationServiceImpl implements RoomReservationService {
     @Override
     public List<Room> findAllAvailableRooms(Instant start_date, Instant end_date, int people) {
         return roomReservationRepository.findAllAvailableRooms(start_date, end_date ,people);
+    }
+
+    @Override
+    public List<Room> findAllAvailableRoomsDetailed(List<Room> rooms, RoomView roomView, RoomTitle roomTitle) {
+
+        List<Room> sortedFromView = rooms.stream().filter(room -> room.getView().equals(roomView)).toList();
+        if(sortedFromView.size() == 0) {
+            logger.warning("");
+        }
+        List<Room> sortedFromTitle = rooms.stream().filter(room -> room.getTitle().equals(roomTitle)).toList();
+        if(sortedFromTitle.size() == 0) {
+            logger.warning("");
+        }
+
+        return rooms.stream().filter(room -> room.getView().equals(roomView)).filter(room -> room.getTitle().equals(roomTitle)).toList();
     }
 }
