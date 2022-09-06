@@ -64,6 +64,19 @@ public class TableReservationConverter {
                 .build();
     }
 
+    public TableReservationResponse convertSummarize(TableReservationRequest tableReservationRequest, long tableId, User user) {
+        Table table = tableService.findById(tableId);
+        String date = tableReservationRequest.getHour() + " " + tableReservationRequest.getDate();
+        return TableReservationResponse.builder()
+                .date(date)
+                .people(tableReservationRequest.getPeople())
+                .price(tableReservationRequest.getPrice())
+                .updated("")
+                .table(tableConverter.convert(table))
+                .user(userConverter.convert(user))
+                .build();
+    }
+
     private Instant convertRequestDateAndHourToInstant(String date, String hour) {
         String concatenatedDate = date + " " + hour;
 

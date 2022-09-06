@@ -96,4 +96,11 @@ public class TableController {
         TableReservationResponse tableReservationResponse = tableReservationConverter.convert(updatedTableReservation);
         return ResponseEntity.ok().body(tableReservationResponse);
     }
+
+    @PostMapping(value = "/{id}/summarize")
+    public ResponseEntity<TableReservationResponse> summarizeTableReservation(@RequestBody TableReservationRequest tableReservationRequest, @PathVariable long id, @AuthenticationPrincipal User user) {
+        User foundUser = userService.findById(user.getId());
+        TableReservationResponse tableReservationResponse = tableReservationConverter.convertSummarize(tableReservationRequest, id, user);
+        return ResponseEntity.ok().body(tableReservationResponse);
+    }
 }
