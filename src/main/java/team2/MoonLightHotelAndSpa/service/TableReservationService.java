@@ -8,5 +8,9 @@ public interface TableReservationService {
 
     TableReservation save(TableReservation tableReservation);
 
+    TableReservation findById(long id);
+
     List<TableReservation> findAllByTable(long id);
+
+    TableReservation findByTableIdAndReservationId(long tableId, long rid);
 }

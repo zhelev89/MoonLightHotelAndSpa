@@ -79,4 +79,12 @@ public class TableController {
         List<TableReservationResponse> tableReservationResponses = allReservation.stream().map(tableReservationConverter::convert).toList();
         return ResponseEntity.ok(tableReservationResponses);
     }
+
+    @GetMapping(value = "/{id}/reservations/{rid}")
+    public ResponseEntity<TableReservationResponse> findReservationById(@PathVariable long id,
+                                                                        @PathVariable long rid) {
+        TableReservation byTableIdAndReservationId = tableReservationService.findByTableIdAndReservationId(id, rid);
+        TableReservationResponse convert = tableReservationConverter.convert(byTableIdAndReservationId);
+        return ResponseEntity.ok().body(convert);
+    }
 }

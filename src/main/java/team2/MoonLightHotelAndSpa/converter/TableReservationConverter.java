@@ -41,7 +41,7 @@ public class TableReservationConverter {
                 .date(stringDate)
                 .people(tableReservation.getPeople())
                 .price(tableReservation.getPrice())
-//                .updated()
+                .updated(tableReservation.getUpdated().toString())
                 .table(tableConverter.convert(tableReservation.getTable()))
                 .user(userConverter.convert(tableReservation.getUser()))
                 .build();
