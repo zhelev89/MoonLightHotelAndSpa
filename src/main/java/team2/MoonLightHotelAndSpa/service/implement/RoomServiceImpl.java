@@ -1,8 +1,10 @@
 package team2.MoonLightHotelAndSpa.service.implement;
 
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.room.Room;
 import team2.MoonLightHotelAndSpa.repository.RoomRepository;
@@ -59,6 +61,10 @@ public class RoomServiceImpl implements RoomService {
         } catch (EmptyResultDataAccessException ex) {
             throw new RecordNotFoundException(
                     String.format("Room with id:%s, not found.", id));
+        } catch (DataIntegrityViolationException exception) {
+            throw new RecordBadRequestException(
+                    String.format("You cannot delete room with id:%s," +
+                            " because you have reservation with this room", id));
         }
     }
 }

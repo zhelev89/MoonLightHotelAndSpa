@@ -12,6 +12,7 @@ import team2.MoonLightHotelAndSpa.repository.TableRepository;
 import team2.MoonLightHotelAndSpa.service.TableService;
 
 import javax.transaction.Transactional;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Objects;
 
 @Service
@@ -32,11 +33,6 @@ public class TableServiceImpl implements TableService {
         }
     }
 
-    public Table findById(Long id) {
-        return tableRepository.findById(id).orElseThrow(
-                () -> new RecordNotFoundException(String.format("Table with this number:%s, not found", id)));
-    }
-
     @Override
     public Table findById(long id) {
         return tableRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
@@ -54,12 +50,18 @@ public class TableServiceImpl implements TableService {
         return table;
     }
 
-    public void deleteById(long id) {
+    @Override
+    public void deleteById(long id) throws EmptyResultDataAccessException, DataIntegrityViolationException{
         try {
             tableRepository.deleteById(id);
         } catch (EmptyResultDataAccessException ex) {
             throw new RecordNotFoundException(
                     String.format("Table with id:%s, not found.", id));
+        } catch (DataIntegrityViolationException exception) {
+            throw new RecordBadRequestException(
+                    String.format("You cannot delete table with id:%s," +
+                            " because you have reservation with this table", id));
         }
+
     }
 }
