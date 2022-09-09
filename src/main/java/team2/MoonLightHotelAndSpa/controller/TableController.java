@@ -97,6 +97,13 @@ public class TableController {
         return ResponseEntity.ok().body(tableReservationResponse);
     }
 
+    @PostMapping(value = "/{id}/summarize")
+    public ResponseEntity<TableReservationResponse> summarizeTableReservation(@RequestBody TableReservationRequest tableReservationRequest, @PathVariable long id, @AuthenticationPrincipal User user) {
+        User foundUser = userService.findById(user.getId());
+        TableReservationResponse tableReservationResponse = tableReservationConverter.convertSummarize(tableReservationRequest, id, user);
+        return ResponseEntity.ok().body(tableReservationResponse);
+    }
+
     @DeleteMapping(value = "/{id}/reservations/{rid}")
     public ResponseEntity<HttpStatus> deleteReservationById(@PathVariable long id, @PathVariable long rid) {
         tableReservationService.tableReservationIdMatch(id, rid);
