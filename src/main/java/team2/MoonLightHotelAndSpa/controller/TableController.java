@@ -20,6 +20,8 @@ import team2.MoonLightHotelAndSpa.service.TableReservationService;
 import team2.MoonLightHotelAndSpa.service.TableService;
 import team2.MoonLightHotelAndSpa.service.UserService;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/tables")
@@ -54,8 +56,9 @@ public class TableController {
         TableResponse tableResponse = tableConverter.convert(table);
         return ResponseEntity.ok().body(tableResponse);
     }
+
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<HttpStatus> deleteById ( @PathVariable long id){
+    public ResponseEntity<HttpStatus> deleteById(@PathVariable long id) {
         tableService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -67,5 +70,13 @@ public class TableController {
         TableReservation savedTableReservation = tableReservationService.save(tableReservation);
         TableReservationResponse tableReservationResponse = tableReservationConverter.convert(savedTableReservation);
         return ResponseEntity.ok().body(tableReservationResponse);
+    }
+
+    @GetMapping(value = "/{id}/reservations")
+    public ResponseEntity<List<TableReservationResponse>> findAllReservationsForTable(@PathVariable long id) {
+        Table table = tableService.findById(id);
+        List<TableReservation> allReservation = tableReservationService.findAllByTable(table.getId());
+        List<TableReservationResponse> tableReservationResponses = allReservation.stream().map(tableReservationConverter::convert).toList();
+        return ResponseEntity.ok(tableReservationResponses);
     }
 }
