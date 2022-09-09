@@ -21,7 +21,6 @@ import team2.MoonLightHotelAndSpa.service.TableService;
 import team2.MoonLightHotelAndSpa.service.UserService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -57,8 +56,9 @@ public class TableController {
         TableResponse tableResponse = tableConverter.convert(table);
         return ResponseEntity.ok().body(tableResponse);
     }
+
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<HttpStatus> deleteById ( @PathVariable long id){
+    public ResponseEntity<HttpStatus> deleteById(@PathVariable long id) {
         tableService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
