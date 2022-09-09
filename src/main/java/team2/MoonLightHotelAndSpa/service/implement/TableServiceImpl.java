@@ -32,6 +32,11 @@ public class TableServiceImpl implements TableService {
         }
     }
 
+    public Table findById(Long id) {
+        return tableRepository.findById(id).orElseThrow(
+                () -> new RecordNotFoundException(String.format("Table with this number:%s, not found", id)));
+    }
+
     @Override
     public Table findById(long id) {
         return tableRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
