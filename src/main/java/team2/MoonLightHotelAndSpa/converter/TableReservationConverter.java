@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import team2.MoonLightHotelAndSpa.dataTransferObject.tableReservation.TableReservationRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.tableReservation.TableReservationResponse;
+import team2.MoonLightHotelAndSpa.dataTransferObject.tableReservation.TableReservationUpdateRequest;
 import team2.MoonLightHotelAndSpa.model.reservation.TableReservation;
 import team2.MoonLightHotelAndSpa.model.table.Table;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.TableService;
+import team2.MoonLightHotelAndSpa.service.UserService;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -21,12 +23,13 @@ public class TableReservationConverter {
     private final TableService tableService;
     private final TableConverter tableConverter;
     private final UserConverter userConverter;
+    private final UserService userService;
 
     public TableReservation convert(TableReservationRequest tableReservationRequest, long tableId, User user) {
         Table table = tableService.findById(tableId);
         return TableReservation.builder()
                 .date(convertRequestDateAndHourToInstant(tableReservationRequest.getDate(), tableReservationRequest.getHour()))
-//                .updated()
+                .updated(Instant.now())
                 .people(tableReservationRequest.getPeople())
                 .price(tableReservationRequest.getPrice())
                 .table(table)
@@ -44,6 +47,20 @@ public class TableReservationConverter {
                 .updated(tableReservation.getUpdated().toString())
                 .table(tableConverter.convert(tableReservation.getTable()))
                 .user(userConverter.convert(tableReservation.getUser()))
+                .build();
+    }
+
+    public TableReservation convert(TableReservationUpdateRequest tableReservationUpdateRequest) {
+        Instant date = convertRequestDateAndHourToInstant(tableReservationUpdateRequest.getDate(), tableReservationUpdateRequest.getHour());
+        Table table = tableService.findById(tableReservationUpdateRequest.getTable());
+        User user = userService.findById(tableReservationUpdateRequest.getUser());
+        return TableReservation.builder()
+                .date(date)
+                .updated(Instant.now())
+                .people(tableReservationUpdateRequest.getPeople())
+                .price(tableReservationUpdateRequest.getPrice())
+                .table(table)
+                .user(user)
                 .build();
     }
 

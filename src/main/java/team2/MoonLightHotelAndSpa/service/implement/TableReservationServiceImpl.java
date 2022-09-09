@@ -13,6 +13,7 @@ import team2.MoonLightHotelAndSpa.service.TableReservationService;
 import team2.MoonLightHotelAndSpa.service.TableService;
 import team2.MoonLightHotelAndSpa.service.UserService;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -76,5 +77,34 @@ public class TableReservationServiceImpl implements TableReservationService {
 
     public Set<TableReservation> findAll() {
         return new HashSet<>(tableReservationRepository.findAll());
+    }
+
+    @Override
+    @Transactional
+    public TableReservation update(TableReservation updatedTableReservation, long id, long rid) {
+        tableReservationIdMatch(rid, id);
+        TableReservation tableReservation = findById(id);
+
+        tableReservation.setDate(updatedTableReservation.getDate());
+        tableReservation.setUpdated(updatedTableReservation.getUpdated());
+        tableReservation.setPeople(updatedTableReservation.getPeople());
+        tableReservation.setPrice(updatedTableReservation.getPrice());
+        tableReservation.setTable(updatedTableReservation.getTable());
+        tableReservation.setUser(updatedTableReservation.getUser());
+
+        return tableReservation;
+    }
+
+    @Override
+    public void tableReservationIdMatch(long tableId, long tableReservationId) {
+        TableReservation tableReservation = findById(tableReservationId);
+        if(tableReservation.getTable().getId() != tableId) {
+            throw new RecordBadRequestException("Reservation ID doesn't match with the table ID.");
+        }
+    }
+
+    @Override
+    public void deleteTableReservationId(long tableReservationId) {
+        tableReservationRepository.deleteById(tableReservationId);
     }
 }
