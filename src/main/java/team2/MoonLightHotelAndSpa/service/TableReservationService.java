@@ -21,6 +21,8 @@ public interface TableReservationService {
 
     Set<TableReservation> findAll();
 
+    void deleteTableReservationId(long tableReservationId);
+
     TableReservation update(TableReservation updatedTableReservation, long id, long rid);
 
     void tableReservationIdMatch(long tableId, long tableReservationId);

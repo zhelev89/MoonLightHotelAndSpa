@@ -103,4 +103,11 @@ public class TableController {
         TableReservationResponse tableReservationResponse = tableReservationConverter.convertSummarize(tableReservationRequest, id, user);
         return ResponseEntity.ok().body(tableReservationResponse);
     }
+
+    @DeleteMapping(value = "/{id}/reservations/{rid}")
+    public ResponseEntity<HttpStatus> deleteReservationById(@PathVariable long id, @PathVariable long rid) {
+        tableReservationService.tableReservationIdMatch(id, rid);
+        tableReservationService.deleteTableReservationId(rid);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
