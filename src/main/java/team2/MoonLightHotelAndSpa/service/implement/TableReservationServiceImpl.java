@@ -102,4 +102,9 @@ public class TableReservationServiceImpl implements TableReservationService {
             throw new RecordBadRequestException("Reservation ID doesn't match with the table ID.");
         }
     }
+
+    @Override
+    public void deleteTableReservationId(long tableReservationId) {
+        tableReservationRepository.deleteById(tableReservationId);
+    }
 }
