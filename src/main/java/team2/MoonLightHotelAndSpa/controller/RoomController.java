@@ -184,7 +184,7 @@ public class RoomController {
         List<Room> allAvailableRoomsDetailed = roomReservationService.findAllAvailableRoomsDetailed(allAvailableRooms, roomView, roomTitle);
         List<RoomResponse> roomResponses = allAvailableRoomsDetailed.stream().map(roomConverter::convert).toList();
         if (roomResponses.size() == 0) {
-            // return message
+            return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok().body(roomResponses);
     }

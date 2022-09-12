@@ -20,8 +20,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -29,7 +27,6 @@ public class RoomReservationServiceImpl implements RoomReservationService {
 
     private final UserService userService;
     private final RoomReservationRepository roomReservationRepository;
-    private Logger logger;
 
     public RoomReservation save(RoomReservation roomReservation) {
         Objects.requireNonNull(roomReservation);
@@ -110,16 +107,14 @@ public class RoomReservationServiceImpl implements RoomReservationService {
 
     @Override
     public List<Room> findAllAvailableRoomsDetailed(List<Room> rooms, RoomView roomView, RoomTitle roomTitle) {
-
         List<Room> sortedFromView = rooms.stream().filter(room -> room.getView().equals(roomView)).toList();
         if(sortedFromView.size() == 0) {
-            logger.warning("");
+            throw new RecordBadRequestException("Room view");
         }
-        List<Room> sortedFromTitle = rooms.stream().filter(room -> room.getTitle().equals(roomTitle)).toList();
+        List<Room> sortedFromTitle = sortedFromView.stream().filter(room -> room.getTitle().equals(roomTitle)).toList();
         if(sortedFromTitle.size() == 0) {
-            logger.warning("");
+            throw new RecordBadRequestException("Room title");
         }
-
         return rooms.stream().filter(room -> room.getView().equals(roomView)).filter(room -> room.getTitle().equals(roomTitle)).toList();
     }
 }
