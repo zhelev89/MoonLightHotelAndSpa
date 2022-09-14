@@ -15,15 +15,17 @@ public class PayPalController {
 
     private final PayPalService payPalService;
 
+    public static final String LOCALHOST_URL = "http://localhost:8080/";
     public static final String SUCCESS_URL = "pay/success";
     public static final String CANCEL_URL = "pay/cancel";
 
     @PostMapping("/pay")
     public String payment(@ModelAttribute("order") Order order) {
         try {
-            Payment payment = payPalService.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(),
-                    order.getIntent(), order.getDescription(), "http://localhost:8080" + CANCEL_URL,
-                    "http://localhost:8080" + SUCCESS_URL);
+            Payment payment = payPalService.createPayment(order.getPrice(), order.getCurrency(),
+                    order.getMethod(), order.getIntent(), order.getDescription(),
+                    LOCALHOST_URL + CANCEL_URL, LOCALHOST_URL + SUCCESS_URL);
+
             for (Links link : payment.getLinks()) {
                 if (link.getRel().equals("approval_url")) {
                     return "redirect:" + link.getHref();
@@ -48,7 +50,7 @@ public class PayPalController {
                 return "success";
             }
         } catch (PayPalRESTException e) {
-
+            System.out.println(e.getMessage());
         }
         return "redirect:/";
     }
