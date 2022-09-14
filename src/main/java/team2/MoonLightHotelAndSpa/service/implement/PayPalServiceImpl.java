@@ -16,9 +16,9 @@ import java.util.List;
 @AllArgsConstructor
 public class PayPalServiceImpl implements PayPalService {
 
-    private APIContext apiContext;
+    private final APIContext apiContext;
 
-    public Payment createPaymanet(
+    public Payment createPayment(
             Double total,
             String currency,
             String method,
@@ -26,9 +26,14 @@ public class PayPalServiceImpl implements PayPalService {
             String description,
             String cancelUrl,
             String successUrl) throws PayPalRESTException {
+
         Amount amount = new Amount();
         amount.setCurrency(currency);
-        total = new BigDecimal(total).setScale(2, RoundingMode.HALF_UP).doubleValue();
+
+        total = new BigDecimal(total)
+                .setScale(2, RoundingMode.HALF_UP)
+                .doubleValue();
+
         amount.setTotal(String.format("%.2f", total));
 
         Transaction transaction = new Transaction();
@@ -45,6 +50,7 @@ public class PayPalServiceImpl implements PayPalService {
         payment.setIntent(intent.toString());
         payment.setPayer(payer);
         payment.setTransactions(transactions);
+
         RedirectUrls redirectUrls = new RedirectUrls();
         redirectUrls.setCancelUrl(cancelUrl);
         redirectUrls.setReturnUrl(successUrl);
@@ -52,11 +58,12 @@ public class PayPalServiceImpl implements PayPalService {
         return payment.create(apiContext);
     }
 
-    public Payment executePayment(String paymentId, String payerId) throws PayPalRESTException{
+    public Payment executePayment(String paymentId, String payerId) throws PayPalRESTException {
         Payment payment = new Payment();
         payment.setId(paymentId);
         PaymentExecution paymentExecution = new PaymentExecution();
         paymentExecution.setPayerId(payerId);
+
         return payment.execute(apiContext, paymentExecution);
     }
 }
