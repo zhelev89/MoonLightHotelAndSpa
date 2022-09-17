@@ -57,7 +57,6 @@ public class PayPalServiceImpl implements PayPalService {
     }
 
     private com.paypal.orders.LinkDescription extractApprovalLink(Order order) {
-        System.out.println(order);
         LinkDescription approveUri = order.links().stream()
                 .filter(link -> APPROVE_LINK_REL.equals(link.rel()))
                 .findFirst()
