@@ -4,13 +4,14 @@ import com.paypal.core.PayPalEnvironment;
 import com.paypal.core.PayPalHttpClient;
 import com.paypal.http.HttpResponse;
 import com.paypal.orders.*;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.model.paypal.CreatedOrder;
 import team2.MoonLightHotelAndSpa.service.PayPalService;
 
-import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -23,16 +24,16 @@ public class PayPalServiceImpl implements PayPalService {
     }
 
     @Override
-    public CreatedOrder createOrder(Double totalAmount, URI returnUrl) throws IOException {
+    @SneakyThrows
+    public CreatedOrder createOrder(Double totalAmount, URI returnUrl) {
         final OrderRequest orderRequest = createOrderRequest(totalAmount, returnUrl);
+//        orderRequest.purchaseUnits(List.of(new PurchaseUnitRequest().amountWithBreakdown(new AmountWithBreakdown().currencyCode("USD").value(totalAmount.toString()))));
         final OrdersCreateRequest ordersCreateRequest = new OrdersCreateRequest().requestBody(orderRequest);
         final HttpResponse<Order> orderHttpResponse = payPalHttpClient.execute(ordersCreateRequest);
         final Order order = orderHttpResponse.result();
-        com.paypal.orders.LinkDescription approveUri = extractApprovalLink(order);
+        LinkDescription approveUri = extractApprovalLink(order);
         return new CreatedOrder(order.id(),URI.create(approveUri.href()));
     }
-
-
 
     private OrderRequest createOrderRequest(Double totalAmount, URI returnUrl) {
         final OrderRequest orderRequest = new OrderRequest();
@@ -56,11 +57,19 @@ public class PayPalServiceImpl implements PayPalService {
         orderRequest.checkoutPaymentIntent("CAPTURE");
     }
 
-    private com.paypal.orders.LinkDescription extractApprovalLink(Order order) {
+    private LinkDescription extractApprovalLink(Order order) {
         LinkDescription approveUri = order.links().stream()
                 .filter(link -> APPROVE_LINK_REL.equals(link.rel()))
                 .findFirst()
                 .orElseThrow(NoSuchElementException::new);
         return approveUri;
+    }
+
+    @Override
+    @SneakyThrows
+    public void captureOrder(String orderId) {
+        final OrdersCaptureRequest ordersCaptureRequest = new OrdersCaptureRequest(orderId);
+        final HttpResponse<Order> httpResponse = payPalHttpClient.execute(ordersCaptureRequest);
+//        log.info("Order Capture Status: {}",httpResponse.result().status());
     }
 }
