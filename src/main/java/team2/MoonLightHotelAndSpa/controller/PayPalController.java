@@ -26,28 +26,6 @@ public class PayPalController {
         return "redirect:" + createdOrder.getApprovalLink();
     }
 
-//    @PostMapping("/pay")
-//    public String captureOrder(@RequestParam Double amount, HttpServletRequest request) throws IOException {
-//        URI requestUri= URI.create("");
-//        try {
-//            requestUri = URI.create(request.getRequestURL().toString());
-//            new URI(requestUri.getScheme(),
-//                    requestUri.getUserInfo(),
-//                    requestUri.getHost(),
-//                    requestUri.getPort(),
-//                    "/capture",
-//                    null, null);
-//            System.out.println(requestUri);
-//            requestUri.toString();
-//        } catch (URISyntaxException e) {
-//            throw new RuntimeException(e);
-//        }
-//        CreatedOrder createdOrder = paypalService.createOrder(amount,URI.create("http://192.168.2.107:8080/capture"));
-//
-//        return "redirect:" + createdOrder.getApprovalLink();
-//
-//    }
-
     private URI buildReturnUrl(HttpServletRequest request) {
         try {
             URI requestUri = URI.create(request.getRequestURL().toString());
