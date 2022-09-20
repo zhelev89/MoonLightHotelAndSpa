@@ -47,6 +47,7 @@ public class RoomReservationConverter {
                 .roomBedType(roomReservationSaveRequest.getType_bed())
                 .roomView(roomReservationSaveRequest.getView())
                 .price(room.getPrice() * days)
+                .status("UNPAID")
                 .build();
     }
 
@@ -62,6 +63,7 @@ public class RoomReservationConverter {
                 .kids(roomReservation.getKids())
                 .price(roomReservation.getPrice())
                 .room(roomConverter.convert(roomReservation.getRoom()))
+                .status(roomReservation.getStatus())
                 .build();
     }
 

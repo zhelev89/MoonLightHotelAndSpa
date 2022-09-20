@@ -28,6 +28,7 @@ public class RoomReservationServiceImpl implements RoomReservationService {
 
     public RoomReservation save(RoomReservation roomReservation) {
         Objects.requireNonNull(roomReservation);
+//        roomReservation.setStatus("UNPAID");
         return roomReservationRepository.save(roomReservation);
     }
 
@@ -101,5 +102,13 @@ public class RoomReservationServiceImpl implements RoomReservationService {
     @Override
     public List<Room> findAllAvailableRooms(Instant start_date, Instant end_date, int people) {
         return roomReservationRepository.findAllAvailableRooms(start_date, end_date ,people);
+    }
+
+    @Override
+    public void isPaid(long reservationId) {
+        RoomReservation roomReservation = findById(reservationId);
+        if(roomReservation.getStatus().equals("PAID")) {
+            throw new RecordBadRequestException("This reservation is already paid!");
+        }
     }
 }
