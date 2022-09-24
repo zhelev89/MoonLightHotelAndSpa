@@ -12,7 +12,6 @@ import team2.MoonLightHotelAndSpa.repository.TableRepository;
 import team2.MoonLightHotelAndSpa.service.TableService;
 
 import javax.transaction.Transactional;
-import java.util.Objects;
 
 @Service
 @AllArgsConstructor
