@@ -65,7 +65,9 @@ public class TableController {
     }
 
     @PostMapping(value = "/{id}/reservations")
-    public ResponseEntity<TableReservationResponse> save(@RequestBody TableReservationRequest tableReservationRequest, @PathVariable long id, @AuthenticationPrincipal User user) {
+    public ResponseEntity<TableReservationResponse> save(@RequestBody TableReservationRequest tableReservationRequest,
+                                                         @PathVariable long id,
+                                                         @AuthenticationPrincipal User user) {
         User foundUser = userService.findById(user.getId());
         TableReservation tableReservation = tableReservationConverter.convert(tableReservationRequest, id, foundUser);
         TableReservation savedTableReservation = tableReservationService.save(tableReservation);

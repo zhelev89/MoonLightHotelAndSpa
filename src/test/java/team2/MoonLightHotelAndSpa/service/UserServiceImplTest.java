@@ -142,7 +142,7 @@ public class UserServiceImplTest {
                 .password(currentHashedPassword)
                 .build();
         when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
-        User changedUser = userService.changePassword(newPassword, password, email);
+        User changedUser = userService.resetPassword(newPassword, password, email);
         boolean isMatching = bCryptPasswordEncoder.matches(newPassword, changedUser.getPassword());
         assertTrue(isMatching);
     }
@@ -156,7 +156,7 @@ public class UserServiceImplTest {
                 .build()));
         String exceptionMessage = "Your old password does not match";
         PasswordNotMatchingException exception = assertThrows(PasswordNotMatchingException.class, () -> {
-            userService.changePassword("123", "321", "email@gmail.com");
+            userService.resetPassword("123", "321", "email@gmail.com");
         });
         assertEquals(exception.getMessage(), exceptionMessage);
     }

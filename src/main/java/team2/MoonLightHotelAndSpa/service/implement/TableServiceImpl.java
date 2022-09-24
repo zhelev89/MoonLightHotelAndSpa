@@ -12,6 +12,7 @@ import team2.MoonLightHotelAndSpa.repository.TableRepository;
 import team2.MoonLightHotelAndSpa.service.TableService;
 
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 
 @Service
 @AllArgsConstructor
@@ -28,6 +29,8 @@ public class TableServiceImpl implements TableService {
         } catch (DataIntegrityViolationException ex) {
             throw new RecordBadRequestException(String.format("Table with this number:%s, already exists.",
                     table.getNumber()));
+        } catch (ConstraintViolationException ex) {
+            throw new ConstraintViolationException(ex.getConstraintViolations());
         }
     }
 

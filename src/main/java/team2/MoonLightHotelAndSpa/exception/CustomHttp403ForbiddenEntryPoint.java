@@ -16,5 +16,6 @@ public class CustomHttp403ForbiddenEntryPoint implements AuthenticationEntryPoin
                          AuthenticationException authException) throws IOException, ServletException {
 
         response.getWriter().print("You need to login first in order to perform this action.");
+        response.setStatus(403);
     }
 }
