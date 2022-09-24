@@ -2,10 +2,7 @@ package team2.MoonLightHotelAndSpa.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.model.paypal.CreatedOrder;
 import team2.MoonLightHotelAndSpa.service.PayPalService;
 import team2.MoonLightHotelAndSpa.service.RoomReservationService;
@@ -51,7 +48,7 @@ public class PayPalController {
     }
 
     @GetMapping("/capture")
-    public String captureOrder(@RequestParam String token,@RequestParam String reservationId){
+    public String captureOrder(@RequestParam String token, @RequestParam String reservationId){
         long reservationIdLong = Long.parseLong(reservationId);
         String orderId = "";
         orderId = token;
