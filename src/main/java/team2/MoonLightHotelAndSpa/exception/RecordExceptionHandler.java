@@ -9,7 +9,6 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class RecordExceptionHandler {
@@ -30,15 +29,6 @@ public class RecordExceptionHandler {
                 new RecordResponseException(ex.getMessage());
 
         return new ResponseEntity<>(recordResponseException, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(value = {EmailNotSendException.class})
-    public ResponseEntity<Object> handleEmailNotSendException(EmailNotSendException ex) {
-
-        RecordResponseException recordResponseException =
-                new RecordResponseException(ex.getMessage());
-
-        return new ResponseEntity<>(recordResponseException, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = ConstraintViolationException.class)
