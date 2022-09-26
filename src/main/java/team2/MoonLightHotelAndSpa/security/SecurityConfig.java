@@ -28,13 +28,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomHttp403ForbiddenEntryPoint customHttp403ForbiddenEntryPoint;
     private static final String ADMIN = "ROLE_ADMIN";
     private static final String CLIENT = "ROLE_CLIENT";
-    private static final String[] PUBLIC_URL_POST = {"/users", "/users/token", "/users/forgot", "/contact", "/pay"};
-    private static final String[] PUBLIC_URL_GET = {"/rooms", "/rooms/{id}", "/capture"};
-    private static final String[] PROTECTED_URL_POST = {"/rooms", "/rooms/{id}/reservation", "/users/reset", "/tables", "/**"};
-    private static final String[] PROTECTED_URL_POST_CLIENT = {"/rooms/{id}/reservation", "/users/reset", "/users/reset", "/**"};
-    private static final String[] PROTECTED_URL_GET = {"/users", "/users/{id}", "/users/reservations", "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/rooms/{id}/reservation/{rid}", "/users/{uid}/reservations", "/**"};
-    private static final String[] PROTECTED_URL_GET_CLIENT = {"/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/**"};
-    private static final String[] PROTECTED_URL_PUT = {"/users/{id}", "/rooms/{id}/reservation/{rid}", "/rooms/{id}", "/tables/{id}", "/tables/{id}", "/**"};
+    private static final String[] PUBLIC_URL_POST = {"/users", "/users/token", "/users/forgot", "/contacts"};
+    private static final String[] PUBLIC_URL_GET = {"/rooms", "/rooms/{id}", "/rooms/{id}/summarize"};
+    private static final String[] PROTECTED_URL_POST = {"/rooms", "/rooms/{id}/reservation", "/users/reset", "/tables",
+            "/**"};
+    private static final String[] PROTECTED_URL_POST_CLIENT = {"/rooms/{id}/reservation", "/users/reset", "/users/reset",
+            "/**"};
+    private static final String[] PROTECTED_URL_GET = {"/users", "/users/{id}", "/users/reservations",
+            "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/rooms/{id}/reservation/{rid}",
+            "/users/{uid}/reservations", "/**"};
+    private static final String[] PROTECTED_URL_GET_CLIENT = {"/users/{uid}/reservations", "/users/{uid}/reservations/{rid}",
+            "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/users/profile", "/**"};
+    private static final String[] PROTECTED_URL_PUT = {"/users/{id}", "/rooms/{id}/reservation/{rid}", "/rooms/{id}",
+            "/tables/{id}", "/tables/{id}", "/**"};
     private static final String[] PROTECTED_URL_PUT_CLIENT = {"/**"};
     private static final String[] PROTECTED_URL_DELETE = {"/users/{id}", "/rooms/{id}", "/rooms/{id}/reservation/{rid}", "/tables/{id}", "/**"};
     private static final String[] PROTECTED_URL_DELETE_CLIENT = {"/**"};
