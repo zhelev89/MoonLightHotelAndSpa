@@ -57,9 +57,9 @@ public class RoomReservation {
     @CreationTimestamp
     private Instant created;
 
-//    @NotNull
-//    @Column(name = "status")
-//    private String status;
+    @NotNull
+    @Column(name = "status")
+    private String status;
 
     @NotNull
     @ManyToOne
