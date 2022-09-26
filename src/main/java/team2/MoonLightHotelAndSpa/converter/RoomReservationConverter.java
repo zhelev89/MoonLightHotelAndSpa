@@ -6,6 +6,7 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReserva
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationResponseV2;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationSaveRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationUpdateRequest;
+import team2.MoonLightHotelAndSpa.model.reservation.ReservationStatus;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.room.Room;
 import team2.MoonLightHotelAndSpa.service.RoomReservationService;
@@ -32,6 +33,7 @@ public class RoomReservationConverter {
         Instant startDate = Instant.parse(roomReservationSaveRequest.getStartDate());
         Instant endDate = Instant.parse(roomReservationSaveRequest.getEndDate());
         Room room = roomService.findById(id);
+        String status = String.valueOf(ReservationStatus.UNPAID);
         int people = roomReservationSaveRequest.getKids() + roomReservationSaveRequest.getAdults();
         roomReservationValidator.validDates(startDate, endDate);
         int days = roomReservationService.calculateDays(startDate, endDate);
@@ -47,7 +49,7 @@ public class RoomReservationConverter {
                 .roomBedType(roomReservationSaveRequest.getType_bed())
                 .roomView(roomReservationSaveRequest.getView())
                 .price(room.getPrice() * days)
-                .status("UNPAID")
+                .status(status)
                 .build();
     }
 

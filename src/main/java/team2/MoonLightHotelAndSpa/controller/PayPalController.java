@@ -52,7 +52,6 @@ public class PayPalController {
         long reservationIdLong = Long.parseLong(reservationId);
         String orderId = "";
         orderId = token;
-        System.out.println(token);
         paypalService.captureOrder(token, reservationIdLong);
         return "redirect:/orders";
     }

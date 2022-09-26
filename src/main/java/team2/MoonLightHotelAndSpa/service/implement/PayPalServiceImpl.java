@@ -8,6 +8,7 @@ import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.model.paypal.CreatedOrder;
+import team2.MoonLightHotelAndSpa.model.reservation.ReservationStatus;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.service.PayPalService;
 import team2.MoonLightHotelAndSpa.service.RoomReservationService;
@@ -82,8 +83,9 @@ public class PayPalServiceImpl implements PayPalService {
     @SneakyThrows
     @Transactional
     public void captureOrder(String orderId, long reservationId) {
+        String status = String.valueOf(ReservationStatus.PAID);
         RoomReservation roomReservation = roomReservationService.findById(reservationId);
-        roomReservation.setStatus("PAID");
+        roomReservation.setStatus(status);
         final OrdersCaptureRequest ordersCaptureRequest = new OrdersCaptureRequest(orderId);
         final HttpResponse<Order> httpResponse = payPalHttpClient.execute(ordersCaptureRequest);
     }
