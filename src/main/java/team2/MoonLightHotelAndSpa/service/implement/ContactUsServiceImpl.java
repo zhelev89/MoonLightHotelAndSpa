@@ -2,7 +2,7 @@ package team2.MoonLightHotelAndSpa.service.implement;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import team2.MoonLightHotelAndSpa.model.contactUs.ContactUs;
+import team2.MoonLightHotelAndSpa.model.contactUsForm.ContactUs;
 import team2.MoonLightHotelAndSpa.repository.ContactUsRepository;
 import team2.MoonLightHotelAndSpa.service.ContactUsService;
 

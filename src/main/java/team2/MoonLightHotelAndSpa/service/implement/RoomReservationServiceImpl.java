@@ -32,9 +32,6 @@ public class RoomReservationServiceImpl implements RoomReservationService {
     }
 
     public RoomReservation findByUserIdAndReservationId(long uid, long rid) {
-        Objects.requireNonNull(uid);
-        Objects.requireNonNull(rid);
-
         User foundUser = userService.findById(uid);
         RoomReservation foundReservation = findById(rid);
         if (foundReservation.getUser().getId() != foundUser.getId()) {
@@ -44,7 +41,6 @@ public class RoomReservationServiceImpl implements RoomReservationService {
     }
 
     public Set<RoomReservation> findAllByUserId(long id) {
-        Objects.requireNonNull(id);
         User userById = userService.findById(id);
         return roomReservationRepository.findAllByUser(userById);
     }
@@ -86,7 +82,6 @@ public class RoomReservationServiceImpl implements RoomReservationService {
     @Override
     @Transactional
     public RoomReservation update(long id, long rid, RoomReservation updatedRoomReservation) {
-        Objects.requireNonNull(rid);
         RoomReservation roomReservation = findById(rid);
         roomReservation.setStartDate(updatedRoomReservation.getStartDate());
         roomReservation.setEndDate(updatedRoomReservation.getEndDate());

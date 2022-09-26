@@ -1,8 +1,8 @@
 package team2.MoonLightHotelAndSpa.dataTransferObject.exceptionMessage;
 
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 public class BadRequestMessageDto {
 
     private String message;

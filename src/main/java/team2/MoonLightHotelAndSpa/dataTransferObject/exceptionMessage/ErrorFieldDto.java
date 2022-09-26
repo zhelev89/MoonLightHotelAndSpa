@@ -1,10 +1,10 @@
 package team2.MoonLightHotelAndSpa.dataTransferObject.exceptionMessage;
 
-import lombok.Getter;
+import lombok.Data;
 
 import java.util.List;
 
-@Getter
+@Data
 public class ErrorFieldDto {
 
     private List<String> field_name;

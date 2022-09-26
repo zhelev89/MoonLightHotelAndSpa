@@ -35,12 +35,11 @@ public class UserServiceImpl implements UserService {
         } catch (DataIntegrityViolationException ex) {
             throw new RecordBadRequestException("User with this email or phone is already exist.");
         } catch (ConstraintViolationException ex) {
-            throw new RecordBadRequestException(ex.getMessage());
+            throw new ConstraintViolationException(ex.getConstraintViolations());
         }
     }
 
     public User findById(long id) {
-        Objects.requireNonNull(id);
         return userRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException(
                         String.format("User with id:%s, not found.", id)));
@@ -58,8 +57,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public User update(long id, User updatedUser) {
-        Objects.requireNonNull(id);
-
         User user = findById(id);
         user.setEmail(updatedUser.getEmail());
         user.setPassword(bCryptPasswordEncoder.encode(updatedUser.getPassword()));
@@ -81,7 +78,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User changePassword(String newPassword, String currentPassword, String email) {
+    public User resetPassword(String newPassword, String currentPassword, String email) {
         User user = findByEmail(email);
         if (bCryptPasswordEncoder.matches(currentPassword, user.getPassword())) {
             user.setPassword(bCryptPasswordEncoder.encode(newPassword));
@@ -96,11 +93,11 @@ public class UserServiceImpl implements UserService {
         return findByEmail(username);
     }
 
-    public boolean isUserExists(long id) {
-        return userRepository.existsById(id);
-    }
-
-    public boolean isEmailExists(String email) {
-        return userRepository.existsByEmail(email);
-    }
+//    public boolean isUserExists(long id) {
+//        return userRepository.existsById(id);
+//    }
+//
+//    public boolean isEmailExists(String email) {
+//        return userRepository.existsByEmail(email);
+//    }
 }

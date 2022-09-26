@@ -8,6 +8,7 @@ import team2.MoonLightHotelAndSpa.model.room.Room;
 import team2.MoonLightHotelAndSpa.repository.RoomRepository;
 import team2.MoonLightHotelAndSpa.service.RoomService;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,8 +20,12 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public Room save(Room room) {
-        Objects.requireNonNull(room);
-        return roomRepository.save(room);
+        try {
+            Objects.requireNonNull(room);
+            return roomRepository.save(room);
+        } catch (ConstraintViolationException ex) {
+            throw new ConstraintViolationException(ex.getConstraintViolations());
+        }
     }
 
     public List<Room> findAll() {
@@ -29,8 +34,6 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public Room update(long id, Room updatedRoom) {
-        Objects.requireNonNull(id);
-
         Room room = findById(id);
         room.setTitle(updatedRoom.getTitle());
         room.setImage(updatedRoom.getImage());
