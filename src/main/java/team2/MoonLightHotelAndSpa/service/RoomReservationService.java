@@ -28,4 +28,6 @@ public interface RoomReservationService {
     RoomReservation update(long id, long rid, RoomReservation updatedRoomReservation);
 
     List<Room> findAllAvailableRooms(Instant start_date, Instant end_date, int people);
+
+    void isPaid(long reservationId);
 }

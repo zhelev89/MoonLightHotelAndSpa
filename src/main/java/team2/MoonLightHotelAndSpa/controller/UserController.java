@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.converter.RoomReservationConverter;
 import team2.MoonLightHotelAndSpa.converter.TableReservationConverter;
@@ -52,8 +53,8 @@ public class UserController {
     })
     public ResponseEntity<UserResponse> save(@RequestBody UserSaveRequest userSaveRequest) {
         User user = userConverter.convert(userSaveRequest);
-        String text = String.format("You can access your system with your email: %s and password: %s.", user.getEmail(), user.getPassword());
         User savedUser = userService.save(user);
+        String text = String.format("You can access your system with your email: %s and password: %s.", user.getEmail(), user.getPassword());
         emailSenderService.sendEmail(user.getEmail(), "Access to Moonlight Hotel.", text);
         UserResponse userResponse = userConverter.convert(savedUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
@@ -103,6 +104,12 @@ public class UserController {
                         .collect(Collectors.toSet()));
     }
 
+    @GetMapping(value = "/profile")
+    public ResponseEntity<UserResponse> profile(@AuthenticationPrincipal User user) {
+        User userById = userService.findById(user.getId());
+        return ResponseEntity.ok().body(userConverter.convert(userById));
+    }
+
     @PutMapping(value = "/{id}")
     @Operation(summary = "Update user", responses = {
             @ApiResponse(description = "Successful operation", responseCode = "200",
@@ -147,7 +154,9 @@ public class UserController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = BadRequestMessageDto.class)))
     })
     public ResponseEntity<UserResponse> resetPassword(@RequestBody ResetPasswordDto resetPasswordDto) {
-        User user = userService.changePassword(resetPasswordDto.getNewPassword(), resetPasswordDto.getCurrentPassword(), resetPasswordDto.getEmail());
+        User user = userService.resetPassword(resetPasswordDto.getNewPassword(),
+                resetPasswordDto.getCurrentPassword(),
+                resetPasswordDto.getEmail());
         UserResponse userResponse = userConverter.convert(user);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(userResponse);
     }

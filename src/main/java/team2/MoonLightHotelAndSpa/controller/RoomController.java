@@ -119,7 +119,8 @@ public class RoomController {
             @ApiResponse(description = "Unauthorized", responseCode = "401",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
     })
-    private ResponseEntity<RoomReservationResponseV1> save(@RequestBody RoomReservationSaveRequest roomReservationSaveRequest, @PathVariable long id) {
+    private ResponseEntity<RoomReservationResponseV1> save(@RequestBody RoomReservationSaveRequest roomReservationSaveRequest,
+                                                           @PathVariable long id) {
         RoomReservation convert = roomReservationConverter.convert(roomReservationSaveRequest, id);
         RoomReservation savedReserve = roomReservationService.save(convert);
         RoomReservationResponseV1 response = roomReservationConverter.convert(savedReserve);
@@ -145,7 +146,8 @@ public class RoomController {
 
     @PutMapping(value = "/{id}/reservation/{rid}")
     @Operation(summary = "Update a Reservation by ID and room ID")
-    public ResponseEntity<RoomReservationResponseV2> update(@RequestBody @Valid RoomReservationUpdateRequest roomReservationUpdateRequest, @PathVariable long id, @PathVariable long rid) {
+    public ResponseEntity<RoomReservationResponseV2> update(@RequestBody @Valid RoomReservationUpdateRequest roomReservationUpdateRequest,
+                                                            @PathVariable long id, @PathVariable long rid) {
         roomReservationService.roomReservationIdMatch(id, rid);
         RoomReservation convertedRoomReservation = roomReservationConverter.convert(roomReservationUpdateRequest);
         RoomReservation updatedRoomReservation = roomReservationService.update(id, rid, convertedRoomReservation);
@@ -161,13 +163,18 @@ public class RoomController {
         return ResponseEntity.ok().body(responseV2);
     }
 
-    @GetMapping
-    public ResponseEntity<List<RoomResponse>> findAllAvailableRooms(@RequestParam String start_date, @RequestParam String end_date, @RequestParam int adults, @RequestParam int kids) {
+    @GetMapping(value = "/{id}/summarize")
+    public ResponseEntity<List<RoomResponse>> findAllAvailableRooms(@RequestParam String start_date,
+                                                                    @RequestParam String end_date,
+                                                                    @RequestParam int adults,
+                                                                    @RequestParam int kids) {
         Instant startDate = Instant.parse(start_date);
         Instant endDate = Instant.parse(end_date);
         int people = adults + kids;
         List<Room> allAvailableRooms = roomReservationService.findAllAvailableRooms(startDate, endDate, people);
-        List<RoomResponse> allAvailableRoomsResponse = allAvailableRooms.stream().map(roomConverter::convert).collect(Collectors.toList());
+        List<RoomResponse> allAvailableRoomsResponse = allAvailableRooms.stream()
+                .map(roomConverter::convert)
+                .collect(Collectors.toList());
         return ResponseEntity.ok().body(allAvailableRoomsResponse);
     }
 }

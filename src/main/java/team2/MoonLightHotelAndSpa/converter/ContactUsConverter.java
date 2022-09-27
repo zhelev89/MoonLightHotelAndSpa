@@ -1,8 +1,8 @@
 package team2.MoonLightHotelAndSpa.converter;
 
 import org.springframework.stereotype.Component;
-import team2.MoonLightHotelAndSpa.dataTransferObject.contact.ContactUsRequest;
-import team2.MoonLightHotelAndSpa.model.contactUs.ContactUs;
+import team2.MoonLightHotelAndSpa.dataTransferObject.contactUsForm.ContactUsRequest;
+import team2.MoonLightHotelAndSpa.model.contactUsForm.ContactUs;
 
 @Component
 public class ContactUsConverter {

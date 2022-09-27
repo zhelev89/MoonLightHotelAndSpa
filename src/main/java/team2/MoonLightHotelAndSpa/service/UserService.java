@@ -18,5 +18,5 @@ public interface UserService extends UserDetailsService {
 
     void deleteById(long id);
 
-    User changePassword(String newPassword, String currentPassword, String email);
+    User resetPassword(String newPassword, String currentPassword, String email);
 }
