@@ -37,6 +37,10 @@ public class TableReservation {
     private double price;
 
     @NotNull
+    @Column(name = "status")
+    private String status;
+
+    @NotNull
     @ManyToOne
     private team2.MoonLightHotelAndSpa.model.table.Table table;
 

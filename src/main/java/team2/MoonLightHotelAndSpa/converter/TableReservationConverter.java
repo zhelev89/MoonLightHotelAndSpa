@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import team2.MoonLightHotelAndSpa.dataTransferObject.tableReservation.TableReservationRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.tableReservation.TableReservationResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.tableReservation.TableReservationUpdateRequest;
+import team2.MoonLightHotelAndSpa.model.reservation.ReservationStatus;
 import team2.MoonLightHotelAndSpa.model.reservation.TableReservation;
 import team2.MoonLightHotelAndSpa.model.table.Table;
 import team2.MoonLightHotelAndSpa.model.user.User;
@@ -26,6 +27,7 @@ public class TableReservationConverter {
     private final UserService userService;
 
     public TableReservation convert(TableReservationRequest tableReservationRequest, long tableId, User user) {
+        String status = String.valueOf(ReservationStatus.UNPAID);
         Table table = tableService.findById(tableId);
         return TableReservation.builder()
                 .date(convertRequestDateAndHourToInstant(tableReservationRequest.getDate(), tableReservationRequest.getHour()))
@@ -34,6 +36,7 @@ public class TableReservationConverter {
                 .price(tableReservationRequest.getPrice())
                 .table(table)
                 .user(user)
+                .status(status)
                 .build();
     }
 
@@ -45,6 +48,7 @@ public class TableReservationConverter {
                 .people(tableReservation.getPeople())
                 .price(tableReservation.getPrice())
                 .updated(tableReservation.getUpdated().toString())
+                .status(tableReservation.getStatus())
                 .table(tableConverter.convert(tableReservation.getTable()))
                 .user(userConverter.convert(tableReservation.getUser()))
                 .build();

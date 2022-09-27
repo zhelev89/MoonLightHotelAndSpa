@@ -18,23 +18,23 @@ public class PayPalController {
     private final PayPalService paypalService;
     private final RoomReservationService roomReservationService;
 
-    @PostMapping("/pay")
-    public String placeOrder(@RequestParam long reservationId, HttpServletRequest request) throws IOException {
-        final URI returnUrl = buildReturnUrl(request, reservationId);
-        CreatedOrder createdOrder = paypalService.createOrder(reservationId, returnUrl);
+    @PostMapping("/pay/room")
+    public String placeOrderRoom(@RequestParam long roomReservationId, HttpServletRequest request) throws IOException {
+        final URI returnUrl = buildReturnUrlRoom(request, roomReservationId);
+        CreatedOrder createdOrder = paypalService.createOrderRoom(roomReservationId, returnUrl);
         return "redirect:" + createdOrder.getApprovalLink();
     }
 
-    private URI buildReturnUrl(HttpServletRequest request, long reservationId) {
-        String reservationIdString = "reservationId=" + String.valueOf(reservationId);
+    private URI buildReturnUrlRoom(HttpServletRequest request, long roomReservationId) {
+        String roomReservationIdString = "roomReservationId=" + String.valueOf(roomReservationId);
         try {
             URI requestUri = URI.create(request.getRequestURL().toString());
             return new URI(requestUri.getScheme(),
                     requestUri.getUserInfo(),
                     requestUri.getHost(),
                     requestUri.getPort(),
-                    "/capture",
-                    reservationIdString, null);
+                    "/capture/room",
+                    roomReservationIdString, null);
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
@@ -43,16 +43,48 @@ public class PayPalController {
     @GetMapping
     public String orderPage(Model model){
         String orderId = "";
-        model.addAttribute("orderId",orderId);
+        model.addAttribute("orderId", orderId);
         return "order";
     }
 
-    @GetMapping("/capture")
-    public String captureOrder(@RequestParam String token, @RequestParam String reservationId){
-        long reservationIdLong = Long.parseLong(reservationId);
+    @GetMapping("/capture/room")
+    public String captureOrderRoom(@RequestParam String token, @RequestParam String roomReservationId){
+        long roomReservationIdLong = Long.parseLong(roomReservationId);
         String orderId = "";
         orderId = token;
-        paypalService.captureOrder(token, reservationIdLong);
+        paypalService.captureOrderRoom(token, roomReservationIdLong);
         return "redirect:/orders";
     }
+
+    @PostMapping("/pay/table")
+    public String placeOrderTable(@RequestParam long tableReservationId, HttpServletRequest request) throws IOException {
+        final URI returnUrl = buildReturnUrlTable(request, tableReservationId);
+        CreatedOrder createdOrder = paypalService.createOrderTable(tableReservationId, returnUrl);
+        return "redirect:" + createdOrder.getApprovalLink();
+    }
+
+    private URI buildReturnUrlTable(HttpServletRequest request, long tableReservationId) {
+        String tableReservationIdString = "tableReservationId=" + String.valueOf(tableReservationId);
+        try {
+            URI requestUri = URI.create(request.getRequestURL().toString());
+            return new URI(requestUri.getScheme(),
+                    requestUri.getUserInfo(),
+                    requestUri.getHost(),
+                    requestUri.getPort(),
+                    "/capture/table",
+                    tableReservationIdString, null);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @GetMapping("/capture/table")
+    public String captureOrderTable(@RequestParam String token, @RequestParam String tableReservationId){
+        long tableReservationIdLong = Long.parseLong(tableReservationId);
+        String orderId = "";
+        orderId = token;
+        paypalService.captureOrderTable(token, tableReservationIdLong);
+        return "redirect:/orders";
+    }
+
 }
