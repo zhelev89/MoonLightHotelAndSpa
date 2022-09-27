@@ -15,4 +15,5 @@ public class RoomReservationResponseV1 {
     private int kids;
     private float price;
     private RoomResponse room;
+    private String status;
 }

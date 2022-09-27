@@ -6,11 +6,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-//@CrossOrigin(origins = "");
 @SpringBootApplication
 public class MoonLightHotelAndSpaApplication {
 
@@ -50,5 +48,4 @@ public class MoonLightHotelAndSpaApplication {
                 .version("v1.0.0");
         return info;
     }
-
 }
