@@ -107,4 +107,12 @@ public class TableReservationServiceImpl implements TableReservationService {
     public void deleteTableReservationId(long tableReservationId) {
         tableReservationRepository.deleteById(tableReservationId);
     }
+
+    @Override
+    public void isPaid(long reservationId) {
+        TableReservation tableReservation = findById(reservationId);
+        if(tableReservation.getStatus().equals("PAID")) {
+            throw new RecordBadRequestException("This reservation is already paid!");
+        }
+    }
 }

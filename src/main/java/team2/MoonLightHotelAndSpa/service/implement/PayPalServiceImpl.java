@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.model.paypal.CreatedOrder;
 import team2.MoonLightHotelAndSpa.model.reservation.ReservationStatus;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
+import team2.MoonLightHotelAndSpa.model.reservation.TableReservation;
 import team2.MoonLightHotelAndSpa.service.PayPalService;
 import team2.MoonLightHotelAndSpa.service.RoomReservationService;
+import team2.MoonLightHotelAndSpa.service.TableReservationService;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
@@ -26,6 +28,9 @@ public class PayPalServiceImpl implements PayPalService {
     private static final String APPROVE_LINK_REL = "approve" ;
     @Autowired
     private RoomReservationService roomReservationService;
+
+    @Autowired
+    private TableReservationService tableReservationService;
     private final PayPalHttpClient payPalHttpClient;
 
 
@@ -35,41 +40,41 @@ public class PayPalServiceImpl implements PayPalService {
 
     @Override
     @SneakyThrows
-    public CreatedOrder createOrder(long reservationId, URI returnUrl) throws IOException {
-        RoomReservation roomReservation = roomReservationService.findById(reservationId);
-        roomReservationService.isPaid(reservationId);
+    public CreatedOrder createOrderRoom(long roomReservationId, URI returnUrl) throws IOException {
+        RoomReservation roomReservation = roomReservationService.findById(roomReservationId);
+        roomReservationService.isPaid(roomReservationId);
         double amount = (double) roomReservation.getPrice();
-        final OrderRequest orderRequest = createOrderRequest(amount, returnUrl);
+        final OrderRequest orderRequest = createOrderRequestRoom(amount, returnUrl);
         final OrdersCreateRequest ordersCreateRequest = new OrdersCreateRequest().requestBody(orderRequest);
         final HttpResponse<Order> orderHttpResponse = payPalHttpClient.execute(ordersCreateRequest);
         final Order order = orderHttpResponse.result();
-        LinkDescription approveUri = extractApprovalLink(order);
+        LinkDescription approveUri = extractApprovalLinkRoom(order);
         return new CreatedOrder(order.id(),URI.create(approveUri.href()));
     }
 
-    private OrderRequest createOrderRequest(Double totalAmount, URI returnUrl) {
+    private OrderRequest createOrderRequestRoom(Double totalAmount, URI returnUrl) {
         final OrderRequest orderRequest = new OrderRequest();
-        setCheckoutIntent(orderRequest);
-        setPurchaseUnits(totalAmount, orderRequest);
-        setApplicationContext(returnUrl, orderRequest);
+        setCheckoutIntentRoom(orderRequest);
+        setPurchaseUnitsRoom(totalAmount, orderRequest);
+        setApplicationContextRoom(returnUrl, orderRequest);
         return orderRequest;
     }
 
-    private OrderRequest setApplicationContext(URI returnUrl, OrderRequest orderRequest) {
+    private OrderRequest setApplicationContextRoom(URI returnUrl, OrderRequest orderRequest) {
         return orderRequest.applicationContext(new ApplicationContext().returnUrl(returnUrl.toString()));
     }
 
-    private void setPurchaseUnits(Double totalAmount, OrderRequest orderRequest) {
+    private void setPurchaseUnitsRoom(Double totalAmount, OrderRequest orderRequest) {
         final PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest()
                 .amountWithBreakdown(new AmountWithBreakdown().currencyCode("USD").value(totalAmount.toString()));
         orderRequest.purchaseUnits(Arrays.asList(purchaseUnitRequest));
     }
 
-    private void setCheckoutIntent(OrderRequest orderRequest) {
+    private void setCheckoutIntentRoom(OrderRequest orderRequest) {
         orderRequest.checkoutPaymentIntent("CAPTURE");
     }
 
-    private LinkDescription extractApprovalLink(Order order) {
+    private LinkDescription extractApprovalLinkRoom(Order order) {
         LinkDescription approveUri = order.links().stream()
                 .filter(link -> APPROVE_LINK_REL.equals(link.rel()))
                 .findFirst()
@@ -77,15 +82,68 @@ public class PayPalServiceImpl implements PayPalService {
         return approveUri;
     }
 
+    @Override
+    @SneakyThrows
+    @Transactional
+    public void captureOrderRoom(String orderId, long roomReservationId) {
+        String status = String.valueOf(ReservationStatus.PAID);
+        RoomReservation roomReservation = roomReservationService.findById(roomReservationId);
+        roomReservation.setStatus(status);
+        final OrdersCaptureRequest ordersCaptureRequest = new OrdersCaptureRequest(orderId);
+        final HttpResponse<Order> httpResponse = payPalHttpClient.execute(ordersCaptureRequest);
+    }
 
+    @Override
+    @SneakyThrows
+    public CreatedOrder createOrderTable(long tableReservationId, URI returnUrl) throws IOException {
+        TableReservation tableReservation = tableReservationService.findById(tableReservationId);
+        tableReservationService.isPaid(tableReservationId);
+        double amount = (double) tableReservation.getPrice();
+        final OrderRequest orderRequest = createOrderRequestTable(amount, returnUrl);
+        final OrdersCreateRequest ordersCreateRequest = new OrdersCreateRequest().requestBody(orderRequest);
+        final HttpResponse<Order> orderHttpResponse = payPalHttpClient.execute(ordersCreateRequest);
+        final Order order = orderHttpResponse.result();
+        LinkDescription approveUri = extractApprovalLinkTable(order);
+        return new CreatedOrder(order.id(),URI.create(approveUri.href()));
+    }
+
+    private OrderRequest createOrderRequestTable(Double totalAmount, URI returnUrl) {
+        final OrderRequest orderRequest = new OrderRequest();
+        setCheckoutIntentTable(orderRequest);
+        setPurchaseUnitsTable(totalAmount, orderRequest);
+        setApplicationContextTable(returnUrl, orderRequest);
+        return orderRequest;
+    }
+
+    private OrderRequest setApplicationContextTable(URI returnUrl, OrderRequest orderRequest) {
+        return orderRequest.applicationContext(new ApplicationContext().returnUrl(returnUrl.toString()));
+    }
+
+    private void setPurchaseUnitsTable(Double totalAmount, OrderRequest orderRequest) {
+        final PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest()
+                .amountWithBreakdown(new AmountWithBreakdown().currencyCode("USD").value(totalAmount.toString()));
+        orderRequest.purchaseUnits(Arrays.asList(purchaseUnitRequest));
+    }
+
+    private void setCheckoutIntentTable(OrderRequest orderRequest) {
+        orderRequest.checkoutPaymentIntent("CAPTURE");
+    }
+
+    private LinkDescription extractApprovalLinkTable(Order order) {
+        LinkDescription approveUri = order.links().stream()
+                .filter(link -> APPROVE_LINK_REL.equals(link.rel()))
+                .findFirst()
+                .orElseThrow(NoSuchElementException::new);
+        return approveUri;
+    }
 
     @Override
     @SneakyThrows
     @Transactional
-    public void captureOrder(String orderId, long reservationId) {
+    public void captureOrderTable(String orderId, long tableReservationId) {
         String status = String.valueOf(ReservationStatus.PAID);
-        RoomReservation roomReservation = roomReservationService.findById(reservationId);
-        roomReservation.setStatus(status);
+        TableReservation tableReservation = tableReservationService.findById(tableReservationId);
+        tableReservation.setStatus(status);
         final OrdersCaptureRequest ordersCaptureRequest = new OrdersCaptureRequest(orderId);
         final HttpResponse<Order> httpResponse = payPalHttpClient.execute(ordersCaptureRequest);
     }

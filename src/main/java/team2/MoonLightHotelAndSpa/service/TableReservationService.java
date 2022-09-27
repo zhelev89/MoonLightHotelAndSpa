@@ -26,4 +26,6 @@ public interface TableReservationService {
     TableReservation update(TableReservation updatedTableReservation, long id, long rid);
 
     void tableReservationIdMatch(long tableId, long tableReservationId);
+
+    void isPaid(long reservationId);
 }
