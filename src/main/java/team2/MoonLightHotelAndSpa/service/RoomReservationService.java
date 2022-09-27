@@ -31,5 +31,5 @@ public interface RoomReservationService {
 
     List<Room> findAllAvailableRooms(Instant start_date, Instant end_date, int people);
 
-    List<Room> findAllAvailableRoomsDetailed(List<Room> rooms, RoomView roomView, RoomTitle roomTitle);
+    boolean findAllAvailableRoomsDetailed(List<Room> rooms, RoomView roomView, RoomTitle roomTitle);
 }

@@ -181,11 +181,10 @@ public class RoomController {
         Instant endDate = Instant.parse(end_date);
         int people = adults + kids;
         List<Room> allAvailableRooms = roomReservationService.findAllAvailableRooms(startDate, endDate, people);
-        List<Room> allAvailableRoomsDetailed = roomReservationService.findAllAvailableRoomsDetailed(allAvailableRooms, roomView, roomTitle);
-        List<RoomResponse> roomResponses = allAvailableRoomsDetailed.stream().map(roomConverter::convert).toList();
-        if (roomResponses.size() == 0) {
+        boolean isFound = roomReservationService.findAllAvailableRoomsDetailed(allAvailableRooms, roomView, roomTitle);
+        if (isFound = false) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok().body(roomResponses);
+        return ResponseEntity.ok().body(null);
     }
 }

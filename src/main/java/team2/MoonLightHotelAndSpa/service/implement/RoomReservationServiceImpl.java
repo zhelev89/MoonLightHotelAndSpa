@@ -17,10 +17,7 @@ import team2.MoonLightHotelAndSpa.service.UserService;
 import javax.transaction.Transactional;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -106,38 +103,23 @@ public class RoomReservationServiceImpl implements RoomReservationService {
         return roomReservationRepository.findAllAvailableRooms(start_date, end_date ,people);
     }
 
-//    @Override
-//    public List<Room> findAllAvailableRoomsDetailed(List<Room> rooms, RoomView roomView, RoomTitle roomTitle) {
-//        List<Room> sortedFromView = rooms.stream().filter(room -> room.getView().equals(roomView)).toList();
-//        try{
-//            if(sortedFromView.size() == 0) {
-//                throw new RecordBadRequestException("Room view");
-//            }
-//        } catch (RecordBadRequestException exception) {
-//            throw new RecordBadRequestException("Room view");
-//        }
-//
-//        List<Room> sortedFromTitle = sortedFromView.stream().filter(room -> room.getTitle().equals(roomTitle)).toList();
-//        try {
-//            if(sortedFromTitle.size() == 0) {
-//                throw new RecordBadRequestException("Room title");
-//            }
-//        } catch (RecordBadRequestException exception) {
-//            throw new RecordBadRequestException("Room title");
-//        }
-//        return rooms.stream().filter(room -> room.getView().equals(roomView)).filter(room -> room.getTitle().equals(roomTitle)).toList();
-//    }
-
     @Override
-    public List<Room> findAllAvailableRoomsDetailed(List<Room> rooms, RoomView roomView, RoomTitle roomTitle) {
+    public boolean findAllAvailableRoomsDetailed(List<Room> rooms, RoomView roomView, RoomTitle roomTitle) {
+        boolean isFound = false;
+        List<String> errorMessages = new ArrayList<>();
+        if(rooms.isEmpty()) {
+            errorMessages.add("Date");
+        }
+
         List<Room> sortedFromView = rooms.stream().filter(room -> room.getView().equals(roomView)).toList();
         if(sortedFromView.size() == 0) {
-            throw new RecordBadRequestException("Room view");
+            errorMessages.add("Room View");
         }
-        List<Room> sortedFromTitle = sortedFromView.stream().filter(room -> room.getTitle().equals(roomTitle)).toList();
+        List<Room> sortedFromTitle = rooms.stream().filter(room -> room.getTitle().equals(roomTitle)).toList();
         if(sortedFromTitle.size() == 0) {
-            throw new RecordBadRequestException("Room title");
+            errorMessages.add("Room Title");
         }
-        return rooms.stream().filter(room -> room.getView().equals(roomView)).filter(room -> room.getTitle().equals(roomTitle)).toList();
+        isFound = true;
+        return isFound;
     }
 }
