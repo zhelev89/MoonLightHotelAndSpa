@@ -14,6 +14,7 @@ public class TableReservationResponse {
     private int people;
     private double price;
     private String updated;
+    private String status;
     private TableResponse table;
     private UserResponse user;
 }

@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String ADMIN = "ROLE_ADMIN";
     private static final String CLIENT = "ROLE_CLIENT";
     private static final String[] PUBLIC_URL_POST = {"/users", "/users/token", "/users/forgot", "/contacts"};
-    private static final String[] PUBLIC_URL_GET = {"/rooms", "/rooms/{id}", "/rooms/{id}/summarize"};
+    private static final String[] PUBLIC_URL_GET = {"/rooms", "/rooms/{id}", "/rooms/{id}/summarize", "/capture/room", "/capture/table"};
     private static final String[] PROTECTED_URL_POST = {"/rooms", "/rooms/{id}/reservation", "/users/reset", "/tables",
             "/**"};
     private static final String[] PROTECTED_URL_POST_CLIENT = {"/rooms/{id}/reservation", "/users/reset", "/users/reset",
@@ -43,8 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] PROTECTED_URL_PUT = {"/users/{id}", "/rooms/{id}/reservation/{rid}", "/rooms/{id}",
             "/tables/{id}", "/tables/{id}", "/**"};
     private static final String[] PROTECTED_URL_PUT_CLIENT = {"/**"};
-    private static final String[] PROTECTED_URL_DELETE = {"/users/{id}", "/rooms/{id}", "/rooms/{id}/reservation/{rid}",
-            "/tables/{id}", "/**"};
+    private static final String[] PROTECTED_URL_DELETE = {"/users/{id}", "/rooms/{id}", "/rooms/{id}/reservation/{rid}", "/tables/{id}", "/**"};
     private static final String[] PROTECTED_URL_DELETE_CLIENT = {"/**"};
 
     @Override

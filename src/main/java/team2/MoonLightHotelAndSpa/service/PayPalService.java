@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.net.URI;
 
 public interface PayPalService {
-
-    CreatedOrder createOrder(long reservationId, URI returnUrl) throws IOException;
-
-    void captureOrder(String orderId, long reservationId);
+    CreatedOrder createOrderRoom(long roomReservationId, URI returnUrl) throws IOException;
+    CreatedOrder createOrderTable(long tableReservationId, URI returnUrl) throws IOException;
+    void captureOrderRoom(String orderId, long roomReservationId);
+    void captureOrderTable(String orderId, long tableReservationId);
 }
