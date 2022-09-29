@@ -40,9 +40,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] PROTECTED_URL_GET_CLIENT = {"/users/{uid}/reservations", "/users/{uid}/reservations/{rid}",
             "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/users/profile", "/**"};
     private static final String[] PROTECTED_URL_PUT = {"/users/{id}", "/rooms/{id}/reservation/{rid}", "/rooms/{id}",
-            "/tables/{id}", "/tables/{id}", "/**"};
+            "/tables/{id}", "/tables/{id}", "/screens/{id}", "/**"};
     private static final String[] PROTECTED_URL_PUT_CLIENT = {"/**"};
-    private static final String[] PROTECTED_URL_DELETE = {"/users/{id}", "/rooms/{id}", "/rooms/{id}/reservation/{rid}", "/tables/{id}", "/**"};
+    private static final String[] PROTECTED_URL_DELETE = {"/users/{id}", "/rooms/{id}", "/rooms/{id}/reservation/{rid}",
+            "/tables/{id}", "/screens/{id}" ,"/**"};
     private static final String[] PROTECTED_URL_DELETE_CLIENT = {"/**"};
 
     @Override

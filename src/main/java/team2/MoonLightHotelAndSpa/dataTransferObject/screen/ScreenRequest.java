@@ -8,7 +8,7 @@ import team2.MoonLightHotelAndSpa.model.screen.ScreenPosition;
 @Data
 @Builder
 @AllArgsConstructor
-public class ScreenSaveRequest {
+public class ScreenRequest {
 
     private String title;
     private String image;
