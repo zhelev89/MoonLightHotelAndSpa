@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/**"};
     private static final String[] PROTECTED_URL_GET = {"/users", "/users/{id}", "/users/reservations",
             "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/rooms/{id}/reservation/{rid}",
-            "/users/{uid}/reservations", "/**"};
+            "/users/{uid}/reservations", "/screens/{id}", "/**"};
     private static final String[] PROTECTED_URL_GET_CLIENT = {"/users/{uid}/reservations", "/users/{uid}/reservations/{rid}",
             "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/users/profile", "/**"};
     private static final String[] PROTECTED_URL_PUT = {"/users/{id}", "/rooms/{id}/reservation/{rid}", "/rooms/{id}",
