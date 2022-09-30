@@ -1,6 +1,7 @@
 package team2.MoonLightHotelAndSpa.service.implement;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
@@ -18,6 +19,7 @@ import javax.transaction.Transactional;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -100,26 +102,33 @@ public class RoomReservationServiceImpl implements RoomReservationService {
 
     @Override
     public List<Room> findAllAvailableRooms(Instant start_date, Instant end_date, int people) {
-        return roomReservationRepository.findAllAvailableRooms(start_date, end_date ,people);
+        return roomReservationRepository.findAllAvailableRooms(start_date, end_date, people);
     }
 
     @Override
-    public boolean findAllAvailableRoomsDetailed(List<Room> rooms, RoomView roomView, RoomTitle roomTitle) {
-        boolean isFound = false;
-        List<String> errorMessages = new ArrayList<>();
+    public ResponseEntity<?> findAllAvailableRoomsDetailed(String start_date, String end_date, int adults, int kids, RoomView roomView, RoomTitle roomTitle) {
+        Instant startDateInst = Instant.parse(start_date);
+        Instant endDateInst = Instant.parse(end_date);
+        int people = adults + kids;
+        List<Room> rooms = findAllAvailableRooms(startDateInst, endDateInst, people);
         if(rooms.isEmpty()) {
-            errorMessages.add("Date");
+            String error = "No available rooms on these dates";
+            return new ResponseEntity<>(error, HttpStatus.OK);
         }
 
-        List<Room> sortedFromView = rooms.stream().filter(room -> room.getView().equals(roomView)).toList();
-        if(sortedFromView.size() == 0) {
-            errorMessages.add("Room View");
+        List<Room> roomsByViewAndType = rooms.stream().filter(room -> room.getView().equals(roomView)).filter(room -> room.getTitle().equals(roomTitle)).toList();
+        if (roomsByViewAndType.isEmpty()) {
+            List<String> errorMessages = new ArrayList<>();
+            List<Room> sortedFromView = rooms.stream().filter(room -> room.getView().equals(roomView)).toList();
+            if (sortedFromView.size() == 0) {
+                errorMessages.add("Room with this room view");
+            }
+            List<Room> sortedFromTitle = rooms.stream().filter(room -> room.getTitle().equals(roomTitle)).toList();
+            if (sortedFromTitle.size() == 0) {
+                errorMessages.add("Room with this room title");
+            }
+            return new ResponseEntity<>(errorMessages, HttpStatus.OK);
         }
-        List<Room> sortedFromTitle = rooms.stream().filter(room -> room.getTitle().equals(roomTitle)).toList();
-        if(sortedFromTitle.size() == 0) {
-            errorMessages.add("Room Title");
-        }
-        isFound = true;
-        return isFound;
+        return new ResponseEntity<>(roomsByViewAndType, HttpStatus.OK);
     }
 }

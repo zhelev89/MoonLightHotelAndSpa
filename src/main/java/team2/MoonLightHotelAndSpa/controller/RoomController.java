@@ -174,17 +174,9 @@ public class RoomController {
     }
 
     @GetMapping(value = "/detailed")
-    public ResponseEntity<List<RoomResponse>> findAllAvailableRoomsDetailed(@RequestParam String start_date, @RequestParam String end_date,
-                                                                            @RequestParam int adults, @RequestParam int kids,
-                                                                            @RequestParam RoomView roomView, @RequestParam RoomTitle roomTitle) {
-        Instant startDate = Instant.parse(start_date);
-        Instant endDate = Instant.parse(end_date);
-        int people = adults + kids;
-        List<Room> allAvailableRooms = roomReservationService.findAllAvailableRooms(startDate, endDate, people);
-        boolean isFound = roomReservationService.findAllAvailableRoomsDetailed(allAvailableRooms, roomView, roomTitle);
-        if (isFound = false) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok().body(null);
+    public ResponseEntity<?> findAllAvailableRoomsDetailed(@RequestParam String start_date, @RequestParam String end_date,
+                                                           @RequestParam int adults, @RequestParam int kids,
+                                                           @RequestParam RoomView roomView, @RequestParam RoomTitle roomTitle) {
+        return roomReservationService.findAllAvailableRoomsDetailed(start_date, end_date, adults, kids, roomView, roomTitle);
     }
 }

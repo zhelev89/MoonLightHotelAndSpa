@@ -1,5 +1,6 @@
 package team2.MoonLightHotelAndSpa.service;
 
+import org.springframework.http.ResponseEntity;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.room.Room;
 import team2.MoonLightHotelAndSpa.model.room.RoomTitle;
@@ -31,5 +32,5 @@ public interface RoomReservationService {
 
     List<Room> findAllAvailableRooms(Instant start_date, Instant end_date, int people);
 
-    boolean findAllAvailableRoomsDetailed(List<Room> rooms, RoomView roomView, RoomTitle roomTitle);
+    ResponseEntity<?> findAllAvailableRoomsDetailed(String start_date, String end_date, int adults, int kids, RoomView roomView, RoomTitle roomTitle);
 }
