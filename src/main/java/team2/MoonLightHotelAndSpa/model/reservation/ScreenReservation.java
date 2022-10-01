@@ -10,7 +10,6 @@ import team2.MoonLightHotelAndSpa.model.user.User;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
-import java.util.HashMap;
 
 @Data
 @Builder
@@ -28,20 +27,16 @@ public class ScreenReservation {
     private Instant date;
 
     @NotNull
-    private Integer[] reservedSeats;
+    private Integer[] seats;
 
     @NotNull
     private double price;
 
+    @ManyToOne
     @NotNull
     private Screen screen;
 
     @NotNull
+    @ManyToOne
     private User user;
-
-    private HashMap<Instant, Integer[]> freeSeats;
-
-    public void setFreeSeats(Instant date, Integer[] seats) {
-        freeSeats.put(date, seats);
-    }
 }

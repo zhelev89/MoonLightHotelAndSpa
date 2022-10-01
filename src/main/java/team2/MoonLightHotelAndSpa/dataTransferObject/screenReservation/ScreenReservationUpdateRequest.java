@@ -9,8 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ScreenReservationRequest {
+public class ScreenReservationUpdateRequest {
 
     private String date;
+    private long user;
     private Integer[] seats;
+    private double price;
 }
