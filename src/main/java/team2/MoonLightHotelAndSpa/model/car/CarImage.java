@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
 
 @Data
 @Builder
@@ -24,4 +23,11 @@ public class CarImage {
     @NotNull
     @Column(name = "image")
     private String image;
+
+    public static CarImage convert(String carImage) {
+        return CarImage.builder()
+                .image(carImage)
+                .build();
+
+    }
 }

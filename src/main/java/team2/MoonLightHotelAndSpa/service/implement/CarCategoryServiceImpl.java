@@ -2,10 +2,12 @@ package team2.MoonLightHotelAndSpa.service.implement;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.car.CarCategory;
 import team2.MoonLightHotelAndSpa.repository.CarCategoryRepository;
 import team2.MoonLightHotelAndSpa.service.CarCategoryService;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -21,21 +23,27 @@ public class CarCategoryServiceImpl implements CarCategoryService {
 
     @Override
     public List<CarCategory> findAll() {
-        return null;
+        return carCategoryRepository.findAll();
     }
 
     @Override
+    @Transactional
     public CarCategory update(long id, CarCategory updatedCarCategory) {
-        return null;
+        CarCategory carCategory = findById(id);
+        carCategory.setTitle(updatedCarCategory.getTitle());
+        carCategory.setSeats(updatedCarCategory.getSeats());
+        carCategory.setPrice(updatedCarCategory.getPrice());
+        return carCategory;
     }
 
     @Override
     public CarCategory findById(long id) {
-        return null;
+        return carCategoryRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(
+                String.format("Car category with id:%s, not found", id)));
     }
 
     @Override
     public void deleteById(long id) {
-
+        carCategoryRepository.deleteById(id);
     }
 }

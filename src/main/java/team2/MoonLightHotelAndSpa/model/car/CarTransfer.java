@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import team2.MoonLightHotelAndSpa.model.user.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -31,7 +33,7 @@ public class CarTransfer {
 
     @NotNull
     @Column(name = "seats")
-    private String seats;
+    private int seats;
 
     @NotNull
     @Column(name = "price")
@@ -41,6 +43,15 @@ public class CarTransfer {
     @Column(name = "date")
     private Instant date;
 
+    @CreationTimestamp
+    @Column(name = "created")
+    private Instant created;
+
+    @NotNull
     @ManyToOne
     private Car car;
+
+    @NotNull
+    @ManyToOne
+    private User user;
 }
