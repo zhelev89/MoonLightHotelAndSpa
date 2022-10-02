@@ -2,7 +2,6 @@ package team2.MoonLightHotelAndSpa.dataTransferObject.car;
 
 import lombok.Builder;
 import lombok.Data;
-import team2.MoonLightHotelAndSpa.model.car.CarImage;
 
 import java.util.Set;
 
@@ -14,6 +13,6 @@ public class CarSaveRequest {
     private String brand;
     private String model;
     private String image;
-    private Set<CarImage> images;
+    private Set<String> images;
     private int year;
 }

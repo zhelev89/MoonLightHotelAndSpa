@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import team2.MoonLightHotelAndSpa.dataTransferObject.carTransfer.CarTransferResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.carTransfer.CarTransferSaveRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.carTransfer.CarTransferUpdateRequest;
+import team2.MoonLightHotelAndSpa.dataTransferObject.carTransfer.SummarizeCarTransfer;
 import team2.MoonLightHotelAndSpa.model.car.Car;
 import team2.MoonLightHotelAndSpa.model.car.CarTransfer;
 import team2.MoonLightHotelAndSpa.model.user.User;
@@ -26,9 +27,6 @@ public class CarTransferConverter {
         Instant dateInst = Instant.parse(carTransferSaveRequest.getDate());
         Car car = carService.findById(carId);
         return CarTransfer.builder()
-                .brand(car.getBrand())
-                .model(car.getModel())
-                .seats(carTransferSaveRequest.getSeats())
                 .price(car.getCarCategory().getPrice())
                 .date(dateInst)
                 .car(car)
@@ -50,12 +48,24 @@ public class CarTransferConverter {
     }
 
     public CarTransfer convert(CarTransferUpdateRequest carTransferUpdateRequest) {
-        User user = userService.findById(carTransferUpdateRequest.getUserId());
+//        User user = userService.findById(carTransferUpdateRequest.getUserId());
         Instant dateInst = Instant.parse(carTransferUpdateRequest.getDate());
         return CarTransfer.builder()
                 .date(dateInst)
-                .seats(carTransferUpdateRequest.getSeats())
-                .user(user)
+//                .user(user)
+                .build();
+    }
+
+    public SummarizeCarTransfer convertSummarize(CarTransfer carTransfer) {
+        String dateString = String.valueOf(carTransfer.getDate());
+        return SummarizeCarTransfer.builder()
+                .id(carTransfer.getId())
+                .category(carTransfer.getCar().getCarCategory())
+                .brand(carTransfer.getCar().getBrand())
+                .model(carTransfer.getCar().getModel())
+                .seats(carTransfer.getCar().getCarCategory().getSeats())
+                .price(carTransfer.getCar().getCarCategory().getPrice())
+                .date(dateString)
                 .build();
     }
 }

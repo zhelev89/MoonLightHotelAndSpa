@@ -11,18 +11,11 @@ import java.util.Set;
 public class CarResponse {
 
     private long id;
-
     private String brand;
-
     private String model;
-
     private String image;
-
     private Set<String> images;
-
     private int year;
-
     private String created;
-
     private CarCategoryResponse category;
 }

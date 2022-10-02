@@ -11,7 +11,7 @@ public class CarCategoryConverter {
 
     public CarCategory convert(CarCategorySaveRequest carCategorySaveRequest) {
         return CarCategory.builder()
-                .title(carCategorySaveRequest.getCarTitle())
+                .title(carCategorySaveRequest.getTitle())
                 .seats(carCategorySaveRequest.getSeats())
                 .price(carCategorySaveRequest.getPrice())
                 .build();
@@ -20,7 +20,7 @@ public class CarCategoryConverter {
     public CarCategoryResponse convert(CarCategory carCategory) {
         return CarCategoryResponse.builder()
                 .id(carCategory.getId())
-                .carTitle(carCategory.getTitle())
+                .title(carCategory.getTitle())
                 .seats(carCategory.getSeats())
                 .price(carCategory.getPrice())
                 .build();
@@ -28,7 +28,7 @@ public class CarCategoryConverter {
 
     public CarCategory convert(CarCategoryUpdateRequest carCategoryUpdateRequest) {
         return CarCategory.builder()
-                .title(carCategoryUpdateRequest.getCarTitle())
+                .title(carCategoryUpdateRequest.getTitle())
                 .seats(carCategoryUpdateRequest.getSeats())
                 .price(carCategoryUpdateRequest.getPrice())
                 .build();

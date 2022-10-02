@@ -25,7 +25,7 @@ public class CarConverter {
                 .brand(carSaveRequest.getBrand())
                 .model(carSaveRequest.getModel())
                 .image(carSaveRequest.getImage())
-                .images(carSaveRequest.getImages())
+                .images(carSaveRequest.getImages().stream().map(CarImage::convert).collect(Collectors.toSet()))
                 .year(carSaveRequest.getYear())
                 .carCategory(carCategory)
                 .build();

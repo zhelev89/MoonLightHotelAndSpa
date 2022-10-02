@@ -1,13 +1,17 @@
 package team2.MoonLightHotelAndSpa.dataTransferObject.carTransfer;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Builder
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CarTransferUpdateRequest {
 
     private String date;
-    private int seats;
-    private long userId;
+//    private int seats;
+//    private long userId;
 }

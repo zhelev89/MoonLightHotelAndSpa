@@ -24,18 +24,6 @@ public class CarTransfer {
     private long id;
 
     @NotNull
-    @Column(name = "brand")
-    private String brand;
-
-    @NotNull
-    @Column(name = "model")
-    private String model;
-
-    @NotNull
-    @Column(name = "seats")
-    private int seats;
-
-    @NotNull
     @Column(name = "price")
     private double price;
 

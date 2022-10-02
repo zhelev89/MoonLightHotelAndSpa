@@ -8,7 +8,7 @@ import team2.MoonLightHotelAndSpa.model.car.CarTitle;
 @Data
 public class CarCategorySaveRequest {
 
-    private CarTitle carTitle;
+    private CarTitle title;
     private int seats;
     private double price;
     private int position;

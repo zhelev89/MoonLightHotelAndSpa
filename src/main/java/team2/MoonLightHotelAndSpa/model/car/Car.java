@@ -33,7 +33,8 @@ public class Car {
     private String image;
 
     @NotNull
-    @Column(name = "images")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "images_id")
     private Set<CarImage> images;
 
     @NotNull

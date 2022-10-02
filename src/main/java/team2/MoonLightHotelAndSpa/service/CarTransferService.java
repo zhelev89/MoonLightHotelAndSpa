@@ -15,4 +15,8 @@ public interface CarTransferService {
     CarTransfer findById(long id);
 
     void deleteById(long id);
+
+    List<CarTransfer> findByCar(long id);
+
+    void carTransferIdMatch(long carId, long carTransferId);
 }
