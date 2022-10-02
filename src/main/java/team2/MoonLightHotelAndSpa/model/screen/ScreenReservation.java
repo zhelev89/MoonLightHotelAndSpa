@@ -1,15 +1,16 @@
-package team2.MoonLightHotelAndSpa.model.reservation;
+package team2.MoonLightHotelAndSpa.model.screen;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import team2.MoonLightHotelAndSpa.model.screen.Screen;
 import team2.MoonLightHotelAndSpa.model.user.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
+import java.util.List;
+import java.util.Map;
 
 @Data
 @Builder

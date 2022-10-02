@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.dataTransferObject.screenReservation.ScreenReservationUpdateRequest;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
-import team2.MoonLightHotelAndSpa.model.reservation.ScreenReservation;
+import team2.MoonLightHotelAndSpa.model.screen.ScreenReservation;
 import team2.MoonLightHotelAndSpa.model.screen.Screen;
 import team2.MoonLightHotelAndSpa.repository.ScreenReservationRepository;
 import team2.MoonLightHotelAndSpa.service.ScreenReservationService;
@@ -12,7 +12,7 @@ import team2.MoonLightHotelAndSpa.service.ScreenService;
 import team2.MoonLightHotelAndSpa.service.UserService;
 
 import java.time.Instant;
-import java.util.List;
+import java.util.*;
 
 @Service
 @AllArgsConstructor

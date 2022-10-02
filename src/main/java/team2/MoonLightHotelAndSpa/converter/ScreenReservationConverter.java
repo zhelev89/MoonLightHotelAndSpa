@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import team2.MoonLightHotelAndSpa.dataTransferObject.screenReservation.ScreenReservationRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.screenReservation.ScreenReservationResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.screenReservation.ScreenReservationResponseV2;
-import team2.MoonLightHotelAndSpa.model.reservation.ScreenReservation;
+import team2.MoonLightHotelAndSpa.model.screen.ScreenReservation;
 import team2.MoonLightHotelAndSpa.model.user.User;
 
 import java.time.Instant;

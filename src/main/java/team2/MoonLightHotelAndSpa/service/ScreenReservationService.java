@@ -1,7 +1,7 @@
 package team2.MoonLightHotelAndSpa.service;
 
 import team2.MoonLightHotelAndSpa.dataTransferObject.screenReservation.ScreenReservationUpdateRequest;
-import team2.MoonLightHotelAndSpa.model.reservation.ScreenReservation;
+import team2.MoonLightHotelAndSpa.model.screen.ScreenReservation;
 
 import java.time.Instant;
 import java.util.List;
