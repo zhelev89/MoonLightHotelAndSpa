@@ -3,12 +3,11 @@ package team2.MoonLightHotelAndSpa.service;
 import team2.MoonLightHotelAndSpa.dataTransferObject.screenReservation.ScreenReservationUpdateRequest;
 import team2.MoonLightHotelAndSpa.model.screen.ScreenReservation;
 
-import java.time.Instant;
 import java.util.List;
 
 public interface ScreenReservationService {
 
-    ScreenReservation summarize(Instant date);
+    List<Integer> findFreeSeatsByScreenIdAndDate(long screenId, String date);
 
     ScreenReservation save(ScreenReservation screenReservation);
 

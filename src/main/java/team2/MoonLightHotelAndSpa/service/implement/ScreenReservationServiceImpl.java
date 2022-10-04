@@ -11,6 +11,7 @@ import team2.MoonLightHotelAndSpa.service.ScreenReservationService;
 import team2.MoonLightHotelAndSpa.service.ScreenService;
 import team2.MoonLightHotelAndSpa.service.UserService;
 
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.*;
 
@@ -23,8 +24,20 @@ public class ScreenReservationServiceImpl implements ScreenReservationService {
     private final UserService userService;
 
     @Override
-    public ScreenReservation summarize(Instant date) {
-        return screenReservationRepository.findBySeats(date);
+    public List<Integer> findFreeSeatsByScreenIdAndDate(long screenId, String date) {
+        List<ScreenReservation> byScreenIdAndDate =
+                screenReservationRepository.findByScreenIdAndDate(screenId, Instant.parse(date));
+        List<Integer> reservedSeats = new ArrayList<>();
+
+        for (ScreenReservation screenReservation : byScreenIdAndDate) {
+            @NotNull Integer[] seats = screenReservation.getSeats();
+            reservedSeats.addAll(Arrays.stream(seats).toList());
+        }
+
+        Integer[] seats = screenService.findById(screenId).getSeats();
+        List<Integer> freeSeats = new ArrayList<>(List.of(seats.clone()));
+        freeSeats.removeAll(reservedSeats);
+        return freeSeats;
     }
 
 

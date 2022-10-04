@@ -36,7 +36,7 @@ public class ScreenReservationConverter {
     public ScreenReservationResponseV2 convert(ScreenReservation screenReservation, User user) {
         return ScreenReservationResponseV2.builder()
                 .id(screenReservation.getId())
-                .seats(screenReservation.getSeats())
+                .seats(screenReservation.getScreen().getSeats())
                 .date(screenReservation.getDate().toString())
                 .price(screenReservation.getPrice())
                 .screen(screenReservation.getScreen())

@@ -6,16 +6,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.converter.ScreenReservationConverter;
-import team2.MoonLightHotelAndSpa.dataTransferObject.screenReservation.ScreenReservationRequest;
-import team2.MoonLightHotelAndSpa.dataTransferObject.screenReservation.ScreenReservationResponse;
-import team2.MoonLightHotelAndSpa.dataTransferObject.screenReservation.ScreenReservationResponseV2;
-import team2.MoonLightHotelAndSpa.dataTransferObject.screenReservation.ScreenReservationUpdateRequest;
+import team2.MoonLightHotelAndSpa.dataTransferObject.screenReservation.*;
 import team2.MoonLightHotelAndSpa.model.screen.ScreenReservation;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.ScreenReservationService;
 import team2.MoonLightHotelAndSpa.service.ScreenService;
 import team2.MoonLightHotelAndSpa.service.UserService;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,14 +27,19 @@ public class ScreenReservationController {
     private final ScreenService screenService;
     private final UserService userService;
 
-    //Not finish yet
-//    @PostMapping(value = "/{id}/summarize")
-//    public ResponseEntity<ScreenReservation> summarize(@PathVariable long id,
-//                                                       @RequestBody ScreenReservationRequest screenReservationRequest) {
-//        ScreenReservation byId = screenReservationService.findById(id);
+//    @PostMapping(value = "/id/summarize")
+//    public ResponseEntity<HttpStatus> ScreenReservationSummarize(@PathVariable long id,
+//                                                                 @RequestBody ScreenReservationRequest screenReservationRequest) {
 //
-//        return ResponseEntity.ok().body(byId);
 //    }
+
+    @PostMapping(value = "/{id}/findFreeSeatsByScreenIdAndDate")
+    public ResponseEntity<List<Integer>> findFreeSeatsByScreenIdAndDate(@PathVariable long id,
+                                                                        @RequestBody ScreenRequestFindFreeSeats screenRequestFindFreeSeats) {
+        List<Integer> freeSeats =
+                screenReservationService.findFreeSeatsByScreenIdAndDate(id, screenRequestFindFreeSeats.getDate());
+        return ResponseEntity.ok().body(freeSeats);
+    }
 
     @PostMapping(value = "/{id}/reservations")
     private ResponseEntity<ScreenReservationResponse> createReservation(@PathVariable long id,

@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String ADMIN = "ROLE_ADMIN";
     private static final String CLIENT = "ROLE_CLIENT";
     private static final String[] PUBLIC_URL_POST = {"/users", "/users/token", "/users/forgot", "/contacts",
-            "/screens/{id}/summarize"};
+            "/screens/{id}/findFreeSeatsByScreenIdAndDate"};
     private static final String[] PUBLIC_URL_GET = {"/rooms", "/rooms/{id}", "/rooms/{id}/summarize", "/capture/room",
             "/capture/table"};
     private static final String[] PROTECTED_URL_POST = {"/rooms", "/rooms/{id}/reservation", "/users/reset", "/tables",

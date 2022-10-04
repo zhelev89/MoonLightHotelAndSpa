@@ -1,6 +1,7 @@
 package team2.MoonLightHotelAndSpa.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import team2.MoonLightHotelAndSpa.model.screen.ScreenReservation;
 import team2.MoonLightHotelAndSpa.model.screen.Screen;
 
@@ -11,5 +12,8 @@ public interface ScreenReservationRepository extends JpaRepository<ScreenReserva
 
     List<ScreenReservation> findAllByScreen(Screen screen);
 
-    ScreenReservation findBySeats(Instant date);
+    @Query(value = "SELECT sc FROM ScreenReservation sc " +
+            "WHERE sc.screen.id = :id " +
+            "AND sc.date = :date")
+    List<ScreenReservation> findByScreenIdAndDate(long id, Instant date);
 }
