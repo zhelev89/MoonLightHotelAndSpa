@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import team2.MoonLightHotelAndSpa.exception.CustomAccessDeniedHandler;
 import team2.MoonLightHotelAndSpa.exception.CustomHttp403ForbiddenEntryPoint;
-import team2.MoonLightHotelAndSpa.service.UserService;
+import team2.MoonLightHotelAndSpa.service.user.UserService;
 
 @AllArgsConstructor
 @Configuration

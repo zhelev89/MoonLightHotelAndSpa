@@ -9,14 +9,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import team2.MoonLightHotelAndSpa.converter.RoomConverter;
+import team2.MoonLightHotelAndSpa.converter.room.RoomConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObject.exceptionMessage.BadRequestMessageDto;
 import team2.MoonLightHotelAndSpa.dataTransferObject.exceptionMessage.ResponseMessageDto;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomSaveRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomUpdateRequest;
 import team2.MoonLightHotelAndSpa.model.room.Room;
-import team2.MoonLightHotelAndSpa.service.RoomService;
+import team2.MoonLightHotelAndSpa.service.room.RoomService;
 
 @RestController
 @AllArgsConstructor

@@ -5,16 +5,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import team2.MoonLightHotelAndSpa.converter.TableReservationConverter;
+import team2.MoonLightHotelAndSpa.converter.table.TableReservationConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObject.tableReservation.TableReservationRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.tableReservation.TableReservationResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.tableReservation.TableReservationUpdateRequest;
 import team2.MoonLightHotelAndSpa.model.reservation.TableReservation;
 import team2.MoonLightHotelAndSpa.model.table.Table;
 import team2.MoonLightHotelAndSpa.model.user.User;
-import team2.MoonLightHotelAndSpa.service.TableReservationService;
-import team2.MoonLightHotelAndSpa.service.TableService;
-import team2.MoonLightHotelAndSpa.service.UserService;
+import team2.MoonLightHotelAndSpa.service.table.TableReservationService;
+import team2.MoonLightHotelAndSpa.service.table.TableService;
+import team2.MoonLightHotelAndSpa.service.user.UserService;
 
 import java.util.List;
 

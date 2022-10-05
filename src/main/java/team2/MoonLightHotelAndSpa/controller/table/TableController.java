@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import team2.MoonLightHotelAndSpa.converter.TableConverter;
+import team2.MoonLightHotelAndSpa.converter.table.TableConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObject.table.TableResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.table.TableSaveRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.table.TableUpdateRequest;
 import team2.MoonLightHotelAndSpa.model.table.Table;
-import team2.MoonLightHotelAndSpa.service.TableService;
+import team2.MoonLightHotelAndSpa.service.table.TableService;
 
 @RestController
 @AllArgsConstructor

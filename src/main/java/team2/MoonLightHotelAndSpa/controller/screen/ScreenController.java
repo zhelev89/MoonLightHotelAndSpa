@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import team2.MoonLightHotelAndSpa.converter.ScreenConverter;
+import team2.MoonLightHotelAndSpa.converter.screen.ScreenConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObject.screen.ScreenRequest;
 import team2.MoonLightHotelAndSpa.model.screen.Screen;
-import team2.MoonLightHotelAndSpa.service.ScreenService;
+import team2.MoonLightHotelAndSpa.service.screen.ScreenService;
 
 @RestController
 @AllArgsConstructor

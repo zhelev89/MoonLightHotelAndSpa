@@ -5,13 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import team2.MoonLightHotelAndSpa.converter.ScreenReservationConverter;
+import team2.MoonLightHotelAndSpa.converter.screen.ScreenReservationConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObject.screenReservation.*;
 import team2.MoonLightHotelAndSpa.model.screen.ScreenReservation;
 import team2.MoonLightHotelAndSpa.model.user.User;
-import team2.MoonLightHotelAndSpa.service.ScreenReservationService;
-import team2.MoonLightHotelAndSpa.service.ScreenService;
-import team2.MoonLightHotelAndSpa.service.UserService;
+import team2.MoonLightHotelAndSpa.service.screen.ScreenReservationService;
+import team2.MoonLightHotelAndSpa.service.screen.ScreenService;
+import team2.MoonLightHotelAndSpa.service.user.UserService;
 
 import java.util.List;
 import java.util.stream.Collectors;
