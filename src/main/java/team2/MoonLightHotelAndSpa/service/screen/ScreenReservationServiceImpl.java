@@ -6,6 +6,7 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.screenReservation.ScreenRes
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.screen.ScreenReservation;
 import team2.MoonLightHotelAndSpa.model.screen.Screen;
+import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.repository.ScreenReservationRepository;
 import team2.MoonLightHotelAndSpa.service.user.UserService;
 
@@ -20,6 +21,10 @@ public class ScreenReservationServiceImpl implements ScreenReservationService {
     private final ScreenReservationRepository screenReservationRepository;
     private final ScreenService screenService;
     private final UserService userService;
+
+    public List<ScreenReservation> findByUser(User user) {
+        return screenReservationRepository.findByUser(user);
+    }
 
     @Override
     public List<Integer> findFreeSeatsByScreenIdAndDate(long screenId, String date) {
@@ -63,6 +68,16 @@ public class ScreenReservationServiceImpl implements ScreenReservationService {
         Screen screen = screenService.findById(screenId);
         ScreenReservation screenReservation = findByScreenReservationID(screenReservationId);
         if (screen.getId() != screenReservation.getScreen().getId()) {
+            throw new RecordNotFoundException("Reservation ID doesn't match with the Screen ID.");
+        }
+        return screenReservation;
+    }
+
+    @Override
+    public ScreenReservation findUserIdAndReservationId(long userId, long screenReservationId) {
+        User user = userService.findById(userId);
+        ScreenReservation screenReservation = findByScreenReservationID(screenReservationId);
+        if (user.getId() != screenReservation.getUser().getId()) {
             throw new RecordNotFoundException("Reservation ID doesn't match with the Screen ID.");
         }
         return screenReservation;

@@ -38,9 +38,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] PROTECTED_URL_POST_CLIENT = {"/rooms/{id}/reservation", "/users/reset", "/users/reset",
             "/**"};
     private static final String[] PROTECTED_URL_GET = {"/users", "/users/{id}", "/users/reservations",
-            "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/rooms/{id}/reservation/{rid}",
-            "/users/{uid}/reservations", "/screens/{id}", "/screens/{id}/reservations", "/screens/{id}/reservations/{rid}",
-            "/**"};
+            "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/users/screens/reservations",
+            "/{uid}/screens/reservations", "/{uid}/screens/reservation/{rid}", "/rooms/{id}/reservation/{rid}",
+            "/users/{uid}/reservations", "/screens/{id}", "/screens/{id}/reservations",
+            "/screens/{id}/reservations/{rid}", "/**"};
     private static final String[] PROTECTED_URL_GET_CLIENT = {"/users/{uid}/reservations", "/users/{uid}/reservations/{rid}",
             "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/users/profile", "/**"};
     private static final String[] PROTECTED_URL_PUT = {"/users/{id}", "/rooms/{id}/reservation/{rid}", "/rooms/{id}",

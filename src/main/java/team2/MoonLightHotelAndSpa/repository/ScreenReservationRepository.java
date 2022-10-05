@@ -4,11 +4,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import team2.MoonLightHotelAndSpa.model.screen.ScreenReservation;
 import team2.MoonLightHotelAndSpa.model.screen.Screen;
+import team2.MoonLightHotelAndSpa.model.user.User;
 
 import java.time.Instant;
 import java.util.List;
 
 public interface ScreenReservationRepository extends JpaRepository<ScreenReservation, Long> {
+
+    List<ScreenReservation> findByUser(User user);
 
     List<ScreenReservation> findAllByScreen(Screen screen);
 
