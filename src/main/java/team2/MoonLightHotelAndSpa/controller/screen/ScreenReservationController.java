@@ -13,7 +13,6 @@ import team2.MoonLightHotelAndSpa.service.ScreenReservationService;
 import team2.MoonLightHotelAndSpa.service.ScreenService;
 import team2.MoonLightHotelAndSpa.service.UserService;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,13 +26,7 @@ public class ScreenReservationController {
     private final ScreenService screenService;
     private final UserService userService;
 
-//    @PostMapping(value = "/id/summarize")
-//    public ResponseEntity<HttpStatus> ScreenReservationSummarize(@PathVariable long id,
-//                                                                 @RequestBody ScreenReservationRequest screenReservationRequest) {
-//
-//    }
-
-    @PostMapping(value = "/{id}/findFreeSeatsByScreenIdAndDate")
+    @PostMapping(value = "/{id}/summarize")
     public ResponseEntity<List<Integer>> findFreeSeatsByScreenIdAndDate(@PathVariable long id,
                                                                         @RequestBody ScreenRequestFindFreeSeats screenRequestFindFreeSeats) {
         List<Integer> freeSeats =
