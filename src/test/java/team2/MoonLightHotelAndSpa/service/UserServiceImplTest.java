@@ -27,10 +27,9 @@ public class UserServiceImplTest {
     @Mock
     private UserRepository userRepository;
 
-    private UserServiceImpl userService;
-
     @Mock
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private UserServiceImpl userService;
 
     @BeforeEach
     public void setUp() {

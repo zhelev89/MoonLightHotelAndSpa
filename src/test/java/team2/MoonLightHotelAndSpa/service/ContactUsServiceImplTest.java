@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import team2.MoonLightHotelAndSpa.model.contactUs.ContactUs;
+import team2.MoonLightHotelAndSpa.model.contactUsForm.ContactUs;
 import team2.MoonLightHotelAndSpa.repository.ContactUsRepository;
 import team2.MoonLightHotelAndSpa.service.implement.ContactUsServiceImpl;
 
