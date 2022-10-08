@@ -11,7 +11,7 @@ import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.user.Role;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.repository.UserRepository;
-import team2.MoonLightHotelAndSpa.service.implement.UserServiceImpl;
+import team2.MoonLightHotelAndSpa.service.user.UserServiceImpl;
 
 import java.util.List;
 import java.util.Objects;

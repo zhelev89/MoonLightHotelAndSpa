@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import team2.MoonLightHotelAndSpa.exception.CustomAccessDeniedHandler;
 import team2.MoonLightHotelAndSpa.exception.CustomHttp403ForbiddenEntryPoint;
-import team2.MoonLightHotelAndSpa.service.UserService;
+import team2.MoonLightHotelAndSpa.service.user.UserService;
 
 @AllArgsConstructor
 @Configuration
@@ -29,21 +29,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomHttp403ForbiddenEntryPoint customHttp403ForbiddenEntryPoint;
     private static final String ADMIN = "ROLE_ADMIN";
     private static final String CLIENT = "ROLE_CLIENT";
-    private static final String[] PUBLIC_URL_POST = {"/users", "/users/token", "/users/forgot", "/contacts"};
-    private static final String[] PUBLIC_URL_GET = {"/rooms", "/rooms/{id}", "/rooms/{id}/summarize", "/capture/room", "/capture/table"};
-    private static final String[] PROTECTED_URL_POST = {"/rooms", "/rooms/{id}/reservation", "/users/reset", "/tables",
-            "/**"};
-    private static final String[] PROTECTED_URL_POST_CLIENT = {"/rooms/{id}/reservation", "/users/reset", "/users/reset",
-            "/**"};
+    private static final String[] PUBLIC_URL_POST = {"/rooms/**", "/users", "/users/token", "/users/forgot", "/contacts",
+            "/screens/{id}/findFreeSeatsByScreenIdAndDate"};
+    private static final String[] PUBLIC_URL_GET = {"/rooms/**", "/capture/room", "/capture/table"};
+    private static final String[] PUBLIC_URL_PUT = {"/rooms/**"};
+    private static final String[] PUBLIC_URL_DELETE = {"/rooms/**"};
+    private static final String[] PROTECTED_URL_POST = {"/users/reset", "/tables", "/screens", "/**"};
+    private static final String[] PROTECTED_URL_POST_CLIENT = {"/users/reset", "/users/reset", "/**"};
     private static final String[] PROTECTED_URL_GET = {"/users", "/users/{id}", "/users/reservations",
-            "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/rooms/{id}/reservation/{rid}",
-            "/users/{uid}/reservations", "/**"};
+            "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/users/screens/reservations",
+            "/{uid}/screens/reservations", "/{uid}/screens/reservation/{rid}", "/rooms/{id}/reservation/{rid}",
+            "/users/{uid}/reservations", "/screens/{id}", "/screens/{id}/reservations",
+            "/screens/{id}/reservations/{rid}", "/**"};
     private static final String[] PROTECTED_URL_GET_CLIENT = {"/users/{uid}/reservations", "/users/{uid}/reservations/{rid}",
             "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/users/profile", "/**"};
-    private static final String[] PROTECTED_URL_PUT = {"/users/{id}", "/rooms/{id}/reservation/{rid}", "/rooms/{id}",
-            "/tables/{id}", "/tables/{id}", "/**"};
+    private static final String[] PROTECTED_URL_PUT = {"/users/{id}", "/tables/{id}", "/screens/{id}",
+            "/screens/{id}/reservations/{rid}", "/**"};
     private static final String[] PROTECTED_URL_PUT_CLIENT = {"/**"};
-    private static final String[] PROTECTED_URL_DELETE = {"/users/{id}", "/rooms/{id}", "/rooms/{id}/reservation/{rid}", "/tables/{id}", "/**"};
+    private static final String[] PROTECTED_URL_DELETE = {"/users/{id}", "/rooms/{id}", "/rooms/{id}/reservation/{rid}",
+            "/tables/{id}", "/screens/{id}", "/screens/{id}/reservations/{rid}", "/**"};
     private static final String[] PROTECTED_URL_DELETE_CLIENT = {"/**"};
 
     @Override
@@ -65,6 +69,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, PUBLIC_URL_POST).permitAll()
                 .antMatchers(HttpMethod.GET, PUBLIC_URL_GET).permitAll()
+                .antMatchers(HttpMethod.PUT, PUBLIC_URL_PUT).permitAll()
+                .antMatchers(HttpMethod.DELETE, PUBLIC_URL_DELETE).permitAll()
                 .antMatchers(HttpMethod.POST, PROTECTED_URL_POST).hasAnyAuthority(ADMIN)
                 .antMatchers(HttpMethod.POST, PROTECTED_URL_POST_CLIENT).hasAnyAuthority(CLIENT)
                 .antMatchers(HttpMethod.GET, PROTECTED_URL_GET).hasAnyAuthority(ADMIN)
@@ -80,6 +86,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().disable()
                 .logout().disable()
-                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+                .csrf().disable();
     }
 }

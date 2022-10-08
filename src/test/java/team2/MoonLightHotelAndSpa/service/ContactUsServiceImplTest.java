@@ -8,7 +8,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import team2.MoonLightHotelAndSpa.model.contactUsForm.ContactUs;
 import team2.MoonLightHotelAndSpa.repository.ContactUsRepository;
-import team2.MoonLightHotelAndSpa.service.implement.ContactUsServiceImpl;
+import team2.MoonLightHotelAndSpa.service.contactUs.ContactUsServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 public class ContactUsServiceImplTest {

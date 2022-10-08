@@ -16,9 +16,9 @@ import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.repository.TableRepository;
 import team2.MoonLightHotelAndSpa.repository.TableReservationRepository;
 import team2.MoonLightHotelAndSpa.repository.UserRepository;
-import team2.MoonLightHotelAndSpa.service.implement.TableReservationServiceImpl;
-import team2.MoonLightHotelAndSpa.service.implement.TableServiceImpl;
-import team2.MoonLightHotelAndSpa.service.implement.UserServiceImpl;
+import team2.MoonLightHotelAndSpa.service.table.TableReservationServiceImpl;
+import team2.MoonLightHotelAndSpa.service.table.TableServiceImpl;
+import team2.MoonLightHotelAndSpa.service.user.UserServiceImpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -186,6 +186,5 @@ public class TableReservationServiceImplTest {
         tableReservationService.findAll();
         Mockito.verify(tableReservationRepository, Mockito.times(1)).findAll();
     }
-
 
 }
