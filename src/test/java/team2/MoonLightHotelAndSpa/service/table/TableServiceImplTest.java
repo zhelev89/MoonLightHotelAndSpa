@@ -1,4 +1,4 @@
-package team2.MoonLightHotelAndSpa.service;
+package team2.MoonLightHotelAndSpa.service.table;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

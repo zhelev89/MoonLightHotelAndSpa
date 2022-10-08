@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import team2.MoonLightHotelAndSpa.exception.CustomAccessDeniedHandler;
 import team2.MoonLightHotelAndSpa.exception.CustomHttp403ForbiddenEntryPoint;
 import team2.MoonLightHotelAndSpa.service.user.UserService;

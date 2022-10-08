@@ -1,4 +1,4 @@
-package team2.MoonLightHotelAndSpa.service;
+package team2.MoonLightHotelAndSpa.service.table;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,16 +10,19 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
+import team2.MoonLightHotelAndSpa.model.reservation.ReservationStatus;
 import team2.MoonLightHotelAndSpa.model.reservation.TableReservation;
 import team2.MoonLightHotelAndSpa.model.table.Table;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.repository.TableRepository;
 import team2.MoonLightHotelAndSpa.repository.TableReservationRepository;
 import team2.MoonLightHotelAndSpa.repository.UserRepository;
+import team2.MoonLightHotelAndSpa.service.table.TableReservationService;
 import team2.MoonLightHotelAndSpa.service.table.TableReservationServiceImpl;
 import team2.MoonLightHotelAndSpa.service.table.TableServiceImpl;
 import team2.MoonLightHotelAndSpa.service.user.UserServiceImpl;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -181,10 +184,106 @@ public class TableReservationServiceImplTest {
     @Test
     public void verifyFindAll() {
         Mockito.when(tableReservationRepository.findAll())
-                        .thenReturn(List.of(TableReservation.builder().build()));
+                .thenReturn(List.of(TableReservation.builder().build()));
 
         tableReservationService.findAll();
         Mockito.verify(tableReservationRepository, Mockito.times(1)).findAll();
     }
 
+    @Test
+    public void verifyUpdate() {
+        Mockito.when(tableReservationRepository.findById(1L))
+                .thenReturn(Optional.of(TableReservation.builder()
+                        .id(1L)
+                        .table(Table.builder()
+                                .id(1L)
+                                .build())
+                        .build()));
+
+        Mockito.when(tableRepository.findById(1L))
+                .thenReturn(Optional.of(Table.builder()
+                        .id(1L)
+                        .build()));
+
+        tableReservationService.findByTableIdAndReservationId(1L, 1L);
+
+        TableReservation update = new TableReservation();
+        update.setDate(Instant.parse("2023-01-01T00:00:00.00Z"));
+        update.setUpdated(Instant.parse("2020-12-31T00:00:00.00Z"));
+        update.setPeople(2);
+        update.setPrice(200);
+        update.setTable(Table.builder().id(1L).build());
+        update.setUser(User.builder().id(1).build());
+
+        TableReservation updatedReservation = tableReservationService.update(update, 1L, 1L);
+        Assertions.assertEquals(updatedReservation.getDate(), update.getDate());
+        Assertions.assertEquals(updatedReservation.getUpdated(), update.getUpdated());
+        Assertions.assertEquals(updatedReservation.getPeople(), update.getPeople());
+        Assertions.assertEquals(updatedReservation.getPrice(), update.getPrice());
+        Assertions.assertEquals(updatedReservation.getTable(), update.getTable());
+        Assertions.assertEquals(updatedReservation.getUser(), update.getUser());
+    }
+
+    @Test
+    public void verifyTableReservationIdMatch() {
+        Mockito.when(tableReservationRepository.findById(1L))
+                .thenReturn(Optional.of(TableReservation.builder()
+                        .id(1L)
+                        .table(Table.builder()
+                                .id(1L)
+                                .build())
+                        .build()));
+
+        tableReservationService.tableReservationIdMatch(1L, 1L);
+        Mockito.verify(tableReservationRepository, Mockito.times(1)).findById(1L);
+    }
+
+    @Test
+    public void verifyTableReservationIdMatchThrowException() {
+        String message = "Reservation ID doesn't match with the table ID.";
+        Mockito.when(tableReservationRepository.findById(1L))
+                .thenReturn(Optional.of(TableReservation.builder()
+                        .id(1L)
+                        .table(Table.builder()
+                                .id(1L)
+                                .build())
+                        .build()));
+
+        RecordBadRequestException exception = Assertions.assertThrows(RecordBadRequestException.class,
+                () -> tableReservationService.tableReservationIdMatch(2L, 1L));
+
+        Assertions.assertEquals(message, exception.getMessage());
+    }
+
+    @Test
+    public void verifyDeleteTableById() {
+        tableReservationService.deleteTableReservationById(1L);
+        Mockito.verify(tableReservationRepository, Mockito.times(1)).deleteById(1L);
+    }
+
+    @Test
+    public void verifyIsPaid() {
+        Mockito.when(tableReservationRepository.findById(1L))
+                .thenReturn(Optional.of(TableReservation.builder()
+                        .id(1L)
+                        .status(String.valueOf(ReservationStatus.PAID))
+                        .build()));
+        tableReservationService.isPaid(1L);
+        Mockito.verify(tableReservationRepository, Mockito.times(1)).findById(1L);
+    }
+
+    @Test
+    public void verifyIsPaidThrowException() {
+        String message = "This reservation is unpaid!";
+        Mockito.when(tableReservationRepository.findById(1L))
+                .thenReturn(Optional.of(TableReservation.builder()
+                        .id(1L)
+                        .status(String.valueOf(ReservationStatus.UNPAID))
+                        .build()));
+
+        RecordBadRequestException exception = Assertions.assertThrows(RecordBadRequestException.class,
+                () -> tableReservationService.isPaid(1L));
+
+        Assertions.assertEquals(message, exception.getMessage());
+    }
 }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
+import team2.MoonLightHotelAndSpa.model.reservation.ReservationStatus;
 import team2.MoonLightHotelAndSpa.model.reservation.TableReservation;
 import team2.MoonLightHotelAndSpa.model.table.Table;
 import team2.MoonLightHotelAndSpa.model.user.User;
@@ -98,15 +99,15 @@ public class TableReservationServiceImpl implements TableReservationService {
     }
 
     @Override
-    public void deleteTableReservationId(long tableReservationId) {
+    public void deleteTableReservationById(long tableReservationId) {
         tableReservationRepository.deleteById(tableReservationId);
     }
 
     @Override
     public void isPaid(long reservationId) {
         TableReservation tableReservation = findById(reservationId);
-        if(tableReservation.getStatus().equals("PAID")) {
-            throw new RecordBadRequestException("This reservation is already paid!");
+        if(tableReservation.getStatus().equals(String.valueOf(ReservationStatus.UNPAID))) {
+            throw new RecordBadRequestException("This reservation is unpaid!");
         }
     }
 }

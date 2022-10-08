@@ -22,7 +22,7 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.screenReservation.ScreenRes
 import team2.MoonLightHotelAndSpa.dataTransferObject.tableReservation.TableReservationResponse;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.reservation.TableReservation;
-import team2.MoonLightHotelAndSpa.model.screen.ScreenReservation;
+import team2.MoonLightHotelAndSpa.model.reservation.ScreenReservation;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.room.RoomReservationService;
 import team2.MoonLightHotelAndSpa.service.screen.ScreenReservationService;

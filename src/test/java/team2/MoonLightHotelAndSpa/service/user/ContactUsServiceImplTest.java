@@ -1,4 +1,4 @@
-package team2.MoonLightHotelAndSpa.service;
+package team2.MoonLightHotelAndSpa.service.user;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,6 +35,4 @@ public class ContactUsServiceImplTest {
         contactUsService.saveContactUs(contactUs);
         Mockito.verify(contactUsRepository, Mockito.times(1)).save(contactUs);
     }
-
-
 }
