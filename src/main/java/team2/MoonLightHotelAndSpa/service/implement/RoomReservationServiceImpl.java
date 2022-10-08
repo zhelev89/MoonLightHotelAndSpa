@@ -47,7 +47,6 @@ public class RoomReservationServiceImpl implements RoomReservationService {
     }
 
     public Set<RoomReservation> findAll() {
-
         return new HashSet<>(roomReservationRepository.findAll());
     }
 

@@ -44,7 +44,6 @@ public class TableServiceImplTest {
     @Test
     public void verifyFindById() {
         long id = 1;
-
         Mockito.when(tableRepository.findById(id))
                 .thenReturn(Optional.of(
                         Table.builder()

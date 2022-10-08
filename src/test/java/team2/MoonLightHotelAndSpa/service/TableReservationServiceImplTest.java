@@ -8,9 +8,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.reservation.TableReservation;
 import team2.MoonLightHotelAndSpa.model.table.Table;
+import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.repository.TableRepository;
 import team2.MoonLightHotelAndSpa.repository.TableReservationRepository;
 import team2.MoonLightHotelAndSpa.repository.UserRepository;
@@ -84,18 +86,106 @@ public class TableReservationServiceImplTest {
                 Table.builder().id(id).build()), Mockito.times(1));
     }
 
-//    @Test
-//    public void verifyFindByTableIdAndReservationId() {
-//        long tableId = 1;
-//        long reservationId = 1;
-//
-////        Mockito.when(tableService.findById(tableId))
-////                .thenReturn(Optional.of(Table.builder().id(tableId).build()));
-//        Mockito.when(tableReservationService.findById(reservationId))
-//                        .thenReturn(TableReservation.builder().id(reservationId).build());
-//        Mockito.when(tableReservationService.findByTableIdAndReservationId(tableId, reservationId))
-//                .thenReturn(TableReservation.builder().build());
-//        Mockito.verify(tableRepository, Mockito.times(1)).findById(tableId);
-//        Mockito.verify(tableReservationRepository, Mockito.times(1)).findById(reservationId);
-//    }
+    @Test
+    public void verifyFindByTableIdAndReservationId() {
+        Mockito.when(tableRepository.findById(1L))
+                .thenReturn(Optional.of(Table.builder()
+                        .id(1L)
+                        .build()));
+
+        Mockito.when(tableReservationRepository.findById(1L))
+                .thenReturn(Optional.of(TableReservation.builder()
+                        .id(1L)
+                        .table(Table.builder().id(1L)
+                                .build())
+                        .build()));
+
+        tableReservationService.findByTableIdAndReservationId(1L, 1L);
+        Mockito.verify(tableRepository, Mockito.times(1)).findById(1L);
+        Mockito.verify(tableReservationRepository, Mockito.times(1)).findById(1L);
+    }
+
+    @Test
+    public void verifyFindByTableIdAndReservationIdThrowException() {
+        String message = "Reservation ID doesn't match with the User ID.";
+
+        Mockito.when(tableRepository.findById(1L))
+                .thenReturn(Optional.of(Table.builder().build()));
+
+        Mockito.when(tableReservationRepository.findById(1L))
+                .thenReturn(Optional.of(TableReservation.builder()
+                        .id(1L)
+                        .table(Table.builder()
+                                .id(1L)
+                                .build())
+                        .build()));
+
+        RecordBadRequestException exception = Assertions.assertThrows(RecordBadRequestException.class,
+                () -> tableReservationService.findByTableIdAndReservationId(1L, 1L));
+
+        Assertions.assertEquals(message, exception.getMessage());
+    }
+
+    @Test
+    public void verifyFindAllByUserId() {
+        Mockito.when(userRepository.findById(1L))
+                .thenReturn(Optional.of(User.builder().build()));
+
+        tableReservationService.findAllByUserId(1L);
+        Mockito.verify(tableReservationRepository, Mockito.times(1))
+                .findAllByUser(User.builder().build());
+    }
+
+    @Test
+    public void verifyFindByUserIdAndTableReservationId() {
+        Mockito.when(userRepository.findById(1L))
+                .thenReturn(Optional.of(User.builder()
+                        .id(1L)
+                        .build()));
+
+        Mockito.when(tableReservationRepository.findById(1L))
+                .thenReturn(Optional.of(TableReservation.builder()
+                        .id(1L)
+                        .user(User.builder().id(1L)
+                                .build())
+                        .build()));
+
+        tableReservationService.findByUserIdAndTableReservationId(1L, 1L);
+        Mockito.verify(tableReservationRepository, Mockito.times(1)).findById(1L);
+        Mockito.verify(userRepository, Mockito.times(1)).findById(1L);
+    }
+
+    @Test
+    public void verifyFindByUserIdAndTableReservationIdThrowException() {
+        String message = "Reservation ID doesn't match with the User ID.";
+
+        Mockito.when(userRepository.findById(1L))
+                .thenReturn(Optional.of(User.builder()
+                        .id(1L)
+                        .build()));
+
+        Mockito.when(tableReservationRepository.findById(1L))
+                .thenReturn(Optional.of(TableReservation.builder()
+                        .id(1L)
+                        .user(User.builder()
+                                .id(2L)
+                                .build())
+                        .build()));
+
+        RecordBadRequestException exception = Assertions.assertThrows(RecordBadRequestException.class,
+                () -> tableReservationService.findByUserIdAndTableReservationId(1L, 1L));
+
+        Assertions.assertEquals(message, exception.getMessage());
+    }
+
+    @Test
+    public void verifyFindAll() {
+        Mockito.when(tableReservationRepository.findAll())
+                        .thenReturn(List.of(TableReservation.builder().build()));
+
+        tableReservationService.findAll();
+        Mockito.verify(tableReservationRepository, Mockito.times(1)).findAll();
+    }
+
+
 }

@@ -62,8 +62,8 @@ public class TableReservationServiceImpl implements TableReservationService {
 
     @Override
     public TableReservation findByUserIdAndTableReservationId(long userId, long tableReservationId) {
-        TableReservation tableReservation = findById(tableReservationId);
         User user = userService.findById(userId);
+        TableReservation tableReservation = findById(tableReservationId);
         if (tableReservation.getUser().getId() != user.getId()) {
             throw new RecordBadRequestException("Reservation ID doesn't match with the User ID.");
         }
@@ -71,6 +71,7 @@ public class TableReservationServiceImpl implements TableReservationService {
         return tableReservation;
     }
 
+    @Override
     public Set<TableReservation> findAll() {
         return new HashSet<>(tableReservationRepository.findAll());
     }
@@ -80,7 +81,6 @@ public class TableReservationServiceImpl implements TableReservationService {
     public TableReservation update(TableReservation updatedTableReservation, long id, long rid) {
         tableReservationIdMatch(rid, id);
         TableReservation tableReservation = findById(id);
-
         tableReservation.setDate(updatedTableReservation.getDate());
         tableReservation.setUpdated(updatedTableReservation.getUpdated());
         tableReservation.setPeople(updatedTableReservation.getPeople());
