@@ -7,12 +7,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.dao.EmptyResultDataAccessException;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.table.Table;
 import team2.MoonLightHotelAndSpa.model.table.TableZone;
 import team2.MoonLightHotelAndSpa.repository.TableRepository;
-import team2.MoonLightHotelAndSpa.service.implement.TableServiceImpl;
+import team2.MoonLightHotelAndSpa.service.table.TableServiceImpl;
 
 import java.util.Optional;
 

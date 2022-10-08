@@ -10,7 +10,7 @@ import team2.MoonLightHotelAndSpa.model.room.Room;
 import team2.MoonLightHotelAndSpa.model.room.RoomImage;
 import team2.MoonLightHotelAndSpa.model.room.RoomView;
 import team2.MoonLightHotelAndSpa.repository.RoomRepository;
-import team2.MoonLightHotelAndSpa.service.implement.RoomServiceImpl;
+import team2.MoonLightHotelAndSpa.service.room.RoomServiceImpl;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
