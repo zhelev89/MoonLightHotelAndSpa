@@ -73,7 +73,7 @@ public class ScreenReservationServiceImpl implements ScreenReservationService {
     }
 
     @Override
-    public ScreenReservation findUserIdAndReservationId(long userId, long screenReservationId) {
+    public ScreenReservation findByUserIdAndReservationId(long userId, long screenReservationId) {
         User user = userService.findById(userId);
         ScreenReservation screenReservation = findByScreenReservationID(screenReservationId);
         if (user.getId() != screenReservation.getUser().getId()) {

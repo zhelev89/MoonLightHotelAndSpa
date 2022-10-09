@@ -144,7 +144,7 @@ public class UserReservationController {
     @GetMapping(value = "/{uid}/screens/reservation/{rid}")
     public ResponseEntity<ScreenReservationResponse> showUserByIdAndScreenReservationsById(@PathVariable long uid,
                                                                                            @PathVariable long rid) {
-        ScreenReservation screenReservation = screenReservationService.findUserIdAndReservationId(uid, rid);
+        ScreenReservation screenReservation = screenReservationService.findByUserIdAndReservationId(uid, rid);
         ScreenReservationResponse response = screenReservationConverter.convert(screenReservation);
         return ResponseEntity.ok().body(response);
     }

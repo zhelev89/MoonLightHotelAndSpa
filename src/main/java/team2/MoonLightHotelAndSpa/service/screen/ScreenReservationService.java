@@ -16,7 +16,7 @@ public interface ScreenReservationService {
 
     ScreenReservation findByScreenReservationID(long id);
 
-    ScreenReservation findUserIdAndReservationId(long userId, long screenReservationId);
+    ScreenReservation findByUserIdAndReservationId(long userId, long screenReservationId);
 
     List<ScreenReservation> findAllByScreenId(long id);
 
