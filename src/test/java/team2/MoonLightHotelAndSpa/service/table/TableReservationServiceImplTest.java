@@ -17,9 +17,6 @@ import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.repository.TableRepository;
 import team2.MoonLightHotelAndSpa.repository.TableReservationRepository;
 import team2.MoonLightHotelAndSpa.repository.UserRepository;
-import team2.MoonLightHotelAndSpa.service.table.TableReservationService;
-import team2.MoonLightHotelAndSpa.service.table.TableReservationServiceImpl;
-import team2.MoonLightHotelAndSpa.service.table.TableServiceImpl;
 import team2.MoonLightHotelAndSpa.service.user.UserServiceImpl;
 
 import java.time.Instant;
@@ -82,11 +79,17 @@ public class TableReservationServiceImplTest {
 
     @Test
     public void verifyFindAllByTable() {
-        long id = 1;
-        Mockito.when(tableReservationService.findAllByTable(id))
-                .thenReturn(List.of(TableReservation.builder().build()));
-        Mockito.verify(tableReservationRepository.findByTable(
-                Table.builder().id(id).build()), Mockito.times(1));
+        Mockito.when(tableRepository.findById(1L))
+                .thenReturn(Optional.of(Table.builder()
+                        .id(1L)
+                        .build()));
+
+        tableReservationService.findAllByTable(1L);
+
+        Mockito.verify(tableReservationRepository, Mockito.times(1))
+                .findByTable(Table.builder()
+                        .id(1L)
+                        .build());
     }
 
     @Test

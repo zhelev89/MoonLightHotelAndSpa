@@ -22,6 +22,12 @@ public class ScreenReservationServiceImpl implements ScreenReservationService {
     private final ScreenService screenService;
     private final UserService userService;
 
+    @Override
+    public ScreenReservation save(ScreenReservation screenReservation) {
+        screenReservation.setPrice(screenReservation.getSeats().length * 10);
+        return screenReservationRepository.save(screenReservation);
+    }
+
     public List<ScreenReservation> findByUser(User user) {
         return screenReservationRepository.findByUser(user);
     }
@@ -41,13 +47,6 @@ public class ScreenReservationServiceImpl implements ScreenReservationService {
         List<Integer> freeSeats = new ArrayList<>(List.of(seats.clone()));
         freeSeats.removeAll(reservedSeats);
         return freeSeats;
-    }
-
-
-    @Override
-    public ScreenReservation save(ScreenReservation screenReservation) {
-        screenReservation.setPrice(screenReservation.getSeats().length * 10);
-        return screenReservationRepository.save(screenReservation);
     }
 
     @Override

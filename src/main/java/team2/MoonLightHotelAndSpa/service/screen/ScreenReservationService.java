@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface ScreenReservationService {
 
+    ScreenReservation save(ScreenReservation screenReservation);
+
     List<ScreenReservation> findByUser(User user);
 
     List<Integer> findFreeSeatsByScreenIdAndDate(long screenId, String date);
-
-    ScreenReservation save(ScreenReservation screenReservation);
 
     ScreenReservation findByScreenReservationID(long id);
 
