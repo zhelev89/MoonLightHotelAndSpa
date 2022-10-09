@@ -48,46 +48,26 @@ public class ScreenReservationServiceImplTest {
                 screenService, userService);
     }
 
-//    @Test
-//    public void verifySave() {
-//        Integer[] seats = {1, 2};
-////        ScreenReservation screenReservation = ScreenReservation.builder()
-////                .date(Instant.now())
-////                .seats(seats)
-////                .screen(Screen.builder()
-////                        .title("Boxing")
-////                        .image("URL://boxing.image.com")
-////                        .position(ScreenPosition.CENTRAL)
-////                        .seats(seats)
-////                        .build())
-////                .user(User.builder()
-////                        .name("Zhivko")
-////                        .surname("Zhelev")
-////                        .email("Zhelev89@yahoo.com")
-////                        .phone("0899123123")
-////                        .password("veryStrong")
-////                        .created(Instant.now())
-////                        .build())
-////                .build();
-//        Mockito.when(screenReservationRepository.save(ScreenReservation.builder()
-//                        .seats(seats)
-//                        .price(seats.length * 10)
-//                        .build()))
-//                .thenReturn(ScreenReservation.builder()
-//                        .seats(seats)
-//                        .price(seats.length * 10)
-//                        .build());
-//
-//        screenReservationService.save(ScreenReservation.builder()
-//                .seats(seats)
-//                .price(seats.length * 10)
-//                .build());
-//
-//        Mockito.verify(screenReservationRepository, Mockito.times(1))
-//                .save(ScreenReservation.builder()
-//                        .seats(seats)
-//                        .build());
-//    }
+    @Test
+    public void verifySave() {
+        Integer[] seats = {1, 2};
+        ScreenReservation beforeSave = ScreenReservation.builder()
+                .seats(seats)
+                .build();
+
+        ScreenReservation afterSave = ScreenReservation.builder()
+                .seats(seats)
+                .price(seats.length * 10)
+                .build();
+
+        Mockito.when(screenReservationRepository.save(beforeSave))
+                .thenReturn(afterSave);
+
+        screenReservationService.save(beforeSave);
+
+        Mockito.verify(screenReservationRepository, Mockito.times(1))
+                .save(beforeSave);
+    }
 
     @Test
     public void verifyFindByUser() {
