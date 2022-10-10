@@ -19,7 +19,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "users",
+        indexes = @Index(name = "first_last_name_index", columnList = "name, surname DESC"))
 public class User implements UserDetails {
 
     @Id
