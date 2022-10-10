@@ -30,7 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String CLIENT = "ROLE_CLIENT";
     private static final String[] PUBLIC_URL_POST = {"/rooms/**", "/users", "/users/token", "/users/forgot", "/contacts",
             "/screens/{id}/findFreeSeatsByScreenIdAndDate"};
-    private static final String[] PUBLIC_URL_GET = {"/rooms/**", "/capture/room", "/capture/table"};
+    private static final String[] PUBLIC_URL_GET = {"/rooms/**", "/capture/room", "/capture/table","/swagger/**","/v3/api-docs",
+            "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html"};
     private static final String[] PUBLIC_URL_PUT = {"/rooms/**"};
     private static final String[] PUBLIC_URL_DELETE = {"/rooms/**"};
     private static final String[] PROTECTED_URL_POST = {"/users/reset", "/tables", "/screens", "/**"};
@@ -66,18 +67,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, PUBLIC_URL_POST).permitAll()
-                .antMatchers(HttpMethod.GET, PUBLIC_URL_GET).permitAll()
-                .antMatchers(HttpMethod.PUT, PUBLIC_URL_PUT).permitAll()
-                .antMatchers(HttpMethod.DELETE, PUBLIC_URL_DELETE).permitAll()
-                .antMatchers(HttpMethod.POST, PROTECTED_URL_POST).hasAnyAuthority(ADMIN)
-                .antMatchers(HttpMethod.POST, PROTECTED_URL_POST_CLIENT).hasAnyAuthority(CLIENT)
-                .antMatchers(HttpMethod.GET, PROTECTED_URL_GET).hasAnyAuthority(ADMIN)
-                .antMatchers(HttpMethod.GET, PROTECTED_URL_GET_CLIENT).hasAnyAuthority(CLIENT)
-                .antMatchers(HttpMethod.PUT, PROTECTED_URL_PUT).hasAnyAuthority(ADMIN)
-                .antMatchers(HttpMethod.PUT, PROTECTED_URL_PUT_CLIENT).hasAnyAuthority(CLIENT)
-                .antMatchers(HttpMethod.DELETE, PROTECTED_URL_DELETE).hasAnyAuthority(ADMIN)
-                .antMatchers(HttpMethod.DELETE, PROTECTED_URL_DELETE_CLIENT).hasAnyAuthority(CLIENT)
+                .mvcMatchers(HttpMethod.POST, PUBLIC_URL_POST).permitAll()
+                .mvcMatchers(HttpMethod.GET, PUBLIC_URL_GET).permitAll()
+                .mvcMatchers(HttpMethod.PUT, PUBLIC_URL_PUT).permitAll()
+                .mvcMatchers(HttpMethod.DELETE, PUBLIC_URL_DELETE).permitAll()
+                .mvcMatchers(HttpMethod.POST, PROTECTED_URL_POST).hasAnyAuthority(ADMIN)
+                .mvcMatchers(HttpMethod.POST, PROTECTED_URL_POST_CLIENT).hasAnyAuthority(CLIENT)
+                .mvcMatchers(HttpMethod.GET, PROTECTED_URL_GET).hasAnyAuthority(ADMIN)
+                .mvcMatchers(HttpMethod.GET, PROTECTED_URL_GET_CLIENT).hasAnyAuthority(CLIENT)
+                .mvcMatchers(HttpMethod.PUT, PROTECTED_URL_PUT).hasAnyAuthority(ADMIN)
+                .mvcMatchers(HttpMethod.PUT, PROTECTED_URL_PUT_CLIENT).hasAnyAuthority(CLIENT)
+                .mvcMatchers(HttpMethod.DELETE, PROTECTED_URL_DELETE).hasAnyAuthority(ADMIN)
+                .mvcMatchers(HttpMethod.DELETE, PROTECTED_URL_DELETE_CLIENT).hasAnyAuthority(CLIENT)
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler)
