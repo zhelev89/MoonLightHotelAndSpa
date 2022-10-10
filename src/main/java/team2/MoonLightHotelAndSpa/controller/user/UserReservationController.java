@@ -22,7 +22,7 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.screenReservation.ScreenRes
 import team2.MoonLightHotelAndSpa.dataTransferObject.tableReservation.TableReservationResponse;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.reservation.TableReservation;
-import team2.MoonLightHotelAndSpa.model.screen.ScreenReservation;
+import team2.MoonLightHotelAndSpa.model.reservation.ScreenReservation;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.room.RoomReservationService;
 import team2.MoonLightHotelAndSpa.service.screen.ScreenReservationService;
@@ -144,7 +144,7 @@ public class UserReservationController {
     @GetMapping(value = "/{uid}/screens/reservation/{rid}")
     public ResponseEntity<ScreenReservationResponse> showUserByIdAndScreenReservationsById(@PathVariable long uid,
                                                                                            @PathVariable long rid) {
-        ScreenReservation screenReservation = screenReservationService.findUserIdAndReservationId(uid, rid);
+        ScreenReservation screenReservation = screenReservationService.findByUserIdAndReservationId(uid, rid);
         ScreenReservationResponse response = screenReservationConverter.convert(screenReservation);
         return ResponseEntity.ok().body(response);
     }

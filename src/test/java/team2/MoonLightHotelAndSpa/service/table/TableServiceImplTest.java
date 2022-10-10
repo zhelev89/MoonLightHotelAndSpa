@@ -1,4 +1,4 @@
-package team2.MoonLightHotelAndSpa.service;
+package team2.MoonLightHotelAndSpa.service.table;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,7 +43,6 @@ public class TableServiceImplTest {
     @Test
     public void verifyFindById() {
         long id = 1;
-
         Mockito.when(tableRepository.findById(id))
                 .thenReturn(Optional.of(
                         Table.builder()

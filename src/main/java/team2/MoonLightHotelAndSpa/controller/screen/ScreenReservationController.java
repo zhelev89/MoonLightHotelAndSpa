@@ -7,7 +7,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.converter.screen.ScreenReservationConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObject.screenReservation.*;
-import team2.MoonLightHotelAndSpa.model.screen.ScreenReservation;
+import team2.MoonLightHotelAndSpa.model.reservation.ScreenReservation;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.screen.ScreenReservationService;
 import team2.MoonLightHotelAndSpa.service.screen.ScreenService;

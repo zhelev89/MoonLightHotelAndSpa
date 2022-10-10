@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.dataTransferObject.screenReservation.ScreenReservationUpdateRequest;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
-import team2.MoonLightHotelAndSpa.model.screen.ScreenReservation;
+import team2.MoonLightHotelAndSpa.model.reservation.ScreenReservation;
 import team2.MoonLightHotelAndSpa.model.screen.Screen;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.repository.ScreenReservationRepository;
@@ -21,6 +21,12 @@ public class ScreenReservationServiceImpl implements ScreenReservationService {
     private final ScreenReservationRepository screenReservationRepository;
     private final ScreenService screenService;
     private final UserService userService;
+
+    @Override
+    public ScreenReservation save(ScreenReservation screenReservation) {
+        screenReservation.setPrice(screenReservation.getSeats().length * 10);
+        return screenReservationRepository.save(screenReservation);
+    }
 
     public List<ScreenReservation> findByUser(User user) {
         return screenReservationRepository.findByUser(user);
@@ -41,13 +47,6 @@ public class ScreenReservationServiceImpl implements ScreenReservationService {
         List<Integer> freeSeats = new ArrayList<>(List.of(seats.clone()));
         freeSeats.removeAll(reservedSeats);
         return freeSeats;
-    }
-
-
-    @Override
-    public ScreenReservation save(ScreenReservation screenReservation) {
-        screenReservation.setPrice(screenReservation.getSeats().length * 10);
-        return screenReservationRepository.save(screenReservation);
     }
 
     @Override
@@ -74,7 +73,7 @@ public class ScreenReservationServiceImpl implements ScreenReservationService {
     }
 
     @Override
-    public ScreenReservation findUserIdAndReservationId(long userId, long screenReservationId) {
+    public ScreenReservation findByUserIdAndReservationId(long userId, long screenReservationId) {
         User user = userService.findById(userId);
         ScreenReservation screenReservation = findByScreenReservationID(screenReservationId);
         if (user.getId() != screenReservation.getUser().getId()) {

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
+import team2.MoonLightHotelAndSpa.model.reservation.ReservationStatus;
 import team2.MoonLightHotelAndSpa.model.reservation.TableReservation;
 import team2.MoonLightHotelAndSpa.model.table.Table;
 import team2.MoonLightHotelAndSpa.model.user.User;
@@ -44,9 +45,6 @@ public class TableReservationServiceImpl implements TableReservationService {
 
     @Override
     public TableReservation findByTableIdAndReservationId(long tableId, long rid) {
-        Objects.requireNonNull(tableId);
-        Objects.requireNonNull(rid);
-
         Table table = tableService.findById(tableId);
         TableReservation tableReservation = findById(rid);
         if (tableReservation.getTable().getId() != table.getId()) {
@@ -63,8 +61,8 @@ public class TableReservationServiceImpl implements TableReservationService {
 
     @Override
     public TableReservation findByUserIdAndTableReservationId(long userId, long tableReservationId) {
-        TableReservation tableReservation = findById(tableReservationId);
         User user = userService.findById(userId);
+        TableReservation tableReservation = findById(tableReservationId);
         if (tableReservation.getUser().getId() != user.getId()) {
             throw new RecordBadRequestException("Reservation ID doesn't match with the User ID.");
         }
@@ -72,6 +70,7 @@ public class TableReservationServiceImpl implements TableReservationService {
         return tableReservation;
     }
 
+    @Override
     public Set<TableReservation> findAll() {
         return new HashSet<>(tableReservationRepository.findAll());
     }
@@ -81,7 +80,6 @@ public class TableReservationServiceImpl implements TableReservationService {
     public TableReservation update(TableReservation updatedTableReservation, long id, long rid) {
         tableReservationIdMatch(rid, id);
         TableReservation tableReservation = findById(id);
-
         tableReservation.setDate(updatedTableReservation.getDate());
         tableReservation.setUpdated(updatedTableReservation.getUpdated());
         tableReservation.setPeople(updatedTableReservation.getPeople());
@@ -101,15 +99,15 @@ public class TableReservationServiceImpl implements TableReservationService {
     }
 
     @Override
-    public void deleteTableReservationId(long tableReservationId) {
+    public void deleteTableReservationById(long tableReservationId) {
         tableReservationRepository.deleteById(tableReservationId);
     }
 
     @Override
     public void isPaid(long reservationId) {
         TableReservation tableReservation = findById(reservationId);
-        if(tableReservation.getStatus().equals("PAID")) {
-            throw new RecordBadRequestException("This reservation is already paid!");
+        if(tableReservation.getStatus().equals(String.valueOf(ReservationStatus.UNPAID))) {
+            throw new RecordBadRequestException("This reservation is unpaid!");
         }
     }
 }

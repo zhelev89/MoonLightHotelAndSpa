@@ -1,4 +1,4 @@
-package team2.MoonLightHotelAndSpa.service;
+package team2.MoonLightHotelAndSpa.service.user;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,10 +27,9 @@ public class UserServiceImplTest {
     @Mock
     private UserRepository userRepository;
 
-    private UserServiceImpl userService;
-
     @Mock
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private UserServiceImpl userService;
 
     @BeforeEach
     public void setUp() {
