@@ -8,6 +8,7 @@ import team2.MoonLightHotelAndSpa.repository.CarRepository;
 import team2.MoonLightHotelAndSpa.service.CarService;
 
 import javax.transaction.Transactional;
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -49,4 +50,11 @@ public class CarServiceImpl implements CarService {
     public void deleteById(long id) {
         carRepository.deleteById(id);
     }
+
+    @Override
+    public List<Car> findAllAvailableCars(Instant date, int seats) {
+        return carRepository.findAllAvailableCars(date, seats);
+    }
+
+
 }

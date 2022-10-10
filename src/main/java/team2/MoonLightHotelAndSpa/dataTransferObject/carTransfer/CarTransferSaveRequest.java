@@ -12,6 +12,4 @@ import lombok.NoArgsConstructor;
 public class CarTransferSaveRequest {
 
     private String date;
-//    private int seats;
-//    private String model;
 }

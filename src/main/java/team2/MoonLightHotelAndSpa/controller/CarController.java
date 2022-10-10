@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.converter.CarCategoryConverter;
 import team2.MoonLightHotelAndSpa.converter.CarConverter;
 import team2.MoonLightHotelAndSpa.converter.CarTransferConverter;
+import team2.MoonLightHotelAndSpa.dataTransferObject.car.CarQueryRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.car.CarResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.car.CarSaveRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.car.CarUpdateRequest;
@@ -26,7 +27,9 @@ import team2.MoonLightHotelAndSpa.service.CarCategoryService;
 import team2.MoonLightHotelAndSpa.service.CarService;
 import team2.MoonLightHotelAndSpa.service.CarTransferService;
 
+import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -60,6 +63,13 @@ public class CarController {
     public ResponseEntity<HttpStatus> deleteCar(@PathVariable long id) {
         carService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping(value = "/available")
+    public ResponseEntity<List<CarResponse>> findAllAvailableCars(@RequestBody CarQueryRequest carQueryRequest) {
+        Instant dateInstant = Instant.parse(carQueryRequest.getDate());
+        List<Car> findAllAvailableCars = carService.findAllAvailableCars(dateInstant, carQueryRequest.getSeats());
+        return ResponseEntity.ok(findAllAvailableCars.stream().map(carConverter::convert).collect(Collectors.toList()));
     }
 
     @PostMapping(value = "/categories")

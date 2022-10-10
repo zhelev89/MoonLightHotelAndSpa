@@ -2,6 +2,7 @@ package team2.MoonLightHotelAndSpa.service;
 
 import team2.MoonLightHotelAndSpa.model.car.Car;
 
+import java.time.Instant;
 import java.util.List;
 
 public interface CarService {
@@ -15,4 +16,6 @@ public interface CarService {
     Car findById(long id);
 
     void deleteById(long id);
+
+    List<Car> findAllAvailableCars(Instant date, int seats);
 }
