@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.repository.RoomReservationRepository;
-import team2.MoonLightHotelAndSpa.service.RoomReservationService;
+import team2.MoonLightHotelAndSpa.service.room.RoomReservationService;
 
 import java.time.Instant;
 

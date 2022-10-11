@@ -19,6 +19,13 @@ public interface CarRepository extends JpaRepository<Car, Long> {
 //            "AND rrIn.endDate NOT BETWEEN :start_date AND :end_date) " +
 //            "GROUP BY r HAVING COUNT(*) <= r.count")
 
-    @Query("SELECT c FROM Car c WHERE c.carCategory.seats >= :seats AND c.id NOT IN (SELECT ct.car FROM CarTransfer ct) OR c.id IN (SELECT ct.car FROM CarTransfer ct WHERE ct.date != :date)")
+
+//    @Query(value = "SELECT sc FROM ScreenReservation sc " +
+//            "WHERE sc.screen.id = :id " +
+//            "AND sc.date = :date")
+
+//    @Query("SELECT c FROM Car c WHERE c.carCategory.seats >= :seats AND c.id NOT IN (SELECT ct.car FROM CarTransfer ct) OR c.id IN (SELECT ct.car FROM CarTransfer ct WHERE ct.date != :date)")
+    @Query("SELECT c FROM Car c WHERE c.carCategory.seats >= :seats AND c NOT IN (SELECT ct.car FROM CarTransfer ct) OR c IN (SELECT ct.car FROM CarTransfer ct WHERE ct.date != :date)")
     List<Car> findAllAvailableCars(Instant date, int seats);
 }
+// if(c.getCarCategory.geSeats >= seats && c_id = ct.car_id || ct.getDate != :date)

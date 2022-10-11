@@ -2,6 +2,7 @@ package team2.MoonLightHotelAndSpa.converter;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import team2.MoonLightHotelAndSpa.converter.user.UserConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObject.carTransfer.CarTransferResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.carTransfer.CarTransferSaveRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.carTransfer.CarTransferUpdateRequest;
@@ -10,7 +11,7 @@ import team2.MoonLightHotelAndSpa.model.car.Car;
 import team2.MoonLightHotelAndSpa.model.car.CarTransfer;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.CarService;
-import team2.MoonLightHotelAndSpa.service.UserService;
+import team2.MoonLightHotelAndSpa.service.user.UserService;
 
 import java.time.Instant;
 
