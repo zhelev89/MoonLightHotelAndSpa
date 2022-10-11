@@ -13,15 +13,6 @@ import java.util.Set;
 @ControllerAdvice
 public class RecordExceptionHandler {
 
-//    @ExceptionHandler(value = {RecordBadRequestException.class})
-//    public ResponseEntity<Object> handleBadRequestException(RecordBadRequestException ex) {
-//
-//        RecordResponseException recordResponseException =
-//                new RecordResponseException(ex.getMessage());
-//
-//        return new ResponseEntity<>(recordResponseException, HttpStatus.BAD_REQUEST);
-//    }
-
     @ExceptionHandler(RecordBadRequestException.class)
     public ResponseEntity<String> handleNoSuchElementFoundException(
             RecordBadRequestException exception
