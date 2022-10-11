@@ -1,11 +1,10 @@
-package team2.MoonLightHotelAndSpa.service.implement;
+package team2.MoonLightHotelAndSpa.service.car;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.car.Car;
 import team2.MoonLightHotelAndSpa.repository.CarRepository;
-import team2.MoonLightHotelAndSpa.service.CarService;
 
 import javax.transaction.Transactional;
 import java.time.Instant;

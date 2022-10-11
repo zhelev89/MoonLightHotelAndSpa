@@ -8,7 +8,7 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.car.CarUpdateRequest;
 import team2.MoonLightHotelAndSpa.model.car.Car;
 import team2.MoonLightHotelAndSpa.model.car.CarCategory;
 import team2.MoonLightHotelAndSpa.model.car.CarImage;
-import team2.MoonLightHotelAndSpa.service.CarCategoryService;
+import team2.MoonLightHotelAndSpa.service.car.CarCategoryService;
 
 import java.util.stream.Collectors;
 

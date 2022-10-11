@@ -10,10 +10,13 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.carTransfer.SummarizeCarTra
 import team2.MoonLightHotelAndSpa.model.car.Car;
 import team2.MoonLightHotelAndSpa.model.car.CarTransfer;
 import team2.MoonLightHotelAndSpa.model.user.User;
-import team2.MoonLightHotelAndSpa.service.CarService;
+import team2.MoonLightHotelAndSpa.service.car.CarService;
 import team2.MoonLightHotelAndSpa.service.user.UserService;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 @Component
 @AllArgsConstructor
@@ -25,7 +28,7 @@ public class CarTransferConverter {
     private final UserService userService;
 
     public CarTransfer convert(CarTransferSaveRequest carTransferSaveRequest, long carId, User user) {
-        Instant dateInst = Instant.parse(carTransferSaveRequest.getDate());
+        Instant dateInst = convertRequestDateToInstant(carTransferSaveRequest.getDate());
         Car car = carService.findById(carId);
         return CarTransfer.builder()
                 .price(car.getCarCategory().getPrice())
@@ -49,11 +52,9 @@ public class CarTransferConverter {
     }
 
     public CarTransfer convert(CarTransferUpdateRequest carTransferUpdateRequest) {
-//        User user = userService.findById(carTransferUpdateRequest.getUserId());
         Instant dateInst = Instant.parse(carTransferUpdateRequest.getDate());
         return CarTransfer.builder()
                 .date(dateInst)
-//                .user(user)
                 .build();
     }
 
@@ -68,5 +69,13 @@ public class CarTransferConverter {
                 .price(carTransfer.getCar().getCarCategory().getPrice())
                 .date(dateString)
                 .build();
+    }
+
+    public Instant convertRequestDateToInstant(String date) {
+        String concatenatedDate = date + " " + "00:00:00";
+        return LocalDateTime
+                .parse(concatenatedDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                .atZone(ZoneId.systemDefault())
+                .toInstant();
     }
 }

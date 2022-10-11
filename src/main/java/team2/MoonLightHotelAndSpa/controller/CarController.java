@@ -23,11 +23,14 @@ import team2.MoonLightHotelAndSpa.model.car.Car;
 import team2.MoonLightHotelAndSpa.model.car.CarCategory;
 import team2.MoonLightHotelAndSpa.model.car.CarTransfer;
 import team2.MoonLightHotelAndSpa.model.user.User;
-import team2.MoonLightHotelAndSpa.service.CarCategoryService;
-import team2.MoonLightHotelAndSpa.service.CarService;
-import team2.MoonLightHotelAndSpa.service.CarTransferService;
+import team2.MoonLightHotelAndSpa.service.car.CarCategoryService;
+import team2.MoonLightHotelAndSpa.service.car.CarService;
+import team2.MoonLightHotelAndSpa.service.car.CarTransferService;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,7 +70,7 @@ public class CarController {
 
     @GetMapping(value = "/available")
     public ResponseEntity<List<CarResponse>> findAllAvailableCars(@RequestBody CarQueryRequest carQueryRequest) {
-        Instant dateInstant = Instant.parse(carQueryRequest.getDate());
+        Instant dateInstant = carTransferConverter.convertRequestDateToInstant(carQueryRequest.getDate());
         List<Car> findAllAvailableCars = carService.findAllAvailableCars(dateInstant, carQueryRequest.getSeats());
         return ResponseEntity.ok(findAllAvailableCars.stream().map(carConverter::convert).collect(Collectors.toList()));
     }

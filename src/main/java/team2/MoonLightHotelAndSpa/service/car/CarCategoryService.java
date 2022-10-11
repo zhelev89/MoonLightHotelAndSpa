@@ -1,4 +1,4 @@
-package team2.MoonLightHotelAndSpa.service;
+package team2.MoonLightHotelAndSpa.service.car;
 
 import team2.MoonLightHotelAndSpa.model.car.CarCategory;
 
