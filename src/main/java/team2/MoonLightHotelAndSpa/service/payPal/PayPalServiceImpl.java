@@ -7,10 +7,14 @@ import com.paypal.orders.*;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import team2.MoonLightHotelAndSpa.model.car.Car;
+import team2.MoonLightHotelAndSpa.model.car.CarTransfer;
+import team2.MoonLightHotelAndSpa.model.car.CarTransferStatus;
 import team2.MoonLightHotelAndSpa.model.paypal.CreatedOrder;
 import team2.MoonLightHotelAndSpa.model.reservation.ReservationStatus;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.reservation.TableReservation;
+import team2.MoonLightHotelAndSpa.service.car.CarTransferService;
 import team2.MoonLightHotelAndSpa.service.room.RoomReservationService;
 import team2.MoonLightHotelAndSpa.service.table.TableReservationService;
 
@@ -25,9 +29,10 @@ public class PayPalServiceImpl implements PayPalService {
     private static final String APPROVE_LINK_REL = "approve" ;
     @Autowired
     private RoomReservationService roomReservationService;
-
     @Autowired
     private TableReservationService tableReservationService;
+    @Autowired
+    private CarTransferService carTransferService;
     private final PayPalHttpClient payPalHttpClient;
 
 
@@ -142,6 +147,61 @@ public class PayPalServiceImpl implements PayPalService {
         TableReservation tableReservation = tableReservationService.findById(tableReservationId);
         tableReservation.setStatus(status);
         final OrdersCaptureRequest ordersCaptureRequest = new OrdersCaptureRequest(orderId);
+        final HttpResponse<Order> httpResponse = payPalHttpClient.execute(ordersCaptureRequest);
+    }
+
+    @Override
+    @SneakyThrows
+    public CreatedOrder createOrderCarTransfer(long carTransferId, URI returnUrl) throws IOException {
+        CarTransfer carTransfer = carTransferService.findById(carTransferId);
+        carTransferService.isPaid(carTransferId);
+        double amount = (double) carTransfer.getPrice();
+        final OrderRequest orderRequest = createOrderRequestRoom(amount, returnUrl);
+        final OrdersCreateRequest ordersCreateRequest = new OrdersCreateRequest().requestBody(orderRequest);
+        final HttpResponse<Order> orderHttpResponse = payPalHttpClient.execute(ordersCreateRequest);
+        final Order order = orderHttpResponse.result();
+        LinkDescription approveUri = extractApprovalLinkCarTransfer(order);
+        return new CreatedOrder(order.id(),URI.create(approveUri.href()));
+    }
+
+    private OrderRequest createOrderRequestCarTransfer(Double totalAmount, URI returnUrl) {
+        final OrderRequest orderRequest = new OrderRequest();
+        setCheckoutIntentRoom(orderRequest);
+        setPurchaseUnitsRoom(totalAmount, orderRequest);
+        setApplicationContextRoom(returnUrl, orderRequest);
+        return orderRequest;
+    }
+
+    private OrderRequest setApplicationContextCarTransfer(URI returnUrl, OrderRequest orderRequest) {
+        return orderRequest.applicationContext(new ApplicationContext().returnUrl(returnUrl.toString()));
+    }
+
+    private void setPurchaseUnitsCarTransfer(Double totalAmount, OrderRequest orderRequest) {
+        final PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest()
+                .amountWithBreakdown(new AmountWithBreakdown().currencyCode("USD").value(totalAmount.toString()));
+        orderRequest.purchaseUnits(Arrays.asList(purchaseUnitRequest));
+    }
+
+    private void setCheckoutIntentCarTransfer(OrderRequest orderRequest) {
+        orderRequest.checkoutPaymentIntent("CAPTURE");
+    }
+
+    private LinkDescription extractApprovalLinkCarTransfer(Order order) {
+        LinkDescription approveUri = order.links().stream()
+                .filter(link -> APPROVE_LINK_REL.equals(link.rel()))
+                .findFirst()
+                .orElseThrow(NoSuchElementException::new);
+        return approveUri;
+    }
+
+    @Override
+    @SneakyThrows
+    @Transactional
+    public void captureOrderCarTransfer(String transferId, long roomReservationId) {
+        String status = String.valueOf(CarTransferStatus.PAID);
+        CarTransfer carTransfer = carTransferService.findById(roomReservationId);
+        carTransfer.setStatus(status);
+        final OrdersCaptureRequest ordersCaptureRequest = new OrdersCaptureRequest(transferId);
         final HttpResponse<Order> httpResponse = payPalHttpClient.execute(ordersCaptureRequest);
     }
 }

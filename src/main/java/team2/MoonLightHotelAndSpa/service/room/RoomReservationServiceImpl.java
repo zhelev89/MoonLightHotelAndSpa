@@ -1,11 +1,15 @@
 package team2.MoonLightHotelAndSpa.service.room;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.room.Room;
+import team2.MoonLightHotelAndSpa.model.room.RoomTitle;
+import team2.MoonLightHotelAndSpa.model.room.RoomView;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.repository.RoomReservationRepository;
 import team2.MoonLightHotelAndSpa.service.user.UserService;
@@ -13,10 +17,7 @@ import team2.MoonLightHotelAndSpa.service.user.UserService;
 import javax.transaction.Transactional;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -94,7 +95,34 @@ public class RoomReservationServiceImpl implements RoomReservationService {
 
     @Override
     public List<Room> findAllAvailableRooms(Instant start_date, Instant end_date, int people) {
-        return roomReservationRepository.findAllAvailableRooms(start_date, end_date ,people);
+        return roomReservationRepository.findAllAvailableRooms(start_date, end_date, people);
+    }
+
+    @Override
+    public ResponseEntity<?> findAllAvailableRoomsDetailed(String start_date, String end_date, int adults, int kids, RoomView roomView, RoomTitle roomTitle) {
+        Instant startDateInst = Instant.parse(start_date);
+        Instant endDateInst = Instant.parse(end_date);
+        int people = adults + kids;
+        List<Room> rooms = findAllAvailableRooms(startDateInst, endDateInst, people);
+        if(rooms.isEmpty()) {
+            String error = "No available rooms on these dates";
+            return new ResponseEntity<>(error, HttpStatus.OK);
+        }
+
+        List<Room> roomsByViewAndType = rooms.stream().filter(room -> room.getView().equals(roomView)).filter(room -> room.getTitle().equals(roomTitle)).toList();
+        if (roomsByViewAndType.isEmpty()) {
+            List<String> errorMessages = new ArrayList<>();
+            List<Room> sortedFromView = rooms.stream().filter(room -> room.getView().equals(roomView)).toList();
+            if (sortedFromView.size() == 0) {
+                errorMessages.add("Room with this room view");
+            }
+            List<Room> sortedFromTitle = rooms.stream().filter(room -> room.getTitle().equals(roomTitle)).toList();
+            if (sortedFromTitle.size() == 0) {
+                errorMessages.add("Room with this room title");
+            }
+            return new ResponseEntity<>(errorMessages, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(roomsByViewAndType, HttpStatus.OK);
     }
 
     @Override
