@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,6 +21,7 @@ import team2.MoonLightHotelAndSpa.service.user.UserService;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,8 +36,9 @@ public class UserController {
     private final EmailSenderService emailSenderService;
 
     @GetMapping("/check")
-    public String check(){
-        return "check passed";
+    public ResponseEntity<Set<User>> check(){
+        Set<User> list = userService.findAll();
+        return ResponseEntity.ok().body(list);
     }
 
     @PostMapping
