@@ -19,6 +19,7 @@ import team2.MoonLightHotelAndSpa.service.user.EmailSenderService;
 import team2.MoonLightHotelAndSpa.service.user.UserService;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,11 @@ public class UserController {
     private final UserConverter userConverter;
     private final UserService userService;
     private final EmailSenderService emailSenderService;
+
+    @PostMapping("/check")
+    public String check(@PathVariable String message){
+        return "CHECK PASSED "+ message;
+    }
 
     @PostMapping
     @Operation(summary = "Save user", responses = {
