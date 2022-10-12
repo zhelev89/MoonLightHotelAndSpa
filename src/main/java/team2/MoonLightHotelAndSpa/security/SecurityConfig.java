@@ -20,7 +20,7 @@ import static team2.MoonLightHotelAndSpa.security.SecurityUrlConstant.*;
 
 @AllArgsConstructor
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
