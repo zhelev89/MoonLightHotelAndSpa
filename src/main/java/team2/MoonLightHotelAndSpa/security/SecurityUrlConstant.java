@@ -11,42 +11,50 @@ public class SecurityUrlConstant {
             "/screens/{id}/findFreeSeatsByScreenIdAndDate"};
     protected static final String[] PUBLIC_URL_GET = {
             "/rooms/**",
-            "/capture/room", "/capture/table",
-            "/swagger/**", "/v3/api-docs", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html"};
+            "/capture/room",
+            "/capture/table",
+            "/swagger/**",
+            "/v3/api-docs",
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/swagger-ui.html",
+            "/users/check"};
     protected static final String[] PUBLIC_URL_PUT = {"/rooms/**"};
     protected static final String[] PUBLIC_URL_DELETE = {"/rooms/**"};
     protected static final String[] PROTECTED_URL_POST = {
             "/users/reset",
-            "/tables", "/screens",
-            "/**"};
+            "/tables",
+            "/screens"
+    };
     protected static final String[] PROTECTED_URL_POST_CLIENT = {
             "/users/reset", "/users/reset",
-            "/**"};
+    };
     protected static final String[] PROTECTED_URL_GET = {
             "/users", "/users/{id}",
             "/users/reservations", "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}",
             "/users/screens/reservations", "/users/{uid}/screens/reservations", "/users/{uid}/screens/reservation/{rid}",
             "/screens/{id}",
-            "/screens/{id}/reservations", "/screens/{id}/reservations/{rid}",
-            "/**"};
+            "/screens/{id}/reservations", "/screens/{id}/reservations/{rid}"
+    };
     protected static final String[] PROTECTED_URL_GET_CLIENT = {
             "/users/profile",
-            "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}",
-            "/**"};
+            "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}"
+    };
     protected static final String[] PROTECTED_URL_PUT = {
             "/users/{id}",
             "/tables/{id}",
             "/screens/{id}",
-            "/screens/{id}/reservations/{rid}",
-            "/**"};
+            "/screens/{id}/reservations/{rid}"
+    };
     protected static final String[] PROTECTED_URL_PUT_CLIENT = {
             "/**"};
     protected static final String[] PROTECTED_URL_DELETE = {
             "/users/{id}",
             "/rooms/{id}", "/rooms/{id}/reservation/{rid}",
             "/tables/{id}",
-            "/screens/{id}", "/screens/{id}/reservations/{rid}",
-            "/**"};
+            "/screens/{id}", "/screens/{id}/reservations/{rid}"
+    };
     protected static final String[] PROTECTED_URL_DELETE_CLIENT = {
-            "/**"};
+            "/**"
+    };
 }

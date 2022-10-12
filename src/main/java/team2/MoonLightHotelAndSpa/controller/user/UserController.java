@@ -33,9 +33,9 @@ public class UserController {
     private final UserService userService;
     private final EmailSenderService emailSenderService;
 
-    @PostMapping("/check")
-    public String check(@PathVariable String message){
-        return "CHECK PASSED "+ message;
+    @GetMapping("/check")
+    public String check(){
+        return "check passed";
     }
 
     @PostMapping
