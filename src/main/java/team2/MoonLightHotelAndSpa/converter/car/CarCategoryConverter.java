@@ -1,4 +1,4 @@
-package team2.MoonLightHotelAndSpa.converter;
+package team2.MoonLightHotelAndSpa.converter.car;
 
 import org.springframework.stereotype.Component;
 import team2.MoonLightHotelAndSpa.dataTransferObject.carCategory.CarCategoryResponse;

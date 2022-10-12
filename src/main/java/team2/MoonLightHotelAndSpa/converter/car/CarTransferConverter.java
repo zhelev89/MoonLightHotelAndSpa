@@ -1,4 +1,4 @@
-package team2.MoonLightHotelAndSpa.converter;
+package team2.MoonLightHotelAndSpa.converter.car;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -9,6 +9,7 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.carTransfer.CarTransferUpda
 import team2.MoonLightHotelAndSpa.dataTransferObject.carTransfer.SummarizeCarTransfer;
 import team2.MoonLightHotelAndSpa.model.car.Car;
 import team2.MoonLightHotelAndSpa.model.car.CarTransfer;
+import team2.MoonLightHotelAndSpa.model.car.CarTransferStatus;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.car.CarService;
 import team2.MoonLightHotelAndSpa.service.user.UserService;
@@ -28,12 +29,14 @@ public class CarTransferConverter {
     private final UserService userService;
 
     public CarTransfer convert(CarTransferSaveRequest carTransferSaveRequest, long carId, User user) {
+        String status = String.valueOf(CarTransferStatus.UNPAID);
         Instant dateInst = convertRequestDateToInstant(carTransferSaveRequest.getDate());
         Car car = carService.findById(carId);
         return CarTransfer.builder()
                 .price(car.getCarCategory().getPrice())
                 .date(dateInst)
                 .car(car)
+                .status(status)
                 .user(user)
                 .build();
     }

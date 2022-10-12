@@ -36,6 +36,10 @@ public class CarTransfer {
     private Instant created;
 
     @NotNull
+    @Column(name = "status")
+    private String status;
+
+    @NotNull
     @ManyToOne
     private Car car;
 
