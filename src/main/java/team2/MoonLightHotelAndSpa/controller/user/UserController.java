@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,6 +20,8 @@ import team2.MoonLightHotelAndSpa.service.user.EmailSenderService;
 import team2.MoonLightHotelAndSpa.service.user.UserService;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,6 +34,12 @@ public class UserController {
     private final UserConverter userConverter;
     private final UserService userService;
     private final EmailSenderService emailSenderService;
+
+    @GetMapping("/check")
+    public ResponseEntity<Set<User>> check(){
+        Set<User> list = userService.findAll();
+        return ResponseEntity.ok().body(list);
+    }
 
     @PostMapping
     @Operation(summary = "Save user", responses = {
@@ -45,7 +54,7 @@ public class UserController {
         User user = userConverter.convert(userSaveRequest);
         User savedUser = userService.save(user);
         String text = String.format("You can access your system with your email: %s and password: %s.", user.getEmail(), user.getPassword());
-        emailSenderService.sendEmail(user.getEmail(), "Access to Moonlight Hotel.", text);
+//        emailSenderService.sendEmail(user.getEmail(), "Access to Moonlight Hotel.", text);
         UserResponse userResponse = userConverter.convert(savedUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
     }

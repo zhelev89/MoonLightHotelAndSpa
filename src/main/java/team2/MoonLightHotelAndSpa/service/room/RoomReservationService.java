@@ -3,6 +3,8 @@ package team2.MoonLightHotelAndSpa.service.room;
 import org.springframework.http.ResponseEntity;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.room.Room;
+import team2.MoonLightHotelAndSpa.model.room.RoomTitle;
+import team2.MoonLightHotelAndSpa.model.room.RoomView;
 
 import java.time.Instant;
 import java.util.List;

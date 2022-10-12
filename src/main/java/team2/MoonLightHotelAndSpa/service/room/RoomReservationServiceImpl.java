@@ -8,8 +8,6 @@ import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.room.Room;
-import team2.MoonLightHotelAndSpa.model.room.RoomTitle;
-import team2.MoonLightHotelAndSpa.model.room.RoomView;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.repository.RoomReservationRepository;
 import team2.MoonLightHotelAndSpa.service.user.UserService;
@@ -18,7 +16,6 @@ import javax.transaction.Transactional;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -96,7 +93,7 @@ public class RoomReservationServiceImpl implements RoomReservationService {
 
     @Override
     public List<Room> findAllAvailableRooms(Instant start_date, Instant end_date, int people) {
-        return roomReservationRepository.findAllAvailableRooms(start_date, end_date, people);
+        return roomReservationRepository.findAllAvailableRooms(start_date, end_date ,people);
     }
 
     @Override

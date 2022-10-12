@@ -20,7 +20,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "users",
-        indexes = @Index(name = "first_last_name_index", columnList = "name, surname DESC"))
+        indexes = @Index(name = "name_index", columnList = "name"))
 public class User implements UserDetails {
 
     @Id

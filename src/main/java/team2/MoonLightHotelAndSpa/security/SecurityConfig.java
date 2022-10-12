@@ -16,6 +16,8 @@ import team2.MoonLightHotelAndSpa.exception.CustomAccessDeniedHandler;
 import team2.MoonLightHotelAndSpa.exception.CustomHttp403ForbiddenEntryPoint;
 import team2.MoonLightHotelAndSpa.service.user.UserService;
 
+import static team2.MoonLightHotelAndSpa.security.SecurityUrlConstant.*;
+
 @AllArgsConstructor
 @Configuration
 @EnableWebSecurity
@@ -26,29 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtFilter jwtFilter;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
     private final CustomHttp403ForbiddenEntryPoint customHttp403ForbiddenEntryPoint;
-    private static final String ADMIN = "ROLE_ADMIN";
-    private static final String CLIENT = "ROLE_CLIENT";
-    private static final String[] PUBLIC_URL_POST = {"/rooms/**", "/users", "/users/token", "/users/forgot", "/contacts",
-            "/screens/{id}/findFreeSeatsByScreenIdAndDate"};
-    private static final String[] PUBLIC_URL_GET = {"/rooms/**", "/capture/room", "/capture/table","/swagger/**","/v3/api-docs",
-            "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html"};
-    private static final String[] PUBLIC_URL_PUT = {"/rooms/**"};
-    private static final String[] PUBLIC_URL_DELETE = {"/rooms/**"};
-    private static final String[] PROTECTED_URL_POST = {"/users/reset", "/tables", "/screens", "/**"};
-    private static final String[] PROTECTED_URL_POST_CLIENT = {"/users/reset", "/users/reset", "/**"};
-    private static final String[] PROTECTED_URL_GET = {"/users", "/users/{id}", "/users/reservations",
-            "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/users/screens/reservations",
-            "/{uid}/screens/reservations", "/{uid}/screens/reservation/{rid}", "/rooms/{id}/reservation/{rid}",
-            "/users/{uid}/reservations", "/screens/{id}", "/screens/{id}/reservations",
-            "/screens/{id}/reservations/{rid}", "/**"};
-    private static final String[] PROTECTED_URL_GET_CLIENT = {"/users/{uid}/reservations", "/users/{uid}/reservations/{rid}",
-            "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}", "/users/profile", "/**"};
-    private static final String[] PROTECTED_URL_PUT = {"/users/{id}", "/tables/{id}", "/screens/{id}",
-            "/screens/{id}/reservations/{rid}", "/**"};
-    private static final String[] PROTECTED_URL_PUT_CLIENT = {"/**"};
-    private static final String[] PROTECTED_URL_DELETE = {"/users/{id}", "/rooms/{id}", "/rooms/{id}/reservation/{rid}",
-            "/tables/{id}", "/screens/{id}", "/screens/{id}/reservations/{rid}", "/**"};
-    private static final String[] PROTECTED_URL_DELETE_CLIENT = {"/**"};
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

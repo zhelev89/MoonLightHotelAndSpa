@@ -19,14 +19,9 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReserva
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationUpdateRequest;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.room.Room;
-<<<<<<< HEAD:src/main/java/team2/MoonLightHotelAndSpa/controller/RoomController.java
 import team2.MoonLightHotelAndSpa.model.room.RoomTitle;
 import team2.MoonLightHotelAndSpa.model.room.RoomView;
-import team2.MoonLightHotelAndSpa.service.RoomReservationService;
-import team2.MoonLightHotelAndSpa.service.RoomService;
-=======
 import team2.MoonLightHotelAndSpa.service.room.RoomReservationService;
->>>>>>> 0d05a3078b7f425376f6fc4efe229b16d76f105d:src/main/java/team2/MoonLightHotelAndSpa/controller/room/RoomReservationController.java
 
 import javax.validation.Valid;
 import java.time.Instant;
@@ -109,7 +104,6 @@ public class RoomReservationController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok().body(allAvailableRoomsResponse);
     }
-<<<<<<< HEAD:src/main/java/team2/MoonLightHotelAndSpa/controller/RoomController.java
 
     @GetMapping(value = "/detailed")
     public ResponseEntity<?> findAllAvailableRoomsDetailed(@RequestParam String start_date, @RequestParam String end_date,
@@ -118,6 +112,4 @@ public class RoomReservationController {
         return roomReservationService.findAllAvailableRoomsDetailed(start_date, end_date, adults, kids, roomView, roomTitle);
     }
 }
-=======
-}
->>>>>>> 0d05a3078b7f425376f6fc4efe229b16d76f105d:src/main/java/team2/MoonLightHotelAndSpa/controller/room/RoomReservationController.java
+
