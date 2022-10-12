@@ -11,4 +11,6 @@ public interface PayPalService {
     CreatedOrder createOrderTable(long tableReservationId, URI returnUrl) throws IOException;
     void captureOrderRoom(String orderId, long roomReservationId);
     void captureOrderTable(String orderId, long tableReservationId);
+    CreatedOrder createOrderCarTransfer(long carTransferId, URI returnUrl) throws IOException;
+    void captureOrderCarTransfer(String orderId, long roomReservationId);
 }

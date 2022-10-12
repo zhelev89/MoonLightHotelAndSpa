@@ -87,4 +87,34 @@ public class PayPalController {
         return "redirect:/orders";
     }
 
+    @PostMapping("/pay/transfer")
+    public String placeOrderCarTransfer(@RequestParam long carTransferId, HttpServletRequest request) throws IOException {
+        final URI returnUrl = buildReturnUrlCarTransfer(request, carTransferId);
+        CreatedOrder createdOrder = paypalService.createOrderCarTransfer(carTransferId, returnUrl);
+        return "redirect:" + createdOrder.getApprovalLink();
+    }
+
+    private URI buildReturnUrlCarTransfer(HttpServletRequest request, long carTransferId) {
+        String carTransferIdString = "carTransferId=" + String.valueOf(carTransferId);
+        try {
+            URI requestUri = URI.create(request.getRequestURL().toString());
+            return new URI(requestUri.getScheme(),
+                    requestUri.getUserInfo(),
+                    requestUri.getHost(),
+                    requestUri.getPort(),
+                    "/capture/transfer",
+                    carTransferIdString, null);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @GetMapping("/capture/transfer")
+    public String captureOrderCarTransfer(@RequestParam String token, @RequestParam String carTransferId){
+        long carTransferIdLong = Long.parseLong(carTransferId);
+        String orderId = "";
+        orderId = token;
+        paypalService.captureOrderCarTransfer(token, carTransferIdLong);
+        return "redirect:/orders";
+    }
 }

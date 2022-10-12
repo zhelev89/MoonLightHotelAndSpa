@@ -19,6 +19,8 @@ import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReserva
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationUpdateRequest;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.room.Room;
+import team2.MoonLightHotelAndSpa.model.room.RoomTitle;
+import team2.MoonLightHotelAndSpa.model.room.RoomView;
 import team2.MoonLightHotelAndSpa.service.room.RoomReservationService;
 
 import javax.validation.Valid;
@@ -101,5 +103,12 @@ public class RoomReservationController {
                 .map(roomConverter::convert)
                 .collect(Collectors.toList());
         return ResponseEntity.ok().body(allAvailableRoomsResponse);
+    }
+
+    @GetMapping(value = "/detailed")
+    public ResponseEntity<?> findAllAvailableRoomsDetailed(@RequestParam String start_date, @RequestParam String end_date,
+                                                           @RequestParam int adults, @RequestParam int kids,
+                                                           @RequestParam RoomView roomView, @RequestParam RoomTitle roomTitle) {
+        return roomReservationService.findAllAvailableRoomsDetailed(start_date, end_date, adults, kids, roomView, roomTitle);
     }
 }
