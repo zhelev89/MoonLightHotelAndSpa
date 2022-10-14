@@ -23,7 +23,7 @@ public class RecordExceptionHandler {
     }
 
     @ExceptionHandler(value = {RecordNotFoundException.class})
-    public ResponseEntity<Object> handleBadRequestException(RecordNotFoundException ex) {
+    public ResponseEntity<Object> handleNotFoundException(RecordNotFoundException ex) {
 
         RecordResponseException recordResponseException =
                 new RecordResponseException(ex.getMessage());

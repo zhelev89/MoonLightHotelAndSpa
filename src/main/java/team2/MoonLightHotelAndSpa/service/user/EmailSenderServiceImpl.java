@@ -13,8 +13,8 @@ import team2.MoonLightHotelAndSpa.model.user.User;
 @AllArgsConstructor
 public class EmailSenderServiceImpl implements EmailSenderService {
 
-    @Autowired
-    private final JavaMailSender mailSender;
+//    @Autowired
+//    private final JavaMailSender mailSender;
     private final UserService userService;
     private final BCryptPasswordEncoder passwordEncoder;
 
@@ -32,7 +32,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         }
 
 
-        this.mailSender.send(simpleMailMessage);
+//        this.mailSender.send(simpleMailMessage);
     }
 
     @Override
@@ -73,6 +73,6 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         simpleMailMessage.setSubject("Forgot password.");
         simpleMailMessage.setText(text);
 
-        this.mailSender.send(simpleMailMessage);
+//        this.mailSender.send(simpleMailMessage);
     }
 }
