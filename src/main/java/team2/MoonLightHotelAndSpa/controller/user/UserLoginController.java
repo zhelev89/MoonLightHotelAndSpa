@@ -65,7 +65,7 @@ public class UserLoginController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = BadRequestMessageDto.class)))
     })
     public ResponseEntity<HttpStatus> forgotPassword(@RequestBody EmailForPasswordDto dto) {
-        emailSenderService.forgotPassword(dto.getEmail());
+//        emailSenderService.forgotPassword(dto.getEmail());
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
