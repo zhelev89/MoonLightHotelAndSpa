@@ -8,6 +8,8 @@ import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.room.Room;
+import team2.MoonLightHotelAndSpa.model.room.RoomTitle;
+import team2.MoonLightHotelAndSpa.model.room.RoomView;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.repository.RoomReservationRepository;
 import team2.MoonLightHotelAndSpa.service.user.UserService;
