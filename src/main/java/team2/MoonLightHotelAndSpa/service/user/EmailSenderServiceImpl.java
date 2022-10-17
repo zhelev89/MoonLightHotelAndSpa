@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
@@ -13,12 +14,13 @@ import team2.MoonLightHotelAndSpa.model.user.User;
 @AllArgsConstructor
 public class EmailSenderServiceImpl implements EmailSenderService {
 
-//    @Autowired
-//    private final JavaMailSender mailSender;
+    @Autowired
+    private final JavaMailSender mailSender;
     private final UserService userService;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
+    @Async
     public void sendEmail(String to, String subject, String text) {
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -32,7 +34,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         }
 
 
-//        this.mailSender.send(simpleMailMessage);
+        this.mailSender.send(simpleMailMessage);
     }
 
     @Override
@@ -73,6 +75,6 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         simpleMailMessage.setSubject("Forgot password.");
         simpleMailMessage.setText(text);
 
-//        this.mailSender.send(simpleMailMessage);
+        this.mailSender.send(simpleMailMessage);
     }
 }
