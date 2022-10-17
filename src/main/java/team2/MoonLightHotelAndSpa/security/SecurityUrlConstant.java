@@ -34,7 +34,8 @@ public class SecurityUrlConstant {
             "/users/reservations", "/users/{uid}/reservations", "/users/{uid}/reservations/{rid}",
             "/users/screens/reservations", "/users/{uid}/screens/reservations", "/users/{uid}/screens/reservation/{rid}",
             "/screens/{id}",
-            "/screens/{id}/reservations", "/screens/{id}/reservations/{rid}", "/users/transfers"
+            "/screens/{id}/reservations", "/screens/{id}/reservations/{rid}", "/users/transfers", "/users/{uid}/transfers/{tid}",
+            "/users/{uid}/transfers"
     };
     protected static final String[] PROTECTED_URL_GET_CLIENT = {
             "/users/profile",
