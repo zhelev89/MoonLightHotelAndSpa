@@ -55,7 +55,7 @@ public class UserController {
         User user = userConverter.convert(userSaveRequest);
         User savedUser = userService.save(user);
         String text = String.format("You can access your system with your email: %s and password: %s.", user.getEmail(), user.getPassword());
-//        emailSenderService.sendEmail(user.getEmail(), "Access to Moonlight Hotel.", text);
+        emailSenderService.sendEmail(user.getEmail(), "Access to Moonlight Hotel.", text);
         UserResponse userResponse = userConverter.convert(savedUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
     }
