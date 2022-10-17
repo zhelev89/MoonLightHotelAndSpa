@@ -6,15 +6,18 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import lombok.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import team2.MoonLightHotelAndSpa.converter.car.CarTransferConverter;
 import team2.MoonLightHotelAndSpa.converter.room.RoomReservationConverter;
 import team2.MoonLightHotelAndSpa.converter.screen.ScreenReservationConverter;
 import team2.MoonLightHotelAndSpa.converter.table.TableReservationConverter;
+import team2.MoonLightHotelAndSpa.dataTransferObject.carTransfer.CarTransferResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.exceptionMessage.BadRequestMessageDto;
 import team2.MoonLightHotelAndSpa.dataTransferObject.exceptionMessage.ResponseMessageDto;
 import team2.MoonLightHotelAndSpa.dataTransferObject.roomReservation.RoomReservationResponseV2;
@@ -24,6 +27,7 @@ import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
 import team2.MoonLightHotelAndSpa.model.reservation.TableReservation;
 import team2.MoonLightHotelAndSpa.model.reservation.ScreenReservation;
 import team2.MoonLightHotelAndSpa.model.user.User;
+import team2.MoonLightHotelAndSpa.service.car.CarTransferService;
 import team2.MoonLightHotelAndSpa.service.room.RoomReservationService;
 import team2.MoonLightHotelAndSpa.service.screen.ScreenReservationService;
 import team2.MoonLightHotelAndSpa.service.table.TableReservationService;
@@ -46,6 +50,8 @@ public class UserReservationController {
     private final TableReservationConverter tableReservationConverter;
     private final ScreenReservationService screenReservationService;
     private final ScreenReservationConverter screenReservationConverter;
+    private final CarTransferService carTransferService;
+    private CarTransferConverter carTransferConverter;
 
     @GetMapping(value = "/reservations")
     @Operation(summary = "Show user reservations", responses = {
@@ -147,5 +153,20 @@ public class UserReservationController {
         ScreenReservation screenReservation = screenReservationService.findByUserIdAndReservationId(uid, rid);
         ScreenReservationResponse response = screenReservationConverter.convert(screenReservation);
         return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping(value = "/transfers")
+    public ResponseEntity<List<CarTransferResponse>> findAllTransfers() {
+        return ResponseEntity.ok().body(carTransferService.findAll().stream().map(carTransfer -> carTransferConverter.convertFindAll(carTransfer)).toList());
+    }
+
+    @GetMapping(value = "/{uid}/transfers")
+    public ResponseEntity<List<CarTransferResponse>> findTransfersByUserId(@PathVariable long uid) {
+        return ResponseEntity.ok().body(carTransferService.findAllByUserId(uid).stream().map(carTransfer -> carTransferConverter.convertFindAll(carTransfer)).toList());
+    }
+
+    @GetMapping(value = "/{uid}/transfers/{tid}")
+    public ResponseEntity<CarTransferResponse> findTransferByUserIdAndTransferId(@PathVariable long uid, @PathVariable long tid) {
+        return ResponseEntity.ok().body(carTransferConverter.convertFindAll(carTransferService.findByUserIdAndTransferId(uid, tid)));
     }
 }
