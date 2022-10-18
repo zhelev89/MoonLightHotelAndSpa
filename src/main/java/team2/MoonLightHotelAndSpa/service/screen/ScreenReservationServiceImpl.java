@@ -107,7 +107,7 @@ public class ScreenReservationServiceImpl implements ScreenReservationService {
     public void isPaid(long screenReservationId) {
         ScreenReservation screenReservation = findByScreenReservationID(screenReservationId);
         if (screenReservation.getStatus().equals("PAID")) {
-            throw new RecordBadRequestException("This car transfer is already paid!");
+            throw new RecordBadRequestException("This ScreenReservation is already paid!");
         }
     }
 }
