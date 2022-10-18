@@ -5,7 +5,7 @@ public class SecurityUrlConstant {
     protected static final String ADMIN = "ROLE_ADMIN";
     protected static final String CLIENT = "ROLE_CLIENT";
     protected static final String[] PUBLIC_URL_POST = {
-            "/rooms/**",
+            "/rooms", "/rooms/**",
             "/users", "/users/token", "/users/forgot",
             "/contacts",
             "/screens/{id}/findFreeSeatsByScreenIdAndDate"};

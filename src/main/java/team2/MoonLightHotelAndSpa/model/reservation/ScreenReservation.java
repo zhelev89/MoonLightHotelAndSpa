@@ -39,4 +39,8 @@ public class ScreenReservation {
     @NotNull
     @ManyToOne
     private User user;
+
+    @NotNull
+    @Column(name = "status")
+    private String status;
 }

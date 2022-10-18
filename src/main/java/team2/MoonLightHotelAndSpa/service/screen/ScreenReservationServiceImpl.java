@@ -3,7 +3,10 @@ package team2.MoonLightHotelAndSpa.service.screen;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import team2.MoonLightHotelAndSpa.dataTransferObject.screenReservation.ScreenReservationUpdateRequest;
+import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
+import team2.MoonLightHotelAndSpa.model.car.CarTransfer;
+import team2.MoonLightHotelAndSpa.model.reservation.ReservationStatus;
 import team2.MoonLightHotelAndSpa.model.reservation.ScreenReservation;
 import team2.MoonLightHotelAndSpa.model.screen.Screen;
 import team2.MoonLightHotelAndSpa.model.user.User;
@@ -25,6 +28,7 @@ public class ScreenReservationServiceImpl implements ScreenReservationService {
     @Override
     public ScreenReservation save(ScreenReservation screenReservation) {
         screenReservation.setPrice(screenReservation.getSeats().length * 10);
+        screenReservation.setStatus(ReservationStatus.UNPAID.toString());
         return screenReservationRepository.save(screenReservation);
     }
 
@@ -97,5 +101,13 @@ public class ScreenReservationServiceImpl implements ScreenReservationService {
     public void deleteByScreenIdAndReservationsId(long screenId, long reservationId) {
         ScreenReservation reservation = findByScreenIdAndReservationId(screenId, reservationId);
         screenReservationRepository.delete(reservation);
+    }
+
+    @Override
+    public void isPaid(long screenReservationId) {
+        ScreenReservation screenReservation = findByScreenReservationID(screenReservationId);
+        if (screenReservation.getStatus().equals("PAID")) {
+            throw new RecordBadRequestException("This car transfer is already paid!");
+        }
     }
 }
