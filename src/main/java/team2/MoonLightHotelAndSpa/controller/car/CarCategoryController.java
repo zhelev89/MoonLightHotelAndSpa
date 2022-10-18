@@ -1,4 +1,4 @@
-package team2.MoonLightHotelAndSpa.controller.screen;
+package team2.MoonLightHotelAndSpa.controller.car;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -9,27 +9,28 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import team2.MoonLightHotelAndSpa.converter.screen.ScreenConverter;
+import team2.MoonLightHotelAndSpa.converter.car.CarCategoryConverter;
+import team2.MoonLightHotelAndSpa.dataTransferObject.carCategory.CarCategoryResponse;
+import team2.MoonLightHotelAndSpa.dataTransferObject.carCategory.CarCategorySaveRequest;
+import team2.MoonLightHotelAndSpa.dataTransferObject.carCategory.CarCategoryUpdateRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.exceptionMessage.BadRequestMessageDto;
 import team2.MoonLightHotelAndSpa.dataTransferObject.exceptionMessage.ResponseMessageDto;
-import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
-import team2.MoonLightHotelAndSpa.dataTransferObject.screen.ScreenRequest;
-import team2.MoonLightHotelAndSpa.model.screen.Screen;
-import team2.MoonLightHotelAndSpa.service.screen.ScreenService;
+import team2.MoonLightHotelAndSpa.model.car.CarCategory;
+import team2.MoonLightHotelAndSpa.service.car.CarCategoryService;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "/screens")
-@Tag(name = "Screen")
-public class ScreenController {
+@RequestMapping(value = "/cars")
+@Tag(name = "Car Category")
+public class CarCategoryController {
 
-    private final ScreenService screenService;
-    private final ScreenConverter screenConverter;
+    private CarCategoryService carCategoryService;
+    private CarCategoryConverter carCategoryConverter;
 
-    @PostMapping
-    @Operation(summary = "Save screen", responses = {
+    @PostMapping(value = "/categories")
+    @Operation(summary = "Save car category", responses = {
             @ApiResponse(description = "Successful operation", responseCode = "201",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Screen.class))),
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = CarCategoryResponse.class))),
             @ApiResponse(description = "Bad request", responseCode = "400",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = BadRequestMessageDto.class))),
             @ApiResponse(description = "Unauthorized", responseCode = "401",
@@ -37,28 +38,17 @@ public class ScreenController {
             @ApiResponse(description = "Forbidden", responseCode = "403",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
     })
-    public ResponseEntity<Screen> save(@RequestBody ScreenRequest screenRequest) {
-        Screen screen = screenConverter.convert(screenRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(screenService.save(screen));
+    public ResponseEntity<CarCategoryResponse> saveCarCategory(@RequestBody CarCategorySaveRequest carCategorySaveRequest) {
+        CarCategory carCategory = carCategoryConverter.convert(carCategorySaveRequest);
+        CarCategory savedCarCategory = carCategoryService.save(carCategory);
+        CarCategoryResponse carCategoryResponse = carCategoryConverter.convert(savedCarCategory);
+        return ResponseEntity.ok().body(carCategoryResponse);
     }
 
-    @GetMapping(value = "/{id}")
-    @Operation(summary = "Find screen by ID", responses = {
+    @PutMapping(value = "/categories/{id}")
+    @Operation(summary = "Update car category by ID", responses = {
             @ApiResponse(description = "Successful operation", responseCode = "200",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Screen.class))),
-            @ApiResponse(description = "Bad request", responseCode = "400",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = BadRequestMessageDto.class))),
-            @ApiResponse(description = "NotFound", responseCode = "404",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
-    })
-    public ResponseEntity<Screen> findById(@PathVariable long id) {
-        return ResponseEntity.ok().body(screenService.findById(id));
-    }
-
-    @PutMapping(value = "/{id}")
-    @Operation(summary = "Update screen by ID", responses = {
-            @ApiResponse(description = "Successful operation", responseCode = "200",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Screen.class))),
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = CarCategoryResponse.class))),
             @ApiResponse(description = "Bad request", responseCode = "400",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = BadRequestMessageDto.class))),
             @ApiResponse(description = "Unauthorized", responseCode = "401",
@@ -68,12 +58,15 @@ public class ScreenController {
             @ApiResponse(description = "NotFound", responseCode = "404",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
     })
-    public ResponseEntity<Screen> update(@PathVariable long id, @RequestBody ScreenRequest screenRequest) {
-        return ResponseEntity.ok().body(screenService.update(id, screenRequest));
+    public ResponseEntity<CarCategoryResponse> updateCarCategory(@RequestBody CarCategoryUpdateRequest carCategoryUpdateRequest, @PathVariable long id) {
+        CarCategory carCategory = carCategoryConverter.convert(carCategoryUpdateRequest);
+        CarCategory updatedCarCategory = carCategoryService.update(id, carCategory);
+        CarCategoryResponse carCategoryResponse = carCategoryConverter.convert(updatedCarCategory);
+        return ResponseEntity.ok().body(carCategoryResponse);
     }
 
-    @DeleteMapping(value = "/{id}")
-    @Operation(summary = "Delete screen by ID", responses = {
+    @DeleteMapping(value = "/categories/{id}")
+    @Operation(summary = "Delete car category by ID", responses = {
             @ApiResponse(description = "No content", responseCode = "204",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = HttpStatus.class))),
             @ApiResponse(description = "Unauthorized", responseCode = "401",
@@ -83,8 +76,8 @@ public class ScreenController {
             @ApiResponse(description = "NotFound", responseCode = "404",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
     })
-    public ResponseEntity<HttpStatus> delete(@PathVariable long id) {
-        screenService.delete(id);
+    public ResponseEntity<HttpStatus> deleteCarCategory(@PathVariable long id) {
+        carCategoryService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
