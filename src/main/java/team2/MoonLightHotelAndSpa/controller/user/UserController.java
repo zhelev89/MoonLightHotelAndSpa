@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.dataTransferObject.exceptionMessage.BadRequestMessageDto;
 import team2.MoonLightHotelAndSpa.dataTransferObject.exceptionMessage.ResponseMessageDto;
 import team2.MoonLightHotelAndSpa.converter.user.UserConverter;
+import team2.MoonLightHotelAndSpa.dataTransferObject.room.RoomResponse;
 import team2.MoonLightHotelAndSpa.dataTransferObject.user.*;
 import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.service.user.EmailSenderService;
@@ -54,7 +55,7 @@ public class UserController {
         User user = userConverter.convert(userSaveRequest);
         User savedUser = userService.save(user);
         String text = String.format("You can access your system with your email: %s and password: %s.", user.getEmail(), user.getPassword());
-//        emailSenderService.sendEmail(user.getEmail(), "Access to Moonlight Hotel.", text);
+        emailSenderService.sendEmail(user.getEmail(), "Access to Moonlight Hotel.", text);
         UserResponse userResponse = userConverter.convert(savedUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
     }
@@ -93,6 +94,14 @@ public class UserController {
     }
 
     @GetMapping(value = "/profile")
+    @Operation(summary = "Show user profile", responses = {
+            @ApiResponse(description = "Successful operation", responseCode = "200",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponse.class))),
+            @ApiResponse(description = "Bad request", responseCode = "400",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = BadRequestMessageDto.class))),
+            @ApiResponse(description = "NotFound", responseCode = "404",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseMessageDto.class)))
+    })
     public ResponseEntity<UserResponse> profile(@AuthenticationPrincipal User user) {
         User userById = userService.findById(user.getId());
         return ResponseEntity.ok().body(userConverter.convert(userById));
