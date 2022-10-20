@@ -39,16 +39,16 @@ public class PayPalController {
             throw new RuntimeException(e);
         }
     }
-    
+
     @GetMapping
-    public String orderPage(Model model){
+    public String orderPage(Model model) {
         String orderId = "";
         model.addAttribute("orderId", orderId);
         return "order";
     }
 
     @GetMapping("/capture/room")
-    public String captureOrderRoom(@RequestParam String token, @RequestParam String roomReservationId){
+    public String captureOrderRoom(@RequestParam String token, @RequestParam String roomReservationId) {
         long roomReservationIdLong = Long.parseLong(roomReservationId);
         String orderId = "";
         orderId = token;
@@ -79,7 +79,7 @@ public class PayPalController {
     }
 
     @GetMapping("/capture/table")
-    public String captureOrderTable(@RequestParam String token, @RequestParam String tableReservationId){
+    public String captureOrderTable(@RequestParam String token, @RequestParam String tableReservationId) {
         long tableReservationIdLong = Long.parseLong(tableReservationId);
         String orderId = "";
         orderId = token;
@@ -110,11 +110,42 @@ public class PayPalController {
     }
 
     @GetMapping("/capture/transfer")
-    public String captureOrderCarTransfer(@RequestParam String token, @RequestParam String carTransferId){
+    public String captureOrderCarTransfer(@RequestParam String token, @RequestParam String carTransferId) {
         long carTransferIdLong = Long.parseLong(carTransferId);
         String orderId = "";
         orderId = token;
         paypalService.captureOrderCarTransfer(token, carTransferIdLong);
+        return "redirect:/orders";
+    }
+
+    @PostMapping("/pay/screen")
+    public String placeOrderScreenReservation(@RequestParam long screenReservationId, HttpServletRequest request) throws IOException {
+        final URI returnUrl = buildReturnUrlScreenReservation(request, screenReservationId);
+        CreatedOrder createdOrder = paypalService.createOrderScreenReservation(screenReservationId, returnUrl);
+        return "redirect:" + createdOrder.getApprovalLink();
+    }
+
+    private URI buildReturnUrlScreenReservation(HttpServletRequest request, long screenReservationId) {
+        String screenReservationIdString = "screenReservationId=" + String.valueOf(screenReservationId);
+        try {
+            URI requestUri = URI.create(request.getRequestURL().toString());
+            return new URI(requestUri.getScheme(),
+                    requestUri.getUserInfo(),
+                    requestUri.getHost(),
+                    requestUri.getPort(),
+                    "/capture/screen",
+                    screenReservationIdString, null);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @GetMapping("/capture/screen")
+    public String captureOrderScreenReservation(@RequestParam String token, @RequestParam String screenReservationId) throws IOException {
+        long screenReservationIdLong = Long.parseLong(screenReservationId);
+        String orderId = "";
+        orderId = token;
+        paypalService.captureOrderScreenReservation(token, screenReservationIdLong);
         return "redirect:/orders";
     }
 }

@@ -9,7 +9,9 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import team2.MoonLightHotelAndSpa.dataTransferObject.screenReservation.ScreenReservationUpdateRequest;
+import team2.MoonLightHotelAndSpa.exception.RecordBadRequestException;
 import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
+import team2.MoonLightHotelAndSpa.model.reservation.ReservationStatus;
 import team2.MoonLightHotelAndSpa.model.reservation.ScreenReservation;
 import team2.MoonLightHotelAndSpa.model.screen.Screen;
 import team2.MoonLightHotelAndSpa.model.user.User;
@@ -284,5 +286,30 @@ public class ScreenReservationServiceImplTest {
                                 .id(1L)
                                 .build())
                         .build());
+    }
+
+    @Test
+    public void verifyIsPaid() {
+        Mockito.when(screenReservationRepository.findById(1L))
+                .thenReturn(Optional.of(ScreenReservation.builder()
+                        .status(ReservationStatus.UNPAID.toString())
+                        .build()));
+
+        screenReservationService.isPaid(1L);
+        Mockito.verify(screenReservationRepository, Mockito.times(1)).findById(1L);
+    }
+
+    @Test
+    public void verifyIsPaidThrowException() {
+        String message = "This ScreenReservation is already paid!";
+        Mockito.when(screenReservationRepository.findById(1L))
+                .thenReturn(Optional.of(ScreenReservation.builder()
+                        .status(ReservationStatus.PAID.toString())
+                        .build()));
+
+        RecordBadRequestException exception = Assertions.assertThrows(RecordBadRequestException.class,
+                () -> screenReservationService.isPaid(1L));
+
+        Assertions.assertEquals(message, exception.getMessage());
     }
 }
