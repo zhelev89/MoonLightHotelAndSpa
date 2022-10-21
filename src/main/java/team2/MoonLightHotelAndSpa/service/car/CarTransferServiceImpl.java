@@ -7,11 +7,14 @@ import team2.MoonLightHotelAndSpa.exception.RecordNotFoundException;
 import team2.MoonLightHotelAndSpa.model.car.Car;
 import team2.MoonLightHotelAndSpa.model.car.CarTransfer;
 import team2.MoonLightHotelAndSpa.model.reservation.RoomReservation;
+import team2.MoonLightHotelAndSpa.model.user.User;
 import team2.MoonLightHotelAndSpa.repository.CarTransferRepository;
+import team2.MoonLightHotelAndSpa.service.user.UserService;
 
 import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,6 +23,7 @@ public class CarTransferServiceImpl implements CarTransferService {
 
     private CarTransferRepository carTransferRepository;
     private CarService carService;
+    private UserService userService;
 
     @Override
     public CarTransfer save(CarTransfer carTransfer) {
@@ -81,5 +85,21 @@ public class CarTransferServiceImpl implements CarTransferService {
         if(!filtered.isEmpty()) {
             throw new RecordBadRequestException("This car is already reserved for this date");
         }
+    }
+
+    @Override
+    public List<CarTransfer> findAllByUserId(long id) {
+        User user = userService.findById(id);
+        return carTransferRepository.findAllByUser(user);
+    }
+
+    @Override
+    public CarTransfer findByUserIdAndTransferId(long uid, long tid) {
+        User foundUser = userService.findById(uid);
+        CarTransfer carTransfer = findById(tid);
+        if (carTransfer.getUser().getId() != foundUser.getId()) {
+            throw new RecordBadRequestException("Transfer ID doesn't match with the User ID.");
+        }
+        return carTransfer;
     }
 }
