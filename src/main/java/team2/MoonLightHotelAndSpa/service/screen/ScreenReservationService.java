@@ -26,4 +26,6 @@ public interface ScreenReservationService {
                                                        ScreenReservationUpdateRequest screenReservationUpdateRequest);
 
     void deleteByScreenIdAndReservationsId(long screenId, long reservationId);
+
+    void isPaid(long screenReservationId);
 }
