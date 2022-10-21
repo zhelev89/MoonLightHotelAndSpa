@@ -41,6 +41,17 @@ public class CarTransferConverter {
                 .build();
     }
 
+    public CarTransferResponse convertFindAll(CarTransfer carTransfer) {
+        String date = String.valueOf(carTransfer.getDate());
+        return CarTransferResponse.builder()
+                .id(carTransfer.getId())
+                .price(carTransfer.getCar().getCarCategory().getPrice())
+                .date(date)
+                .car(carConverter.convert(carTransfer.getCar()))
+                .user(userConverter.convert(carTransfer.getUser()))
+                .build();
+    }
+
     public CarTransferResponse convert(CarTransfer carTransfer) {
         String dateString = String.valueOf(carTransfer.getDate());
         String createdString = String.valueOf(carTransfer.getCreated());
