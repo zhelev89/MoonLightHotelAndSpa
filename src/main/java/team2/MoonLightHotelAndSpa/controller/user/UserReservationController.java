@@ -9,10 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.converter.car.CarTransferConverter;
 import team2.MoonLightHotelAndSpa.converter.room.RoomReservationConverter;
 import team2.MoonLightHotelAndSpa.converter.screen.ScreenReservationConverter;
@@ -42,6 +39,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RequestMapping(value = "/users")
 @Tag(name = "User Reservation")
+@CrossOrigin
 public class UserReservationController {
 
     private final UserService userService;

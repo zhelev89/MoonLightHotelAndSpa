@@ -42,6 +42,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RequestMapping(value = "/cars")
 @Tag(name = "Car")
+@CrossOrigin
 public class CarController {
 
     private CarService carService;

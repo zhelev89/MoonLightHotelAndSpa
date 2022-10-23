@@ -30,6 +30,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping(value = "/tables")
 @Tag(name = "Table Reservation")
+@CrossOrigin
 public class TableReservationController {
 
     private final UserService userService;

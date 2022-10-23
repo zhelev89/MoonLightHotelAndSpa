@@ -8,10 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.converter.user.UserConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObject.exceptionMessage.BadRequestMessageDto;
 import team2.MoonLightHotelAndSpa.dataTransferObject.user.*;
@@ -24,6 +21,7 @@ import team2.MoonLightHotelAndSpa.service.user.UserService;
 @AllArgsConstructor
 @RequestMapping(value = "/users")
 @Tag(name = "User")
+@CrossOrigin
 public class UserLoginController {
 
     private final LoginService loginService;

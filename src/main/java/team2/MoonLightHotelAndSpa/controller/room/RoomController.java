@@ -22,6 +22,7 @@ import team2.MoonLightHotelAndSpa.service.room.RoomService;
 @AllArgsConstructor
 @RequestMapping(value = "/rooms")
 @Tag(name = "Room")
+@CrossOrigin
 public class RoomController {
 
     private final RoomService roomService;

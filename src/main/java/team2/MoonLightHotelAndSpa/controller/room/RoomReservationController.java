@@ -33,6 +33,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RequestMapping(value = "/rooms")
 @Tag(name = "Room Reservation")
+@CrossOrigin
 public class RoomReservationController {
 
     private final RoomReservationService roomReservationService;

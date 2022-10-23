@@ -21,6 +21,7 @@ import team2.MoonLightHotelAndSpa.service.screen.ScreenService;
 @AllArgsConstructor
 @RequestMapping(value = "/screens")
 @Tag(name = "Screen")
+@CrossOrigin
 public class ScreenController {
 
     private final ScreenService screenService;

@@ -22,6 +22,7 @@ import team2.MoonLightHotelAndSpa.service.car.CarCategoryService;
 @AllArgsConstructor
 @RequestMapping(value = "/cars")
 @Tag(name = "Car Category")
+@CrossOrigin
 public class CarCategoryController {
 
     private CarCategoryService carCategoryService;

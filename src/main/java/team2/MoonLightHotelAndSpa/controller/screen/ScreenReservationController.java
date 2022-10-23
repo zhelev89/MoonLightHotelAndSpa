@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RequestMapping(value = "/screens")
 @Tag(name = "Screen Reservation")
+@CrossOrigin
 public class ScreenReservationController {
 
     private final ScreenReservationService screenReservationService;

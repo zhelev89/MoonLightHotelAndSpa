@@ -8,10 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import team2.MoonLightHotelAndSpa.converter.contactUs.ContactUsConverter;
 import team2.MoonLightHotelAndSpa.dataTransferObject.contactUsForm.ContactUsRequest;
 import team2.MoonLightHotelAndSpa.dataTransferObject.exceptionMessage.BadRequestMessageDto;
@@ -23,6 +20,7 @@ import team2.MoonLightHotelAndSpa.service.contactUs.ContactUsService;
 @AllArgsConstructor
 @RequestMapping(value = "/contacts")
 @Tag(name = "ContactUs")
+@CrossOrigin
 public class ContactUsController {
 
     private final ContactUsService contactUsService;

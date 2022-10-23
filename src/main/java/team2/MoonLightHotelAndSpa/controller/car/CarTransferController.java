@@ -29,6 +29,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping(value = "/cars")
 @Tag(name = "Car Transfer")
+@CrossOrigin
 public class CarTransferController {
 
     private CarTransferConverter carTransferConverter;

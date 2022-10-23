@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RequestMapping(value = "/users")
 @Tag(name = "User")
+@CrossOrigin
 public class UserController {
 
     private final UserConverter userConverter;

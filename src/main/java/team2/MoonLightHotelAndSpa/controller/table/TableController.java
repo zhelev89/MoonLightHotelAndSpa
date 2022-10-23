@@ -23,6 +23,7 @@ import team2.MoonLightHotelAndSpa.service.table.TableService;
 @AllArgsConstructor
 @RequestMapping(value = "/tables")
 @Tag(name = "Table")
+@CrossOrigin
 public class TableController {
 
     private final TableService tableService;
